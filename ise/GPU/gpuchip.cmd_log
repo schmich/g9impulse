@@ -1,0 +1,181 @@
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd
+xst -intstyle ise -ifn __projnav/gpuchip.xst -ofn gpuchip.syr
+ngdbuild -intstyle ise -dd "c:\dev_zuofu\395_vgs\ise\gpu/_ngo" -nt timestamp -uc ../../hdl/gpuchip.ucf  -p xc2s100-tq144-5 gpuchip.ngc gpuchip.ngd
+map -intstyle ise -p xc2s100-tq144-5 -cm area -pr b -k 4 -c 100 -tx off -o gpuchip_map.ncd gpuchip.ngd gpuchip.pcf
+par -w -intstyle ise -ol std -t 1 gpuchip_map.ncd gpuchip.ncd gpuchip.pcf
+trce -intstyle ise -e 3 -l 3 -s 5 -xml gpuchip gpuchip.ncd -o gpuchip.twr gpuchip.pcf
+bitgen -intstyle ise -f gpuchip.ut gpuchip.ncd

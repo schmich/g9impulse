@@ -1,0 +1,7 @@
+To make this work, you have to build the hardware, then directly
+dump the software/output/data.raw file out to an SD Card (no partition table
+or filesystem, just raw image). Good luck!
+
+Copyright (c) 2005, K9spud LLC.
+http://www.k9spud.com/traxmod/
+

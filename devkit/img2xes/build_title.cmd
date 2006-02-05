@@ -1,0 +1,1 @@
+perl img2xes.pl -x 320 -y 4800 -d 3+2+3 -pixelwidth 8 -memwidth 16 -address 0x576000 -i title_screen.png -o title.xes

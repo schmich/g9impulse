@@ -1,0 +1,1 @@
+perl img2xes.pl -x 320 -y 240 -d 3+2+3 -pixelwidth 8 -memwidth 16 -address 0x000000 -i boot.png -o boot.xes

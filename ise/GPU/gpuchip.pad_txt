@@ -1,0 +1,169 @@
+Release 7.1.03i - par H.41
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+
+Sat Dec 03 19:03:22 2005
+
+
+INPUT FILE:       gpuchip_map.ncd
+OUTPUT FILE:      gpuchip_pad.txt
+PART TYPE:        xc2s100
+SPEED GRADE:      -5
+PACKAGE:          tq144
+
+Pinout by Pin Number:
+
++----------+----------------+---------+------------+---------+-----------+--------------+----------+---------+-----------+---------+-------+----------+---------+-----------+----------------+
+|Pin Number|Signal Name     |Pin Usage|Pin Name    |Direction|IO Standard|IO Bank Number|Drive (mA)|Slew Rate|Termination|IOB Delay|Voltage|Constraint|DCI Value|IO Register|Signal Integrity|
++----------+----------------+---------+------------+---------+-----------+--------------+----------+---------+-----------+---------+-------+----------+---------+-----------+----------------+
+|P1        |                |         |VCCO        |         |           |0             |          |         |           |         |3.30   |          |         |           |                |
+|P2        |                |         |TCK         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P3        |pin_sAddr<7>    |IOB      |IO          |OUTPUT   |LVTTL      |0             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P4        |pin_sAddr<1>    |IOB      |IO          |OUTPUT   |LVTTL      |0             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P5        |pin_sAddr<6>    |IOB      |IO_VREF_0   |OUTPUT   |LVTTL      |0             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P6        |pin_sAddr<2>    |IOB      |IO_VREF_0   |OUTPUT   |LVTTL      |0             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P7        |pin_sAddr<5>    |IOB      |IO          |OUTPUT   |LVTTL      |0             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P8        |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P9        |                |         |VCCINT      |         |           |              |          |         |           |         |2.5    |          |         |           |                |
+|P10       |pin_sAddr<3>    |IOB      |IO          |OUTPUT   |LVTTL      |0             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P11       |pin_sAddr<4>    |IOB      |IO          |OUTPUT   |LVTTL      |0             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P12       |pin_red<0>      |IOB      |IO_VREF_0   |OUTPUT   |LVTTL      |0             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P13       |pin_red<1>      |IOB      |IO          |OUTPUT   |LVTTL      |0             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P14       |                |         |VCCINT      |         |           |              |          |         |           |         |2.5    |          |         |           |                |
+|P15       |                |GCLKIOB  |GCK3        |UNUSED   |           |0             |          |         |           |         |       |          |         |           |                |
+|P16       |                |         |VCCO        |         |           |0             |          |         |           |         |3.30   |          |         |           |                |
+|P17       |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P18       |                |GCLKIOB  |GCK2        |UNUSED   |           |1             |          |         |           |         |       |          |         |           |                |
+|P19       |pin_green<0>    |IOB      |IO          |OUTPUT   |LVTTL      |1             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P20       |pin_green<1>    |IOB      |IO          |OUTPUT   |LVTTL      |1             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P21       |pin_blue<0>     |IOB      |IO_VREF_1   |OUTPUT   |LVTTL      |1             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P22       |pin_blue<1>     |IOB      |IO          |OUTPUT   |LVTTL      |1             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P23       |pin_hsync_n     |IOB      |IO          |OUTPUT   |LVTTL      |1             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P24       |                |         |VCCINT      |         |           |              |          |         |           |         |2.5    |          |         |           |                |
+|P25       |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P26       |pin_vsync_n     |IOB      |IO          |OUTPUT   |LVTTL      |1             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |NO         |NONE            |
+|P27       |                |IOB      |IO_VREF_1   |UNUSED   |           |1             |          |         |           |         |       |          |         |           |                |
+|P28       |                |IOB      |IO_VREF_1   |UNUSED   |           |1             |          |         |           |         |       |          |         |           |                |
+|P29       |                |IOB      |IO          |UNUSED   |           |1             |          |         |           |         |       |          |         |           |                |
+|P30       |pin_done        |IOB      |IO_WRITE    |OUTPUT   |LVTTL      |1             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |NO         |NONE            |
+|P31       |pin_start       |IOB      |IO_CS       |INPUT    |LVTTL      |1             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P32       |                |         |TDI         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P33       |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P34       |                |         |TDO         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P35       |                |         |VCCO        |         |           |0             |          |         |           |         |3.30   |          |         |           |                |
+|P36       |                |         |VCCO        |         |           |1             |          |         |           |         |3.30   |          |         |           |                |
+|P37       |                |         |CCLK        |         |           |              |          |         |           |         |       |          |         |           |                |
+|P38       |                |IOB      |IO_DOUT_BUSY|UNUSED   |           |2             |          |         |           |         |       |          |         |           |                |
+|P39       |                |IOB      |IO_DIN_D0   |UNUSED   |           |2             |          |         |           |         |       |          |         |           |                |
+|P40       |                |IOB      |IO          |UNUSED   |           |2             |          |         |           |         |       |          |         |           |                |
+|P41       |pin_ce_n        |IOB      |IO_VREF_2   |OUTPUT   |LVTTL      |2             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |NO         |NONE            |
+|P42       |                |IOB      |IO          |UNUSED   |           |2             |          |         |           |         |       |          |         |           |                |
+|P43       |                |IOB      |IO_VREF_2   |UNUSED   |           |2             |          |         |           |         |       |          |         |           |                |
+|P44       |                |IOB      |IO_D1       |UNUSED   |           |2             |          |         |           |         |       |          |         |           |                |
+|P45       |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P46       |                |IOB      |IO_D2       |UNUSED   |           |2             |          |         |           |         |       |          |         |           |                |
+|P47       |                |IOB      |IO          |UNUSED   |           |2             |          |         |           |         |       |          |         |           |                |
+|P48       |                |IOB      |IO_VREF_2   |UNUSED   |           |2             |          |         |           |         |       |          |         |           |                |
+|P49       |                |IOB      |IO_D3       |UNUSED   |           |2             |          |         |           |         |       |          |         |           |                |
+|P50       |                |IOB      |IO          |UNUSED   |           |2             |          |         |           |         |       |          |         |           |                |
+|P51       |                |PCIIOB   |IO_IRDY     |UNUSED   |           |2             |          |         |           |         |       |          |         |           |                |
+|P52       |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P53       |                |         |VCCO        |         |           |1             |          |         |           |         |3.30   |          |         |           |                |
+|P54       |pin_port_in<7>  |IOB      |IO_TRDY     |INPUT    |LVTTL      |3             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P55       |                |         |VCCINT      |         |           |              |          |         |           |         |2.5    |          |         |           |                |
+|P56       |pin_port_in<6>  |IOB      |IO          |INPUT    |LVTTL      |3             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P57       |                |IOB      |IO_D4       |UNUSED   |           |3             |          |         |           |         |       |          |         |           |                |
+|P58       |                |IOB      |IO_VREF_3   |UNUSED   |           |3             |          |         |           |         |       |          |         |           |                |
+|P59       |pin_load        |IOB      |IO          |INPUT    |LVTTL      |3             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P60       |pin_port_addr<2>|IOB      |IO_D5       |INPUT    |LVTTL      |3             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P61       |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P62       |pin_port_addr<3>|IOB      |IO_D6       |INPUT    |LVTTL      |3             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P63       |pin_port_in<5>  |IOB      |IO_VREF_3   |INPUT    |LVTTL      |3             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P64       |pin_port_in<4>  |IOB      |IO          |INPUT    |LVTTL      |3             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P65       |                |IOB      |IO_VREF_3   |UNUSED   |           |3             |          |         |           |         |       |          |         |           |                |
+|P66       |pin_port_in<3>  |IOB      |IO          |INPUT    |LVTTL      |3             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P67       |                |IOB      |IO_D7       |UNUSED   |           |3             |          |         |           |         |       |          |         |           |                |
+|P68       |                |IOB      |IO_INIT     |UNUSED   |           |3             |          |         |           |         |       |          |         |           |                |
+|P69       |                |         |PROGRAM     |         |           |              |          |         |           |         |       |          |         |           |                |
+|P70       |                |         |VCCO        |         |           |1             |          |         |           |         |3.30   |          |         |           |                |
+|P71       |                |         |VCCO        |         |           |2             |          |         |           |         |3.30   |          |         |           |                |
+|P72       |                |         |DONE        |         |           |              |          |         |           |         |       |          |         |           |                |
+|P73       |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P74       |pin_port_addr<0>|IOB      |IO          |INPUT    |LVTTL      |4             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P75       |pin_port_addr<1>|IOB      |IO          |INPUT    |LVTTL      |4             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P76       |pin_port_in<2>  |IOB      |IO          |INPUT    |LVTTL      |4             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P77       |                |IOB      |IO_VREF_4   |UNUSED   |           |4             |          |         |           |         |       |          |         |           |                |
+|P78       |                |IOB      |IO          |UNUSED   |           |4             |          |         |           |         |       |          |         |           |                |
+|P79       |pin_port_in<1>  |IOB      |IO_VREF_4   |INPUT    |LVTTL      |4             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P80       |pin_port_in<0>  |IOB      |IO          |INPUT    |LVTTL      |4             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P81       |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P82       |                |         |VCCINT      |         |           |              |          |         |           |         |2.5    |          |         |           |                |
+|P83       |                |IOB      |IO          |UNUSED   |           |4             |          |         |           |         |       |          |         |           |                |
+|P84       |                |IOB      |IO          |UNUSED   |           |4             |          |         |           |         |       |          |         |           |                |
+|P85       |                |IOB      |IO_VREF_4   |UNUSED   |           |4             |          |         |           |         |       |          |         |           |                |
+|P86       |                |IOB      |IO          |UNUSED   |           |4             |          |         |           |         |       |          |         |           |                |
+|P87       |                |IOB      |IO          |UNUSED   |           |4             |          |         |           |         |       |          |         |           |                |
+|P88       |pin_clkin       |GCLKIOB  |GCK0        |INPUT    |LVTTL      |4             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P89       |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P90       |                |         |VCCO        |         |           |2             |          |         |           |         |3.30   |          |         |           |                |
+|P91       |pin_sclkfb      |GCLKIOB  |GCK1        |INPUT    |LVTTL      |5             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P92       |                |         |VCCINT      |         |           |              |          |         |           |         |2.5    |          |         |           |                |
+|P93       |pin_pushbtn     |IOB      |IO          |INPUT    |LVTTL      |5             |          |         |           |NONE     |       |LOCATED   |         |NO         |NONE            |
+|P94       |                |IOB      |IO_VREF_5   |UNUSED   |           |5             |          |         |           |         |       |          |         |           |                |
+|P95       |pin_sData<0>    |IOB      |IO          |BIDIR    |LVTTL      |5             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P96       |pin_sData<15>   |IOB      |IO          |BIDIR    |LVTTL      |5             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P97       |                |         |VCCINT      |         |           |              |          |         |           |         |2.5    |          |         |           |                |
+|P98       |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P99       |pin_sData<1>    |IOB      |IO          |BIDIR    |LVTTL      |5             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P100      |pin_sData<14>   |IOB      |IO_VREF_5   |BIDIR    |LVTTL      |5             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P101      |pin_sData<2>    |IOB      |IO          |BIDIR    |LVTTL      |5             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P102      |pin_sData<13>   |IOB      |IO_VREF_5   |BIDIR    |LVTTL      |5             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P103      |pin_sData<3>    |IOB      |IO          |BIDIR    |LVTTL      |5             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P104      |                |         |NC          |         |           |              |          |         |           |         |       |          |         |           |                |
+|P105      |                |         |NC          |         |           |              |          |         |           |         |       |          |         |           |                |
+|P106      |                |         |M2          |         |           |              |          |         |           |         |       |          |         |           |                |
+|P107      |                |         |VCCO        |         |           |2             |          |         |           |         |3.30   |          |         |           |                |
+|P108      |                |         |VCCO        |         |           |3             |          |         |           |         |3.30   |          |         |           |                |
+|P109      |                |         |M0          |         |           |              |          |         |           |         |       |          |         |           |                |
+|P110      |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P111      |                |         |M1          |         |           |              |          |         |           |         |       |          |         |           |                |
+|P112      |pin_sData<12>   |IOB      |IO          |BIDIR    |LVTTL      |6             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P113      |pin_sData<4>    |IOB      |IO          |BIDIR    |LVTTL      |6             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P114      |pin_sData<11>   |IOB      |IO          |BIDIR    |LVTTL      |6             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P115      |pin_sData<5>    |IOB      |IO_VREF_6   |BIDIR    |LVTTL      |6             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P116      |pin_sData<10>   |IOB      |IO          |BIDIR    |LVTTL      |6             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P117      |pin_sData<6>    |IOB      |IO_VREF_6   |BIDIR    |LVTTL      |6             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P118      |pin_sData<9>    |IOB      |IO          |BIDIR    |LVTTL      |6             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P119      |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P120      |pin_sData<7>    |IOB      |IO          |BIDIR    |LVTTL      |6             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P121      |pin_sData<8>    |IOB      |IO          |BIDIR    |LVTTL      |6             |12        |SLOW     |NONE**     |NONE     |       |LOCATED   |         |YES        |NONE            |
+|P122      |pin_dqml        |IOB      |IO_VREF_6   |OUTPUT   |LVTTL      |6             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |NO         |NONE            |
+|P123      |pin_we_n        |IOB      |IO          |OUTPUT   |LVTTL      |6             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P124      |pin_dqmh        |IOB      |IO          |OUTPUT   |LVTTL      |6             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |NO         |NONE            |
+|P125      |                |         |VCCINT      |         |           |              |          |         |           |         |2.5    |          |         |           |                |
+|P126      |pin_cas_n       |IOB      |IO_TRDY     |OUTPUT   |LVTTL      |6             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P127      |                |         |VCCO        |         |           |3             |          |         |           |         |3.30   |          |         |           |                |
+|P128      |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P129      |pin_sclk        |IOB      |IO_IRDY     |OUTPUT   |LVTTL      |7             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |NO         |NONE            |
+|P130      |pin_ras_n       |IOB      |IO          |OUTPUT   |LVTTL      |7             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P131      |pin_cke         |IOB      |IO          |OUTPUT   |LVTTL      |7             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P132      |pin_cs_n        |IOB      |IO_VREF_7   |OUTPUT   |LVTTL      |7             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |NO         |NONE            |
+|P133      |                |IOB      |IO          |UNUSED   |           |7             |          |         |           |         |       |          |         |           |                |
+|P134      |pin_ba<0>       |IOB      |IO          |OUTPUT   |LVTTL      |7             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P135      |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P136      |pin_sAddr<11>   |IOB      |IO          |OUTPUT   |LVTTL      |7             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P137      |pin_ba<1>       |IOB      |IO_VREF_7   |OUTPUT   |LVTTL      |7             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P138      |pin_sAddr<9>    |IOB      |IO          |OUTPUT   |LVTTL      |7             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P139      |pin_sAddr<10>   |IOB      |IO_VREF_7   |OUTPUT   |LVTTL      |7             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P140      |pin_sAddr<8>    |IOB      |IO          |OUTPUT   |LVTTL      |7             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P141      |pin_sAddr<0>    |IOB      |IO          |OUTPUT   |LVTTL      |7             |12        |SLOW     |NONE**     |         |       |LOCATED   |         |YES        |NONE            |
+|P142      |                |         |TMS         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P143      |                |         |GND         |         |           |              |          |         |           |         |       |          |         |           |                |
+|P144      |                |         |VCCO        |         |           |3             |          |         |           |         |3.30   |          |         |           |                |
++----------+----------------+---------+------------+---------+-----------+--------------+----------+---------+-----------+---------+-------+----------+---------+-----------+----------------+
+
+* Default value.
+** This default Pullup/Pulldown value can be overridden in Bitgen. 
+****** This value can be any of the allowed voltages 
+       (1.5v,2.5v,3.3v) or VCCAUX 
+
+
