@@ -1,9 +1,0 @@
-// SourceBoost Linker Function Resource Usage Dump
-
-#GLOBAL:"global",line = 0,ram = 0.0,rom = 0;
-delay_ms(unsigned char):"NoSourceFile",line = 0,ram = 0.0,rom = 32;
-portinit(void):"C:\Documents and Settings\Zuofu Cheng\Desktop\395_vgs\src\PIC18\synth\midi.c",line = 7,ram = 0.0,rom = 22;
-main(void):"C:\Documents and Settings\Zuofu Cheng\Desktop\395_vgs\src\PIC18\synth\midi.c",line = 27,ram = 5.0,rom = 174;
-delay_s(unsigned char):"NoSourceFile",line = 0,ram = 1.0,rom = 38;
-_startup(void):"NoSourceFile",line = 0,ram = 0.0,rom = 4;
-#HEAP_BLOCK: 0, 5, 3963;
