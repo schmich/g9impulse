@@ -1,6 +1,0 @@
-vhdl work "../../../hdl/common.vhd"
-vhdl work "../../../hdl/sdramcntl.vhd"
-vhdl work "../../../hdl/xsasdramcntl.vhd"
-vhdl work "../../../hdl/vga.vhd"
-vhdl work "../../../hdl/blitter.vhd"
-vhdl work "../../../hdl/XSA-50/gpuchip.vhd"

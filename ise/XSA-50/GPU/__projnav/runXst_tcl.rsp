@@ -1,1 +1,0 @@
-set allSynthModules {common.MOD dualport.MOD sdramcntl.MOD sdram.MOD xsasdramcntl.MOD fifo_cc.MOD sync.MOD vga.MOD fifo_cc_pckg.MOD vga_pckg.MOD xsasdram.MOD blitter.MOD blitter_pckg.MOD gpuchip.MOD}

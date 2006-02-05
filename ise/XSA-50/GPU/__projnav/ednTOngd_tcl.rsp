@@ -1,3 +1,0 @@
-set ADucfFile {../../../hdl/gpuchip.ucf}
-set ADbmmFile {}
-set ADcdcFile {}
