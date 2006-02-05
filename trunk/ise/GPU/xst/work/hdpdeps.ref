@@ -1,0 +1,73 @@
+V2 41
+FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/sdramcntl.vhd 2005/10/10.16:52:17 H.41
+PH work/SDRAM 1133658146           FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/sdramcntl.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628
+EN work/SDRAMCNTL 1133658147       FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/sdramcntl.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PB ieee/STD_LOGIC_UNSIGNED 1106404634 \
+      PH ieee/NUMERIC_STD 1106404639 PB work/COMMON 1133658145
+AR work/SDRAMCNTL/ARCH 1133658148  FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/sdramcntl.vhd \
+      EN work/SDRAMCNTL 1133658147
+EN work/DUALPORT 1133658149        FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/sdramcntl.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PB ieee/STD_LOGIC_UNSIGNED 1106404634 \
+      PH ieee/NUMERIC_STD 1106404639 PB work/COMMON 1133658145
+AR work/DUALPORT/ARCH 1133658150   FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/sdramcntl.vhd \
+      EN work/DUALPORT 1133658149
+FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/gpuchip.vhd 2005/11/09.01:31:36 H.41
+EN work/GPUCHIP 1133658165         FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/gpuchip.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PB ieee/STD_LOGIC_UNSIGNED 1106404634 \
+      PH ieee/NUMERIC_STD 1106404639 PB work/COMMON 1133658145 PH work/XSASDRAM 1133658151 \
+      PH work/SDRAM 1133658146 PH work/VGA_PCKG 1133658154 PH work/BLITTER_PCKG 1133658162
+AR work/GPUCHIP/ARCH 1133658166    FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/gpuchip.vhd \
+      EN work/GPUCHIP 1133658165 CP DUALPORT CP XSASDRAMCNTL CP VGA            CP BLITTER
+FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/xsasdramcntl.vhd 2005/10/10.16:52:17 H.41
+PH work/XSASDRAM 1133658151        FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/xsasdramcntl.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PH ieee/NUMERIC_STD 1106404639 \
+      PH unisim/VCOMPONENTS 1116003484 PB work/COMMON 1133658145 PH work/SDRAM 1133658146
+EN work/XSASDRAMCNTL 1133658152    FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/xsasdramcntl.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PH ieee/NUMERIC_STD 1106404639 \
+      PH unisim/VCOMPONENTS 1116003484 PB work/COMMON 1133658145 PH work/SDRAM 1133658146
+AR work/XSASDRAMCNTL/ARCH 1133658153 \
+      FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/xsasdramcntl.vhd \
+      EN work/XSASDRAMCNTL 1133658152 CP IBUFG CP CLKDLL     CP BUFG           CP SRL16 \
+      CP SDRAMCNTL
+FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/blitter.vhd 2005/11/07.23:18:55 H.41
+PH work/BLITTER_PCKG 1133658162    FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/blitter.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PH ieee/NUMERIC_STD 1106404639 \
+      PH unisim/VCOMPONENTS 1116003484 PB work/COMMON 1133658145 PH work/XSASDRAM 1133658151 \
+      PH work/SDRAM 1133658146 PH work/VGA_PCKG 1133658154 PH work/FIFO_CC_PCKG 1133658155 \
+      PB ieee/STD_LOGIC_ARITH 1106404630 PB ieee/STD_LOGIC_UNSIGNED 1106404634
+EN work/BLITTER 1133658163         FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/blitter.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PH ieee/NUMERIC_STD 1106404639 \
+      PH unisim/VCOMPONENTS 1116003484 PB work/COMMON 1133658145 PH work/XSASDRAM 1133658151 \
+      PH work/SDRAM 1133658146 PH work/VGA_PCKG 1133658154 PH work/FIFO_CC_PCKG 1133658155 \
+      PB ieee/STD_LOGIC_ARITH 1106404630 PB ieee/STD_LOGIC_UNSIGNED 1106404634
+AR work/BLITTER/BEHAVIORAL 1133658164 FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/blitter.vhd \
+      EN work/BLITTER 1133658163 CP FIFO_CC
+FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/common.vhd 2005/10/10.16:52:17 H.41
+PH work/COMMON 1133658144          FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/common.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PH ieee/NUMERIC_STD 1106404639
+PB work/COMMON 1133658145          FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/common.vhd \
+      PH work/COMMON 1133658144 PB ieee/STD_LOGIC_1164 1106404628 \
+      PH ieee/NUMERIC_STD 1106404639
+FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/vga.vhd 2005/10/10.16:52:17 H.41
+PH work/VGA_PCKG 1133658154        FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/vga.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PH ieee/NUMERIC_STD 1106404639 \
+      PH unisim/VCOMPONENTS 1116003484 PB work/COMMON 1133658145
+PH work/FIFO_CC_PCKG 1133658155    FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/vga.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PB ieee/STD_LOGIC_UNSIGNED 1106404634 \
+      PH unisim/VCOMPONENTS 1116003484
+EN work/VGA 1133658156             FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/vga.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PH ieee/NUMERIC_STD 1106404639 \
+      PH unisim/VCOMPONENTS 1116003484 PB work/COMMON 1133658145
+AR work/VGA/VGA_ARCH 1133658157    FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/vga.vhd \
+      EN work/VGA 1133658156 CP FIFO_CC    CP SYNC
+EN work/SYNC 1133658158            FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/vga.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PH ieee/NUMERIC_STD 1106404639 \
+      PH unisim/VCOMPONENTS 1116003484 PB work/COMMON 1133658145
+AR work/SYNC/SYNC_ARCH 1133658159  FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/vga.vhd \
+      EN work/SYNC 1133658158
+EN work/FIFO_CC 1133658160         FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/vga.vhd \
+      PB ieee/STD_LOGIC_1164 1106404628 PB ieee/STD_LOGIC_UNSIGNED 1106404634 \
+      PH unisim/VCOMPONENTS 1116003484
+AR work/FIFO_CC/ARCH 1133658161    FL C:/dev_zuofu/395_vgs/ise/GPU/../../hdl/vga.vhd \
+      EN work/FIFO_CC 1133658160 CP RAMB4_S16_S16

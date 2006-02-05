@@ -1,0 +1,13 @@
+CPP = g++ -g -c
+
+all:	traxmod
+
+%.o: %.cpp
+	$(CPP) $<
+
+traxmod: traxmod.o mod.o cmd.o pattern.o row.o
+	g++ -g traxmod.o mod.o cmd.o pattern.o row.o -o traxmod
+
+clean:
+	rm -f *.o *~ traxmod *#
+

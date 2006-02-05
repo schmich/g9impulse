@@ -1,0 +1,153 @@
+;/////////////////////////////////////////////////////////////////////////////////
+;// Code Generator: BoostC Compiler and Linker - http://www.picant.com/c2c/c.html
+;// Version       : 6.25
+;// License Type  : Full License
+;// Limitations   : PIC18 max code size:Unlimited, max RAM banks:Unlimited, Non commercial use only
+;/////////////////////////////////////////////////////////////////////////////////
+
+	ORG 0x00000000
+0000  EF87F000  	GOTO	_startup
+	ORG 0x00000004
+0004            delay_ms_00000
+; { delay_ms ; function begin
+0004  5204      	MOVF delay_ms_00000_arg_del, F
+0006  A4D8      	BTFSS STATUS,Z
+0008  EF07F000  	GOTO	label4026531855
+000C  0012      	RETURN
+000E            label4026531855
+000E  0E31      	MOVLW 0x31
+0010            label4026531856
+0010  0000      	NOP
+0012  0FFF      	ADDLW 0xFF
+0014  A4D8      	BTFSS STATUS,Z
+0016  EF08F000  	GOTO	label4026531856
+001A  0000      	NOP
+001C  2E04      	DECFSZ delay_ms_00000_arg_del, F
+001E  EF07F000  	GOTO	label4026531855
+0022  0012      	RETURN
+; } delay_ms function end
+
+	ORG 0x00000024
+0024            delay_s_00000
+; { delay_s ; function begin
+0024            label4026531861
+0024  0EFA      	MOVLW 0xFA
+0026  6E04      	MOVWF delay_ms_00000_arg_del
+0028  EC02F000  	CALL delay_ms_00000
+002C  0EFA      	MOVLW 0xFA
+002E  6E04      	MOVWF delay_ms_00000_arg_del
+0030  EC02F000  	CALL delay_ms_00000
+0034  0EFA      	MOVLW 0xFA
+0036  6E04      	MOVWF delay_ms_00000_arg_del
+0038  EC02F000  	CALL delay_ms_00000
+003C  0EFA      	MOVLW 0xFA
+003E  6E04      	MOVWF delay_ms_00000_arg_del
+0040  EC02F000  	CALL delay_ms_00000
+0044  2E03      	DECFSZ delay_s_00000_arg_del, F
+0046  D7EE      	BRA	label4026531861
+0048  0012      	RETURN
+; } delay_s function end
+
+	ORG 0x0000004A
+004A            portinit_00000
+; { portinit ; function begin
+004A  0E07      	MOVLW 0x07
+004C  6EC1      	MOVWF gbl_adcon1
+004E  6892      	SETF gbl_trisa
+0050  6893      	SETF gbl_trisb
+0052  6894      	SETF gbl_trisc
+0054  6A95      	CLRF gbl_trisd
+0056  6A80      	CLRF gbl_porta
+0058  6A81      	CLRF gbl_portb
+005A  6A82      	CLRF gbl_portc
+005C  6883      	SETF gbl_portd
+005E  0012      	RETURN
+; } portinit function end
+
+	ORG 0x00000060
+0060            main
+; { main ; function begin
+0060  6883      	SETF gbl_portd
+0062  6A00      	CLRF main_1_i
+0064  6A01      	CLRF main_1_currenttrack
+0066  6A02      	CLRF main_1_playtrack
+0068  EC25F000  	CALL portinit_00000
+006C  0E02      	MOVLW 0x02
+006E  6E03      	MOVWF delay_s_00000_arg_del
+0070  EC12F000  	CALL delay_s_00000
+0074  9083      	BCF gbl_portd,0
+0076  0E14      	MOVLW 0x14
+0078  6E04      	MOVWF delay_ms_00000_arg_del
+007A  EC02F000  	CALL delay_ms_00000
+007E  8083      	BSF gbl_portd,0
+0080  0E06      	MOVLW 0x06
+0082  6E03      	MOVWF delay_s_00000_arg_del
+0084  EC12F000  	CALL delay_s_00000
+0088  9283      	BCF gbl_portd,1
+008A  0E64      	MOVLW 0x64
+008C  6E04      	MOVWF delay_ms_00000_arg_del
+008E  EC02F000  	CALL delay_ms_00000
+0092  8283      	BSF gbl_portd,1
+0094            label268435719
+0094  AE82      	BTFSS gbl_portc,7
+0096  D7FE      	BRA	label268435719
+0098  0E0F      	MOVLW 0x0F
+009A  1482      	ANDWF gbl_portc, W
+009C  6E03      	MOVWF CompTempVar0
+009E  0E0F      	MOVLW 0x0F
+00A0  6203      	CPFSEQ CompTempVar0
+00A2  D7F8      	BRA	label268435719
+00A4  5081      	MOVF gbl_portb, W
+00A6  6E01      	MOVWF main_1_currenttrack
+00A8  2801      	INCF main_1_currenttrack, W
+00AA  E10B      	BNZ	label268435730
+00AC  9283      	BCF gbl_portd,1
+00AE  0E64      	MOVLW 0x64
+00B0  6E04      	MOVWF delay_ms_00000_arg_del
+00B2  EC02F000  	CALL delay_ms_00000
+00B6  8283      	BSF gbl_portd,1
+00B8  0E32      	MOVLW 0x32
+00BA  6E04      	MOVWF delay_ms_00000_arg_del
+00BC  EC02F000  	CALL delay_ms_00000
+00C0  D7E9      	BRA	label268435719
+00C2            label268435730
+00C2  5002      	MOVF main_1_playtrack, W
+00C4  6201      	CPFSEQ main_1_currenttrack
+00C6  6202      	CPFSEQ main_1_playtrack
+00C8  D01B      	BRA	label268435746
+00CA  5001      	MOVF main_1_currenttrack, W
+00CC  6002      	CPFSLT main_1_playtrack
+00CE  D00C      	BRA	label268435749
+00D0  2A02      	INCF main_1_playtrack, F
+00D2  9683      	BCF gbl_portd,3
+00D4  0E32      	MOVLW 0x32
+00D6  6E04      	MOVWF delay_ms_00000_arg_del
+00D8  EC02F000  	CALL delay_ms_00000
+00DC  8683      	BSF gbl_portd,3
+00DE  0E32      	MOVLW 0x32
+00E0  6E04      	MOVWF delay_ms_00000_arg_del
+00E2  EC02F000  	CALL delay_ms_00000
+00E6  D7ED      	BRA	label268435730
+00E8            label268435749
+00E8  0602      	DECF main_1_playtrack, F
+00EA  9483      	BCF gbl_portd,2
+00EC  0E32      	MOVLW 0x32
+00EE  6E04      	MOVWF delay_ms_00000_arg_del
+00F0  EC02F000  	CALL delay_ms_00000
+00F4  8483      	BSF gbl_portd,2
+00F6  0E32      	MOVLW 0x32
+00F8  6E04      	MOVWF delay_ms_00000_arg_del
+00FA  EC02F000  	CALL delay_ms_00000
+00FE  D7E1      	BRA	label268435730
+0100            label268435746
+0100  9083      	BCF gbl_portd,0
+0102  0E14      	MOVLW 0x14
+0104  6E04      	MOVWF delay_ms_00000_arg_del
+0106  EC02F000  	CALL delay_ms_00000
+010A  8083      	BSF gbl_portd,0
+010C  D7C3      	BRA	label268435719
+; } main function end
+
+	ORG 0x0000010E
+010E            _startup
+010E  EF30F000  	GOTO	main

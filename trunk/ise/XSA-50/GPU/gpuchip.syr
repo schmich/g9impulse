@@ -1,0 +1,802 @@
+Release 7.1.03i - xst H.41
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to __projnav
+CPU : 0.00 / 5.41 s | Elapsed : 0.00 / 4.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 5.41 s | Elapsed : 0.00 / 4.00 s
+ 
+--> Reading design: gpuchip.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) HDL Analysis
+  4) HDL Synthesis
+  5) Advanced HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Final Report
+     7.1) Device utilization summary
+     7.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "gpuchip.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "gpuchip"
+Output Format                      : NGC
+Target Device                      : xc2s50-5-tq144
+
+---- Source Options
+Top Module Name                    : gpuchip
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+Resource Sharing                   : YES
+Multiplier Style                   : lut
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100
+Add Generic Clock Buffer(BUFG)     : 4
+Register Duplication               : YES
+Equivalent register Removal        : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 2
+Keep Hierarchy                     : NO
+Global Optimization                : AllClockNets
+RTL Output                         : Yes
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : gpuchip.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+Optimize Instantiated Primitives   : NO
+tristate2logic                     : Yes
+use_clock_enable                   : Yes
+use_sync_set                       : Yes
+use_sync_reset                     : Yes
+enable_auto_floorplanning          : No
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/common.vhd" in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/sdramcntl.vhd" in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Architecture arch of Entity dualport is up to date.
+Compiling vhdl file "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/xsasdramcntl.vhd" in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/vga.vhd" in Library work.
+Architecture vga_arch of Entity vga is up to date.
+Architecture sync_arch of Entity sync is up to date.
+Architecture arch of Entity fifo_cc is up to date.
+Compiling vhdl file "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/blitter.vhd" in Library work.
+Architecture behavioral of Entity blitter is up to date.
+Compiling vhdl file "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/XSA-50/gpuchip.vhd" in Library work.
+Entity <gpuchip> compiled.
+Entity <gpuchip> (Architecture <arch>) compiled.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <gpuchip> (Architecture <arch>).
+WARNING:Xst:753 - "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/XSA-50/gpuchip.vhd" line 193: Unconnected output port 'status0' of component 'dualport'.
+WARNING:Xst:753 - "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/XSA-50/gpuchip.vhd" line 193: Unconnected output port 'status1' of component 'dualport'.
+WARNING:Xst:753 - "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/XSA-50/gpuchip.vhd" line 303: Unconnected output port 'blank' of component 'vga'.
+WARNING:Xst:819 - "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/XSA-50/gpuchip.vhd" line 395: The following signals are missing in the process sensitivity list:
+   source_address_r, target_address_r, source_lines_r, line_size_r, alphaOp_r, db_enable_r, front_buffer_r, idle_r, pin_load, blit_done.
+Entity <gpuchip> analyzed. Unit <gpuchip> generated.
+
+Analyzing generic Entity <dualport> (Architecture <arch>).
+	PIPE_EN = <u>1
+	PORT_TIME_SLOTS = <u>0000001111111111
+	DATA_WIDTH = 16
+	HADDR_WIDTH = 24
+Entity <dualport> analyzed. Unit <dualport> generated.
+
+Analyzing generic Entity <XSASDRAMCntl> (Architecture <arch>).
+	FREQ = 50000
+	CLK_DIV = 1.000000
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>0
+	DATA_WIDTH = 16
+	NROWS = 4096
+	NCOLS = 256
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 12
+Entity <XSASDRAMCntl> analyzed. Unit <XSASDRAMCntl> generated.
+
+Analyzing generic Entity <sdramCntl> (Architecture <arch>).
+	FREQ = 50000
+	IN_PHASE = <u>1
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>0
+	DATA_WIDTH = 16
+	NROWS = 4096
+	NCOLS = 256
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 12
+Entity <sdramCntl> analyzed. Unit <sdramCntl> generated.
+
+Analyzing generic Entity <vga> (Architecture <vga_arch>).
+	FREQ = 50000
+	CLK_DIV = 4
+	PIXEL_WIDTH = 8
+	PIXELS_PER_LINE = 320
+	LINES_PER_FRAME = 240
+	NUM_RGB_BITS = 2
+	FIT_TO_SCREEN = <u>1
+WARNING:Xst:753 - "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/vga.vhd" line 178: Unconnected output port 'full' of component 'fifo_cc'.
+Entity <vga> analyzed. Unit <vga> generated.
+
+Analyzing Entity <fifo_cc> (Architecture <arch>).
+Entity <fifo_cc> analyzed. Unit <fifo_cc> generated.
+
+Analyzing generic Entity <sync> (Architecture <sync_arch>).
+	FREQ = 12500
+	PERIOD = 32
+	START = 26
+	WIDTH = 4
+	VISIBLE = 320
+Entity <sync> analyzed. Unit <sync> generated.
+
+Analyzing generic Entity <sync.0> (Architecture <sync_arch>).
+	FREQ = 31
+	PERIOD = 9104
+	START = 8020
+	WIDTH = 64
+	VISIBLE = 240
+Entity <sync.0> analyzed. Unit <sync.0> generated.
+
+Analyzing generic Entity <Blitter> (Architecture <behavioral>).
+	FREQ = 50000
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	ADDR_WIDTH = 24
+WARNING:Xst:753 - "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/blitter.vhd" line 171: Unconnected output port 'full' of component 'fifo_cc'.
+WARNING:Xst:753 - "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/blitter.vhd" line 184: Unconnected output port 'full' of component 'fifo_cc'.
+WARNING:Xst:819 - "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/blitter.vhd" line 209: The following signals are missing in the process sensitivity list:
+   blend_data_r, out_q<14>, out_q<12>, out_q<10>, out_q<8>, out_b, out_q.
+Entity <Blitter> analyzed. Unit <Blitter> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <sync_0>.
+    Related source file is "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/vga.vhd".
+    Found 16-bit adder for signal <$n0002> created at line 447.
+    Found 1-bit register for signal <blank_r>.
+    Found 16-bit register for signal <cnt_r>.
+    Found 1-bit register for signal <gate_r>.
+    Found 1-bit register for signal <sync_r>.
+    Summary:
+	inferred  19 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+Unit <sync_0> synthesized.
+
+
+Synthesizing Unit <sync>.
+    Related source file is "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/vga.vhd".
+    Found 16-bit adder for signal <$n0002> created at line 447.
+    Found 1-bit register for signal <blank_r>.
+    Found 16-bit register for signal <cnt_r>.
+    Found 1-bit register for signal <gate_r>.
+    Found 1-bit register for signal <sync_r>.
+    Summary:
+	inferred  19 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+Unit <sync> synthesized.
+
+
+Synthesizing Unit <fifo_cc>.
+    Related source file is "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/vga.vhd".
+    Found 8-bit updown counter for signal <level_i>.
+    Found 8-bit up counter for signal <rd_addr>.
+    Found 8-bit up counter for signal <wr_addr>.
+    Summary:
+	inferred   3 Counter(s).
+Unit <fifo_cc> synthesized.
+
+
+Synthesizing Unit <sdramCntl>.
+    Related source file is "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/sdramcntl.vhd".
+WARNING:Xst:647 - Input <hAddr<23:22>> is never used.
+WARNING:Xst:646 - Signal <col<11>> is assigned but never used.
+WARNING:Xst:646 - Signal <bankIndex<0>> is assigned but never used.
+WARNING:Xst:646 - Signal <hDOutOppPhase_r> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 30                                             |
+    | Inputs             | 10                                             |
+    | Outputs            | 8                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Clock enable       | $n0080 (negative)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | initwait                                       |
+    | Power Up State     | initwait                                       |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 2-bit subtractor for signal <$n0092> created at line 456.
+    Found 13-bit adder for signal <$n0093> created at line 485.
+    Found 13-bit subtractor for signal <$n0095>.
+    Found 10-bit subtractor for signal <$n0096> created at line 480.
+    Found 14-bit adder for signal <$n0097> created at line 440.
+    Found 14-bit subtractor for signal <$n0098> created at line 491.
+    Found 2-bit comparator not equal for signal <$n0106> created at line 423.
+    Found 12-bit comparator not equal for signal <$n0107> created at line 423.
+    Found 2-bit register for signal <activeBank_r>.
+    Found 1-bit register for signal <activeFlag_r<0>>.
+    Found 12-bit register for signal <activeRow_r<0>>.
+    Found 2-bit register for signal <ba_r>.
+    Found 1-bit register for signal <cke_r>.
+    Found 6-bit register for signal <cmd_r>.
+    Found 1-bit 4-to-1 multiplexer for signal <doSelfRfsh>.
+    Found 16-bit register for signal <hDOut_r>.
+    Found 14-bit register for signal <nopCntr_r>.
+    Found 14-bit 4-to-1 multiplexer for signal <nopCntr_x>.
+    Found 1-bit register for signal <opBegun_r>.
+    Found 2-bit register for signal <rasTimer_r>.
+    Found 5-bit register for signal <rdPipeline_r>.
+    Found 10-bit register for signal <refTimer_r>.
+    Found 13-bit register for signal <rfshCntr_r>.
+    Found 12-bit register for signal <sAddr_r>.
+    Found 16-bit register for signal <sData_r>.
+    Found 1-bit register for signal <sDataDir_r>.
+    Found 14-bit register for signal <timer_r>.
+    Found 1-bit register for signal <wrPipeline_r<0>>.
+    Found 1-bit register for signal <wrTimer_r<0>>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 114 D-type flip-flop(s).
+	inferred   6 Adder/Subtractor(s).
+	inferred   2 Comparator(s).
+	inferred  15 Multiplexer(s).
+Unit <sdramCntl> synthesized.
+
+
+Synthesizing Unit <Blitter>.
+    Related source file is "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/blitter.vhd".
+WARNING:Xst:647 - Input <opBegun> is never used.
+WARNING:Xst:647 - Input <done> is never used.
+WARNING:Xst:646 - Signal <empty_b> is assigned but never used.
+WARNING:Xst:646 - Signal <level_b> is assigned but never used.
+WARNING:Xst:1780 - Signal <reset_b> is never used or assigned.
+WARNING:Xst:646 - Signal <level_q> is assigned but never used.
+    Found finite state machine <FSM_1> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 10                                             |
+    | Transitions        | 19                                             |
+    | Inputs             | 7                                              |
+    | Outputs            | 12                                             |
+    | Clock              | clk (rising_edge)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | synchronous                                    |
+    | Reset State        | standby                                        |
+    | Power Up State     | standby                                        |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 8-bit comparator equal for signal <$n0026> created at line 276.
+    Found 8-bit comparator equal for signal <$n0027> created at line 363.
+    Found 24-bit adder for signal <$n0046> created at line 239.
+    Found 24-bit adder for signal <$n0047> created at line 239.
+    Found 8-bit adder for signal <$n0050> created at line 239.
+    Found 24-bit adder for signal <$n0051> created at line 367.
+    Found 8-bit adder for signal <$n0052> created at line 357.
+    Found 24-bit register for signal <addr_r>.
+    Found 16-bit register for signal <blend_data_r>.
+    Found 8-bit register for signal <count_r>.
+    Found 8-bit register for signal <current_line_r>.
+    Found 24-bit register for signal <s_addr_r>.
+    Found 24-bit register for signal <t_addr_r>.
+    Found 8-bit register for signal <tot_pix_r>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 112 D-type flip-flop(s).
+	inferred   5 Adder/Subtractor(s).
+	inferred   2 Comparator(s).
+Unit <Blitter> synthesized.
+
+
+Synthesizing Unit <vga>.
+    Related source file is "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/vga.vhd".
+WARNING:Xst:646 - Signal <fifo_level<2:0>> is assigned but never used.
+WARNING:Xst:646 - Signal <line_cnt> is assigned but never used.
+WARNING:Xst:646 - Signal <pixel_cnt<15:1>> is assigned but never used.
+WARNING:Xst:646 - Signal <pixel<5>> is assigned but never used.
+WARNING:Xst:646 - Signal <pixel<0>> is assigned but never used.
+    Found 3-bit register for signal <blank_r>.
+    Found 1-bit register for signal <cke>.
+    Found 8-bit up counter for signal <clk_div_cnt>.
+    Found 1-bit register for signal <eof_r>.
+    Found 3-bit register for signal <hsync_r>.
+    Found 16-bit register for signal <pixel_data_r>.
+    Found 16-bit 4-to-1 multiplexer for signal <pixel_data_x>.
+    Found 1-bit register for signal <rd_r>.
+    Found 6-bit register for signal <rgb_r>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  31 D-type flip-flop(s).
+	inferred  16 Multiplexer(s).
+Unit <vga> synthesized.
+
+
+Synthesizing Unit <XSASDRAMCntl>.
+    Related source file is "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/xsasdramcntl.vhd".
+WARNING:Xst:646 - Signal <dllext_rst_n> is assigned but never used.
+WARNING:Xst:646 - Signal <int_clkdv_b> is assigned but never used.
+    Found 16-bit tristate buffer for signal <sData>.
+    Summary:
+	inferred  16 Tristate(s).
+Unit <XSASDRAMCntl> synthesized.
+
+
+Synthesizing Unit <dualport>.
+    Related source file is "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/sdramcntl.vhd".
+WARNING:Xst:647 - Input <opBegun> is never used.
+    Found 1-bit register for signal <opBegun0>.
+    Found 1-bit register for signal <opBegun1>.
+    Found 1-bit register for signal <door_r<0>>.
+    Found 1-bit 4-to-1 multiplexer for signal <door_x<0>>.
+    Found 1-bit register for signal <port_r<0>>.
+    Found 1-bit 4-to-1 multiplexer for signal <port_x<0>>.
+    Found 1-bit 4-to-1 multiplexer for signal <rd_i>.
+    Found 16-bit register for signal <slot_r>.
+    Found 1-bit 4-to-1 multiplexer for signal <switch>.
+    Found 1-bit 4-to-1 multiplexer for signal <wr_i>.
+    Summary:
+	inferred   4 D-type flip-flop(s).
+	inferred   5 Multiplexer(s).
+Unit <dualport> synthesized.
+
+
+Synthesizing Unit <gpuchip>.
+    Related source file is "C:/dev_zuofu/395_vgs/ise/XSA-50/GPU/../../../hdl/XSA-50/gpuchip.vhd".
+WARNING:Xst:647 - Input <pin_flip_buffer> is never used.
+WARNING:Xst:1780 - Signal <rst_n> is never used or assigned.
+WARNING:Xst:646 - Signal <done0> is assigned but never used.
+WARNING:Xst:646 - Signal <sdram_clk2x> is assigned but never used.
+WARNING:Xst:646 - Signal <opBegun0> is assigned but never used.
+WARNING:Xst:646 - Signal <rdPending0> is assigned but never used.
+    Found finite state machine <FSM_2> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 4                                              |
+    | Transitions        | 6                                              |
+    | Inputs             | 2                                              |
+    | Outputs            | 4                                              |
+    | Clock              | sdram_clk1x (rising_edge)                      |
+    | Power Up State     | init                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 1-bit register for signal <alphaOp_r>.
+    Found 1-bit register for signal <db_enable_r>.
+    Found 1-bit register for signal <drawframe>.
+    Found 1-bit register for signal <front_buffer_r>.
+    Found 1-bit register for signal <idle_r>.
+    Found 8-bit register for signal <line_size_r>.
+    Found 24-bit register for signal <source_address_r>.
+    Found 8-bit register for signal <source_lines_r>.
+    Found 1-bit register for signal <sysReset>.
+    Found 24-bit register for signal <target_address_r>.
+    Found 24-bit up counter for signal <vga_address>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred   1 Counter(s).
+	inferred  70 D-type flip-flop(s).
+Unit <gpuchip> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Analyzing FSM <FSM_2> for best encoding.
+Optimizing FSM <FSM_2> on signal <state_r[1:2]> with gray encoding.
+-------------------
+ State | Encoding
+-------------------
+ init  | 00
+ load  | 01
+ draw  | 11
+ rest  | 10
+-------------------
+Analyzing FSM <FSM_1> for best encoding.
+Optimizing FSM <FSM_1> on signal <state_r[1:10]> with one-hot encoding.
+----------------------------
+ State        | Encoding
+----------------------------
+ standby      | 0000000001
+ init1        | 0000000010
+ init2        | 0000000100
+ read         | 0000001000
+ empty_pipe   | 0000010000
+ read_b       | 0001000000
+ empty_pipe_b | 0010000000
+ write1       | 0000100000
+ write2       | 0100000000
+ stop         | 1000000000
+----------------------------
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <FSM_0> on signal <state_r[1:8]> with one-hot encoding.
+-------------------------
+ State       | Encoding
+-------------------------
+ initwait    | 00000001
+ initpchg    | 00000010
+ initsetmode | 00001000
+ initrfsh    | 00000100
+ rw          | 00010000
+ activate    | 01000000
+ refreshrow  | 00100000
+ selfrefresh | 10000000
+-------------------------
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# FSMs                             : 3
+# Adders/Subtractors               : 13
+ 10-bit subtractor                 : 1
+ 13-bit adder                      : 1
+ 13-bit subtractor                 : 1
+ 14-bit adder                      : 1
+ 14-bit subtractor                 : 1
+ 16-bit adder                      : 2
+ 2-bit subtractor                  : 1
+ 24-bit adder                      : 3
+ 8-bit adder                       : 2
+# Counters                         : 11
+ 24-bit up counter                 : 1
+ 8-bit up counter                  : 7
+ 8-bit updown counter              : 3
+# Registers                        : 76
+ 1-bit register                    : 45
+ 10-bit register                   : 1
+ 12-bit register                   : 2
+ 13-bit register                   : 1
+ 14-bit register                   : 2
+ 16-bit register                   : 7
+ 2-bit register                    : 3
+ 24-bit register                   : 5
+ 3-bit register                    : 2
+ 5-bit register                    : 1
+ 6-bit register                    : 2
+ 8-bit register                    : 5
+# Comparators                      : 4
+ 12-bit comparator not equal       : 1
+ 2-bit comparator not equal        : 1
+ 8-bit comparator equal            : 2
+# Multiplexers                     : 8
+ 1-bit 4-to-1 multiplexer          : 6
+ 14-bit 4-to-1 multiplexer         : 1
+ 16-bit 4-to-1 multiplexer         : 1
+# Tristates                        : 1
+ 16-bit tristate buffer            : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+Register <sDataDir_r> equivalent to <wrPipeline_r_0> has been removed
+Register <wrPipeline_r_0> equivalent to <wrTimer_r_0> has been removed
+WARNING:Xst:1291 - FF/Latch <pixel_data_r_0> is unconnected in block <vga>.
+WARNING:Xst:1291 - FF/Latch <pixel_data_r_5> is unconnected in block <vga>.
+WARNING:Xst:1291 - FF/Latch <opBegun1> is unconnected in block <u1>.
+WARNING:Xst:1291 - FF/Latch <opBegun0> is unconnected in block <u1>.
+WARNING:Xst:1291 - FF/Latch <opBegun_r> is unconnected in block <u1>.
+WARNING:Xst:1291 - FF/Latch <blank_r_3> is unconnected in block <u3>.
+WARNING:Xst:1710 - FF/Latch  <cmd_r_5> (without init value) has a constant value of 0 in block <sdramCntl>.
+Register <cmd_r_1> equivalent to <cmd_r_0> has been removed
+WARNING:Xst:1291 - FF/Latch <pixel_data_r_8> is unconnected in block <vga>.
+WARNING:Xst:1291 - FF/Latch <pixel_data_r_13> is unconnected in block <vga>.
+
+Optimizing unit <gpuchip> ...
+
+Optimizing unit <sdramCntl> ...
+
+Optimizing unit <dualport> ...
+
+Optimizing unit <sync_0> ...
+
+Optimizing unit <Blitter> ...
+
+Optimizing unit <vga> ...
+
+Optimizing unit <sync> ...
+
+Optimizing unit <fifo_cc> ...
+Loading device for application Rf_Device from file 'v50.nph' in environment C:/Xilinx.
+
+Mapping all equations...
+WARNING:Xst:1291 - FF/Latch <source_address_r_23> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <target_address_r_23> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <source_address_r_22> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <target_address_r_22> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <vga_address_23> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <vga_address_22> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <u2/u1/opBegun_r> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <u1/opBegun1> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <u1/opBegun0> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <u4/addr_r_23> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <u4/t_addr_r_23> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <u4/s_addr_r_23> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <u4/s_addr_r_22> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <u4/t_addr_r_22> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <u4/addr_r_22> is unconnected in block <gpuchip>.
+WARNING:Xst:1291 - FF/Latch <u3/blank_r_3> is unconnected in block <gpuchip>.
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block gpuchip, actual ratio is 78.
+FlipFlop drawframe has been replicated 1 time(s)
+FlipFlop sysReset has been replicated 4 time(s)
+FlipFlop u1/port_r_0 has been replicated 4 time(s)
+FlipFlop u3/cke has been replicated 1 time(s)
+FlipFlop u4/state_r_FFd2 has been replicated 1 time(s)
+FlipFlop u4/state_r_FFd9 has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : gpuchip.ngr
+Top Level Output File Name         : gpuchip
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 66
+
+Macro Statistics :
+# Registers                        : 365
+#      1-bit register              : 337
+#      12-bit register             : 2
+#      13-bit register             : 1
+#      14-bit register             : 2
+#      16-bit register             : 6
+#      2-bit register              : 3
+#      24-bit register             : 5
+#      3-bit register              : 2
+#      5-bit register              : 1
+#      6-bit register              : 1
+#      8-bit register              : 5
+# Counters                         : 1
+#      8-bit up counter            : 1
+# Multiplexers                     : 8
+#      1-bit 4-to-1 multiplexer    : 6
+#      14-bit 4-to-1 multiplexer   : 1
+#      16-bit 4-to-1 multiplexer   : 1
+# Tristates                        : 1
+#      16-bit tristate buffer      : 1
+# Adders/Subtractors               : 22
+#      10-bit subtractor           : 1
+#      13-bit adder                : 1
+#      13-bit subtractor           : 1
+#      14-bit adder                : 1
+#      14-bit subtractor           : 1
+#      16-bit adder                : 2
+#      24-bit adder                : 13
+#      8-bit adder                 : 2
+# Comparators                      : 3
+#      12-bit comparator not equal : 1
+#      8-bit comparator equal      : 2
+
+Cell Usage :
+# BELS                             : 1561
+#      GND                         : 1
+#      INV                         : 55
+#      LUT1                        : 177
+#      LUT2                        : 76
+#      LUT2_D                      : 4
+#      LUT2_L                      : 42
+#      LUT3                        : 45
+#      LUT3_D                      : 9
+#      LUT3_L                      : 56
+#      LUT4                        : 239
+#      LUT4_D                      : 40
+#      LUT4_L                      : 278
+#      MUXCY                       : 262
+#      MUXF5                       : 22
+#      VCC                         : 1
+#      XORCY                       : 254
+# FlipFlops/Latches                : 513
+#      FD                          : 66
+#      FDC                         : 93
+#      FDCE                        : 156
+#      FDCPE                       : 8
+#      FDE                         : 122
+#      FDP                         : 11
+#      FDPE                        : 18
+#      FDR                         : 5
+#      FDRE                        : 19
+#      FDRS                        : 4
+#      FDRSE                       : 5
+#      FDS                         : 5
+#      FDSE                        : 1
+# RAMS                             : 3
+#      RAMB4_S16_S16               : 3
+# Shifters                         : 1
+#      SRL16                       : 1
+# Clock Buffers                    : 3
+#      BUFG                        : 3
+# IO Buffers                       : 65
+#      IBUF                        : 15
+#      IBUFG                       : 2
+#      IOBUF                       : 16
+#      OBUF                        : 32
+# DLLs                             : 2
+#      CLKDLL                      : 2
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2s50tq144-5 
+
+ Number of Slices:                     558  out of    768    72%  
+ Number of Slice Flip Flops:           513  out of   1536    33%  
+ Number of 4 input LUTs:               967  out of   1536    62%  
+ Number of bonded IOBs:                 66  out of     96    68%  
+ Number of BRAMs:                        3  out of      8    37%  
+ Number of GCLKs:                        3  out of      4    75%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+pin_clkin                          | u2/dllint:CLK0         | 517   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 18.501ns (Maximum Frequency: 54.051MHz)
+   Minimum input arrival time before clock: 9.663ns
+   Maximum output required time after clock: 11.948ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'pin_clkin'
+  Clock period: 18.501ns (frequency: 54.051MHz)
+  Total number of paths / destination ports: 50649 / 955
+-------------------------------------------------------------------------
+Delay:               18.501ns (Levels of Logic = 8)
+  Source:            u3/fifo/level_i_4 (FF)
+  Destination:       u4/count_r_5 (FF)
+  Source Clock:      pin_clkin rising
+  Destination Clock: pin_clkin rising
+
+  Data Path: u3/fifo/level_i_4 to u4/count_r_5
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             3   1.292   1.480  u3/fifo/level_i_4 (u3/fifo/level_i_4)
+     LUT4_D:I0->O          5   0.653   1.740  u3/_n00061 (CHOICE432)
+     LUT4_L:I3->LO         1   0.653   0.000  u1/rd11_1_F (N2697)
+     MUXF5:I0->O           1   0.375   1.150  u1/rd11_1 (u1/rd11)
+     LUT4:I0->O            1   0.653   1.150  u2/u1/Ker451_SW1 (N2548)
+     LUT4:I3->O           15   0.653   2.700  u2/u1/opBegun_x1 (sdram_earlyOpBegun)
+     LUT4:I0->O            2   0.653   1.340  u4/Ker1020_SW2 (N2496)
+     LUT4:I2->O            7   0.653   1.950  u4/Ker2 (u4/N2)
+     LUT4_L:I1->LO         1   0.653   0.000  u4/_n0044<2>1 (u4/_n0044<2>)
+     FDE:D                     0.753          u4/count_r_2
+    ----------------------------------------
+    Total                     18.501ns (6.991ns logic, 11.510ns route)
+                                       (37.8% logic, 62.2% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'pin_clkin'
+  Total number of paths / destination ports: 402 / 86
+-------------------------------------------------------------------------
+Offset:              9.663ns (Levels of Logic = 3)
+  Source:            pin_load (PAD)
+  Destination:       front_buffer_r (FF)
+  Destination Clock: pin_clkin rising
+
+  Data Path: pin_load to front_buffer_r
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             3   0.924   1.480  pin_load_IBUF (pin_load_IBUF)
+     LUT3_D:I1->O         60   0.653   5.200  Ker121 (N12)
+     LUT4_L:I2->LO         1   0.653   0.000  _n0067<5>1 (_n0067<5>)
+     FD:D                      0.753          line_size_r_5
+    ----------------------------------------
+    Total                      9.663ns (2.983ns logic, 6.680ns route)
+                                       (30.9% logic, 69.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'pin_clkin'
+  Total number of paths / destination ports: 61 / 45
+-------------------------------------------------------------------------
+Offset:              11.948ns (Levels of Logic = 2)
+  Source:            u2/u1/wrTimer_r_0 (FF)
+  Destination:       pin_sData<6> (PAD)
+  Source Clock:      pin_clkin rising
+
+  Data Path: u2/u1/wrTimer_r_0 to pin_sData<6>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              3   1.292   1.480  u2/u1/wrTimer_r_0 (u2/u1/wrTimer_r_0)
+     INV:I->O             16   0.653   2.800  u2/sData_sDOut_EnableTr_INV1_INV_0 (u2/sData_sDOut_N0)
+     IOBUF:T->IO               5.723          pin_sData_15_IOBUF (pin_sData<15>)
+    ----------------------------------------
+    Total                     11.948ns (7.668ns logic, 4.280ns route)
+                                       (64.2% logic, 35.8% route)
+
+=========================================================================
+CPU : 66.18 / 71.81 s | Elapsed : 66.00 / 70.00 s
+ 
+--> 
+
+Total memory usage is 98564 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   57 (   0 filtered)
+Number of infos    :    1 (   0 filtered)
+
