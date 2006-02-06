@@ -14,6 +14,8 @@ void main()
 	set_bit(rcsta, SPEN);
 	set_bit(txsta, TXEN);
 	
+	//poll nintendo controller every 10 ms or so
+	//send results on serial port.
 	char i, input;
 	while (true)
 	{
@@ -42,11 +44,8 @@ void main()
 			clear_bit(portb, 5);
 			delay_ms(1);
 		}
-		if (input != 0b00000000)
-		{
-			txreg = input;
-		}
-		delay_ms(5);
+		txreg = input;
+		delay_ms(10);
 	}
 		
 }
