@@ -5,5 +5,5 @@ Version=1.0
 Location=iomain.OBJ
 Folder=Intermediary
 [File001]
-Location=C:\cygwin\home\Zuofu Cheng\dev\395_vgs\src\PIC16\input.HEX
+Location=C:\cygwin\home\Zuofu Cheng\dev\starcell\src\PIC16\input.HEX
 Folder=Output
