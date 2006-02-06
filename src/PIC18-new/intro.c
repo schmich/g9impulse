@@ -1,7 +1,9 @@
 #include <system.h>
 #include "intro.h"
+#include "input.h"
 #include "gpu_pic.h"
 #include "spu_pic.h"
+#include "nb_delay.h"
 
 void cls(char color)
 {
@@ -51,7 +53,7 @@ void fadeinout(void)
 }
 
 #pragma OPTIMIZE "0"
-void scene1(void)
+uint8 scene1(void)
 {
 	char i = 0;
 	char j = 0;
@@ -123,30 +125,36 @@ void scene1(void)
 
 	//fade in introduction text
 	cls(0);
-	delay_s(1);
+	if(delayS(1))
+		return true;
 	playmusic (1);
-	delay_ms(255);
-	delay_ms(255);
+	if(delayMs(500))
+		return true;
 	drawSprite(near_future);
-	delay_ms(255);
+	if(delayMs(250))
+		return true;
 	near_future.image.address = 0X00025EE0;
 	cls(0);
 	drawSprite(near_future);
-	delay_ms(255);
+	if(delayMs(250))
+		return true;
 	near_future.image.address = 0X000265C0;
 	cls(0);
 	drawSprite(near_future);
-	delay_s(2);
+	if(delayS(2))
+		return true;
 	//black screen - dramatic pause
 	cls(0);
-	delay_s(2);
+	if(delayS(2))
+		return true;
 	//draw eye open animation
 	for (i = 0; i < 5; i++)
 	{
 		drawSprite(eye_mask);
 		drawSprite(eye_anim);
 		eye_anim.image.address += 0x00000020;
-		delay_ms(100);
+		if(delayMs(100))
+			return true;
 	}
 	//draw and animate compass
 	j = 30;
@@ -154,13 +162,16 @@ void scene1(void)
 	{
 		drawSprite(compass);//1
 		compass.image.address += 0x0000002E;
-		delay_ms(j);
+		if(delayMs(j))
+			return true;
 		drawSprite(compass);//2
 		compass.image.address += 0x0000002E;
-		delay_ms(j);
+		if(delayMs(j))
+			return true;
 		drawSprite(compass);//3
 		compass.image.address -= 0x0000005C;	
-		delay_ms(j);
+		if(delayMs(j))
+			return true;
 		j+= 15;
 	}
 	j=20;
@@ -169,12 +180,15 @@ void scene1(void)
 		compass.image.address += 0x0000005C;
 		drawSprite(compass);//3
 		compass.image.address -= 0x0000002E;
-		delay_ms(j);
+		if(delayMs(j))
+			return true;
 		drawSprite(compass);//2
 		compass.image.address -= 0x0000002E;
-		delay_ms(j);
+		if(delayMs(j))
+			return true;
 		drawSprite(compass);//1
-		delay_ms(j);
+		if(delayMs(j))
+			return true;
 		j+= 15;
 	}
 	j=150;
@@ -182,13 +196,16 @@ void scene1(void)
 	{
 		drawSprite(compass);//1
 		compass.image.address += 0x0000002E;
-		delay_ms(j);
+		if(delayMs(j))
+			return true;
 		drawSprite(compass);//2
 		compass.image.address += 0x0000002E;
-		delay_ms(j);
+		if(delayMs(j))
+			return true;
 		drawSprite(compass);//3
 		compass.image.address -= 0x0000005C;	
-		delay_ms(j);
+		if(delayMs(j))
+			return true;
 		j-= 60;
 	}
 	drawSprite(lines);
@@ -199,13 +216,16 @@ void scene1(void)
 	{
 		drawSprite(compass);
 		compass.image.address += 0x0000002E;
-		delay_ms(j);
+		if(delayMs(j))
+			return true;
 		drawSprite(compass);//2
 		compass.image.address += 0x0000002E;
-		delay_ms(j);
+		if(delayMs(j))
+			return true;
 		drawSprite(compass);//3
 		compass.image.address -= 0x0000005C;	
-		delay_ms(j);
+		if(delayMs(j))
+			return true;
 		j+= 40;
 	}
 
@@ -218,13 +238,16 @@ void scene1(void)
 	
 	drawSprite(compass);
 	compass.image.address += 0x0000002E;
-	delay_ms(j);
+	if(delayMs(j))
+		return true;
 	drawSprite(compass);//2
 	compass.image.address += 0x0000002E;
-	delay_ms(j);
+	if(delayMs(j))
+		return true;
 	drawSprite(compass);//3
 	compass.image.address -= 0x0000005C;	
-	delay_ms(j);
+	if(delayMs(j))
+		return true;
 	j+= 40;
 
 	lines.image.address = 0x0002AE40;
@@ -233,21 +256,18 @@ void scene1(void)
 	drawSprite(lines);
 	drawSprite(bars);
 	
-	//last compass animation
-	//drawSprite(north);
-	//drawSprite(south);
-	//drawSprite(east);
-	//drawSprite(west);
-
 	drawSprite(compass);
 	compass.image.address += 0x0000002E;
-	delay_ms(j);
+	if(delayMs(j))
+		return true;
 	drawSprite(compass);//2
 	compass.image.address += 0x0000002E;
-	delay_ms(j);
+	if(delayMs(j))
+		return true;
 	drawSprite(compass);//3
 	compass.image.address -= 0x0000005C;	
-	delay_ms(j);
+	if(delayMs(j))
+		return true;
 	drawSprite(compass);//1
 	
 	lines.image.address = 0x0002BE80;
@@ -255,8 +275,9 @@ void scene1(void)
 	bars.image.width = 0x36;
 	drawSprite(lines);
 	drawSprite(bars);
-	delay_ms(200);
-
+	if(delayMs(200))
+		return true;
+		
 	lines.image.address = 0x0002CEC0;
 	lines.image.height = 32;
 	lines.image.width = 84;
@@ -265,7 +286,8 @@ void scene1(void)
 	bars.image.address += 0x00000960;
 	drawSprite(bars);	
 	drawSprite(lines);
-	delay_ms(50);
+	if(delayMs(50))
+		return true;
 	bars.image.address = 0x000713E0;
 	bars.image.height = 21;
 	bars.image.width = 62;
@@ -281,12 +303,14 @@ void scene1(void)
 		lines.image.address = 0x000821E0;
 		drawSprite(bars);
 		drawSprite(lines);
-		delay_ms(5);
+		if(delayMs(5))
+			return true;
 		bars.image.address = 0x000706C0;
 		lines.image.address = 0x0002CEC0;
 		drawSprite(bars);
 		drawSprite(lines);
-		delay_ms(5);			
+		if(delayMs(5))
+			return true;			
 	}	
 
 	//draw overlay
@@ -299,12 +323,14 @@ void scene1(void)
 		lines.image.address = 0x000821E0;
 		drawSprite(bars);
 		drawSprite(lines);
-		delay_ms(5);
+		if(delayMs(5))
+			return true;
 		bars.image.address = 0x000706C0;
 		lines.image.address = 0x0002CEC0;
 		drawSprite(bars);
 		drawSprite(lines);
-		delay_ms(5);			
+		if(delayMs(5))
+			return true;			
 	}		
 
 	//draw eye close animation with overlay
@@ -315,7 +341,8 @@ void scene1(void)
 		drawSprite(eye_anim);
 		drawSprite(outline);
 		eye_anim.image.address -= 0x00000020;
-		delay_ms(50);
+		if(delayMs(50))
+			return true;
 	}
 	//draw eye open with overlay
 	eye_anim.image.address = 0x00026CA0;
@@ -325,10 +352,11 @@ void scene1(void)
 		drawSprite(eye_anim);
 		drawSprite(outline);
 		eye_anim.image.address += 0x00000020;
-		delay_ms(50);
+		if(delayMs(50))
+			return true;
 	}
-
-	delay_ms(255);
+	if(delayMs(250))
+		return true;	
 	//draw rest of overlay
 	drawSprite(eye_mask);
 	outline.position.x = 24;
@@ -336,16 +364,18 @@ void scene1(void)
 	outline.image.width = 46;
 	drawSprite(outline);
 	drawSprite(compass);
-	delay_ms(200);
+	if(delayMs(200))
+			return true;
 	outline.image.address = 0x00027DD9;
 	outline.image.width = 60;
 	drawSprite(outline);
 	drawSprite(compass);
-	delay_s(2);
-	
-	return;
+	if(delayS(2))
+		return true;
+	//if no input, return falses
+	return false;
 }
-void scene2(void)
+uint8 scene2(void)
 {
 	char i = 0;
 	char j = 0;
@@ -567,11 +597,12 @@ void scene2(void)
 	drawSprite(boot4);
 	drawSprite(boot5);
 	delay_s(3);
-	return;
+	//if no input, return falses
+	return false;
 }
 
 #pragma OPTIMIZE "0"	// yea, cool, don't listen to us
-void scene3(void)
+uint8 scene3(void)
 {
 	char i = 0;
 	char j = 0;
@@ -791,10 +822,12 @@ void scene3(void)
 
 	cls(0);
 	delay_s(1);
+	//if no input, return falses
+	return false;
 }
 
 
-void scene4(void)
+uint8 scene4(void)
 {
 	char i = 0;
 	char j = 0;
@@ -899,9 +932,11 @@ void scene4(void)
 		engine.image.address -= 29;
 	}
 	delay_ms(255);
+	//if no input, return falses
+	return false;
 }
 
-void scene5(void)
+uint8 scene5(void)
 {
 	char i = 0;
 	char j = 0;
@@ -962,9 +997,11 @@ void scene5(void)
 		}
 	}
 	cls(0);
+	//if no input, return falses
+	return false;
 }
 
-void scene6(void)
+uint8 scene6(void)
 {
 	char i = 0;
 	char j = 0;
@@ -990,6 +1027,8 @@ void scene6(void)
 		reflect.image.address = 0x0E1140;
 	}
 	cls(0);
+	//if no input, return falses
+	return false;
 }
 
 void bootup(void)
