@@ -1,6 +1,7 @@
 #include <system.h>
 #include <rand.h>
 #include "intro.h"
+#include "input.h"
 #include "gpu_pic.h"
 #include "spu_pic.h"
 
@@ -33,23 +34,6 @@ enum Visibility
 
 #endif
 
-//initialize serial port for continuous receive
-void serialInit()
-{
-	set_bit(trisc, 7);
-	set_bit(trisc, 6);
-	spbrg = 80;
-	clear_bit(txsta, BRGH); 
-	clear_bit(baudcon, BRG16);
-	clear_bit(txsta, SYNC);
-	set_bit(rcsta, SPEN);
-	set_bit(txsta, TXEN);
-	set_bit(rcsta, CREN);
-	set_bit(pie1, RCIE);
-	set_bit(intcon, PEIE);
-	set_bit(intcon, GIE);
-}
-
 #if 0
 
 void putchar(char d)
@@ -69,14 +53,15 @@ char screenrand()
 #endif
 	
 //generic ISR
+
 void interrupt()
 {
-	//serial receive interrupt handler?
-	if (pir1 & 0b00100000)
-	{
-		input = rcreg;
-		newinput = 1;
-	}
+//	//serial receive interrupt handler?
+//	if (pir1 & 0b00100000)
+//	{
+//		input = rcreg;
+//		newinput = 1;
+//	}
 }
 
 void introLoop()
@@ -85,48 +70,19 @@ void introLoop()
     setDrawMode(false);
 
     delay_s(2);
-
-    if (newinput)
-    {
-        newinput = 0;
-        return;
-    }
-    scene1();
-
-    if (newinput)
-    {
-        newinput = 0;
-        return;
-    }
-    scene2();
-
-    if (newinput)
-    {
-        newinput = 0;
-        return;
-    }
-    scene3();
-
-    if (newinput)
-    {
-        newinput = 0;
-        return;
-    }
-    scene4();
-
-    if (newinput)
-    {
-        newinput = 0;
-        return;
-    }
-    scene5();
-
-    if (newinput)
-    {
-        newinput = 0;
-        return;
-    }
-    scene6();
+    //all scenes return 1 if input received during runtime, else 0
+    if (scene1())
+	    return;
+    if (scene2())
+	    return;
+    if (scene3())
+	    return;
+    if (scene4())
+	    return;
+    if (scene5())
+	    return;
+    if (scene6())
+	    return;
 }
 
 /**
