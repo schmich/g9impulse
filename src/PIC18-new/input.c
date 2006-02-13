@@ -23,5 +23,6 @@ void serialInit()
 //returns the last known status of the input device
 uint8 getInput()
 {
+	//getting around the PIC's double buffering system
 	return rcreg;
 }
