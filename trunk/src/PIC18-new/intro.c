@@ -1037,7 +1037,7 @@ void bootup(void)
 	char j = 0;
 
 	Sprite frame;
-		frame.image.address = 0x00376800;
+		frame.image.address = 0x003767C0;
 		frame.image.height = 160;
 		frame.image.width = 79;
 		frame.position.x = 40;

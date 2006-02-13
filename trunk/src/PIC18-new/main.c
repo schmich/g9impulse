@@ -54,16 +54,6 @@ char screenrand()
 	
 //generic ISR
 
-void interrupt()
-{
-//	//serial receive interrupt handler?
-//	if (pir1 & 0b00100000)
-//	{
-//		input = rcreg;
-//		newinput = 1;
-//	}
-}
-
 void introLoop()
 {
     // single-buffer mode
@@ -94,7 +84,7 @@ bool titleLoop()
     setDrawMode(false);
 
 	Sprite me;
-		me.image.address = 0x02BB000;
+		me.image.address = 0x02C43E0;
 		me.image.height = 240;
 		me.image.width = 160;
 		me.position.x = 0;
@@ -128,17 +118,14 @@ bool titleLoop()
 
 	for ( i = 0; i < 255; i++)
 	{
-		if (newinput)
+		if(getInput() & 00010000b)
 		{
-			if (input & 00010000b)
-			{
-				//seed random generator based on time player takes to hit start
-				srand(i);
-				playmusic(255);
-				delay_ms(200);
-				playmusic(2);
-				return false;
-			}
+			//seed random generator based on time player takes to hit start
+			srand(i);
+			playmusic(255);
+			delay_ms(200);
+			playmusic(2);
+			return false;
 		}
 		delay_ms(100);
 	}
@@ -1261,14 +1248,14 @@ Entity* createPlayer(Point where)
 }
 
 
-void destroyEntity(Entity* entity)
-{
-    free(entity->image);
-    free(entity);
-}
+//void destroyEntity(Entity* entity)
+//{
+//    free(entity->image);
+//    free(entity);
+//}
 
 
-#pragma OPTIMIZE "0"
+//THE REAL GAME LOOP
 void gameLoop()
 {	
     // double-buffered drawing
@@ -1282,7 +1269,7 @@ void gameLoop()
     Point start;
     start.x = 80;
     start.y = 80;
-    Entity* player = makePlayer(start);
+    Entity* player = createPlayer(start);
 
     for ( ; ; )
     {
@@ -1294,7 +1281,7 @@ void gameLoop()
 		delay_ms(20);
     }
 
-    destroyEntity(player);
+    //destroyEntity(player);
 
 #if 0
 	unsigned int line_counter = 0;

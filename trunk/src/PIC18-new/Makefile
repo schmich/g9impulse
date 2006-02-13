@@ -3,7 +3,7 @@ CC=$(SB)/boostc.pic18.exe
 CFLAGS=-O0 -W1 -t 18F4620
 LINK=$(SB)/boostlink.pic.exe
 LIBS="C:\Program Files\SourceBoost\Lib\libc.pic18.lib" "C:\Program Files\SourceBoost\Lib\rand.pic18.lib"
-LFLAGS=$(LIBS) -O1 -t 18F4620
+LFLAGS=$(LIBS) -O0 -t 18F4620
 
 intro.hex: gpu_pic.obj intro.obj main.obj spu_pic.obj input.obj nb_delay.obj nb_delay.obj input.obj
 	$(LINK) $(LFLAGS) $^ -p $(@:.hex=)

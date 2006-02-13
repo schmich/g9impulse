@@ -9,6 +9,7 @@
 #define _NB_DELAY_H
 
 uint8 delayMs(uint8 ms);
+uint8 delayMs(uint16 ms);
 uint8 delayS(uint8 s);
 
 #endif

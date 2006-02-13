@@ -44,8 +44,9 @@ void main()
 			clear_bit(portb, 5);
 			delay_ms(1);
 		}
+
 		txreg = input;
-		delay_ms(10);
+		delay_ms(20);
 	}
 		
 }
