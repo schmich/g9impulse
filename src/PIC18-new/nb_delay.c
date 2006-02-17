@@ -4,31 +4,31 @@
 #include "input.h"
 #include "nb_delay.h"
 
-uint8 delayMs(uint8 ms)
+bool delayMs(uint8 ms)
 {
 	uint8 i;
 	uint8 input;
 	for (i = 0; i < ms; i ++)
 	{
 		delay_ms(1);
-		input = getInput();
-		if (input) 
-			return input;
+		InputEvent* event = getInputEvent();
+		if (event->anyInput) 
+			return true;
 	}
 	//if no input, return false
 	return false;
 }
 
-uint8 delayMs(uint16 ms)
+bool delayMs(uint16 ms)
 {
 	uint16 i;
 	uint8 input;
 	for (i = 0; i < ms; i ++)
 	{
 		delay_ms(1);
-		input = getInput();
-		if (input) 
-			return input;
+		InputEvent* event = getInputEvent();
+		if (event->anyInput) 
+			return true;
 	}
 	//if no input, return false
 	return false;
@@ -43,9 +43,9 @@ uint8 delayS(uint8 s)
 	for (i = 0; i < ms; i ++)
 	{
 		delay_ms(1);
-		input = getInput();
-		if (input) 
-			return input;
+		InputEvent* event = getInputEvent();
+		if (event->anyInput) 
+			return true;
 	}
 	//if no input, return false
 	return false;

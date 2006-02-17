@@ -7,8 +7,6 @@
 
 #pragma CLOCK_FREQ 50000000						//required for accurate delay functionality
 
-char input;
-char newinput;
 char fb = 0;
 char playerKills = 0;
 char playerGotHit = 0;
@@ -35,7 +33,6 @@ enum Visibility
 #endif
 
 #if 0
-
 void putchar(char d)
 {
 	txreg = d;
@@ -118,7 +115,8 @@ bool titleLoop()
 
 	for ( i = 0; i < 255; i++)
 	{
-		if(getInput() & 00010000b)
+		InputEvent* event = getInputEvent();
+		if(event->startPressed)
 		{
 			//seed random generator based on time player takes to hit start
 			srand(i);
@@ -1602,7 +1600,6 @@ void main()
 	// initalize GPU ports
 	gpuInit();
 	serialInit();
-	newinput = 0;	
 	setDrawMode(false);             // single-buffer mode
 	delay_s(2);						// wait for system to boot
 	bootup();						// draw bootup logo
