@@ -8,8 +8,8 @@
 #ifndef _NB_DELAY_H
 #define _NB_DELAY_H
 
-uint8 delayMs(uint8 ms);
-uint8 delayMs(uint16 ms);
-uint8 delayS(uint8 s);
+bool delayMs(uint8 ms);
+bool delayMs(uint16 ms);
+bool delayS(uint8 s);
 
 #endif

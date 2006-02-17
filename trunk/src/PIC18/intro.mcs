@@ -46,7 +46,7 @@ SOLK=
 SuiteArgsString=
 ToolArgsString=
 [File004]
-Location=C:\cygwin\home\Zuofu Cheng\dev\395_vgs\src\PIC18\intro.HEX
+Location=C:\cygwin\home\Zuofu Cheng\dev\starcell\src\PIC18\intro.HEX
 Folder=Output
 DeviceName=
 LanguageToolSuiteID=
