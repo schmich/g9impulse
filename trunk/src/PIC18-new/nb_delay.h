@@ -5,8 +5,8 @@
 //*
 //**************************************************************
 
-#ifndef _NB_DELAY_H
-#define _NB_DELAY_H
+#ifndef NB_DELAY_H
+#define NB_DELAY_H
 
 bool delayMs(uint8 ms);
 bool delayMs(uint16 ms);

@@ -5,8 +5,8 @@
 //*
 //**************************************************************
 
-#ifndef _SPU_OPS_H
-#define _SPU_OPS_H
+#ifndef SPU_OPS_H
+#define SPU_OPS_H
 
 void playmusic (char track);
 

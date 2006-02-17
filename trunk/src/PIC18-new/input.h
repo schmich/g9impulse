@@ -3,24 +3,25 @@
 
 #include "common.h"
 
-typedef struct _InputEvent
+typedef struct _Input
 {
-	bool buttonAPressed;
-	bool buttonBPressed;
-	
-	bool startPressed;
-	bool selectPressed;
-	
-	bool upPressed;
-	bool downPressed;
-	bool leftPressed;
-	bool rightPressed;
-	
-	bool anyInput;
-} InputEvent;
+    bool buttonAPressed;
+    bool buttonBPressed;
+    
+    bool startPressed;
+    bool selectPressed;
+    
+    bool upPressed;
+    bool downPressed;
+    bool leftPressed;
+    bool rightPressed;
+    
+    bool anyInput;
+} Input;
 
 
-void serialInit();
-InputEvent* getInputEvent();
+void inputInit();
+Input* getInputEvent();
+Input* getInputStatus();
 
 #endif

@@ -27,9 +27,9 @@ typedef struct Image
 
 /*typedef struct Bitmap
 {
-	uint32  	address;
-	char		width;
-	char	  	lines;
+    uint32      address;
+    char        width;
+    char        lines;
 } Bitmap;
 */
 
@@ -41,18 +41,18 @@ typedef struct Entity
 
 typedef struct Sprite
 {
-	Image 	        image;
-	Point 	        position;
-	char			visible;
-	char  			alpha;
+    Image image;
+    Point position;
+    char  visible;
+    char  alpha;
 
-	//general purpose 8 bit parameters
-	//wastes memory but makes code cleaner
-	//would be better if this was C++ compiler :(
-	char			a;
-	char			b;
-	char			x;
-	char			y;
+    //general purpose 8 bit parameters
+    //wastes memory but makes code cleaner
+    //would be better if this was C++ compiler :(
+    char  a;
+    char  b;
+    char  x;
+    char  y;
 } Sprite;
 
 //prototypes

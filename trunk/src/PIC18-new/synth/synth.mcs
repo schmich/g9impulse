@@ -4,6 +4,22 @@ Version=1.0
 [File000]
 Location=midi.OBJ
 Folder=Intermediary
+DeviceName=
+LanguageToolSuiteID=
+LanguageToolID=
+LanguageToolLocation=
+PPAD=
+SOLK=
+SuiteArgsString=
+ToolArgsString=
 [File001]
 Location=C:\cygwin\home\Zuofu Cheng\dev\starcell\src\PIC18-new\synth\synth.HEX
 Folder=Output
+DeviceName=
+LanguageToolSuiteID=
+LanguageToolID=
+LanguageToolLocation=
+PPAD=
+SOLK=
+SuiteArgsString=
+ToolArgsString=
