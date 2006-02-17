@@ -4,12 +4,12 @@
 #include "common.h"
 
 
-uint8 scene1();
-uint8 scene2();
-uint8 scene3();
-uint8 scene4();
-uint8 scene5();
-uint8 scene6();
+bool scene1();
+bool scene2();
+bool scene3();
+bool scene4();
+bool scene5();
+bool scene6();
 void bootup();
 void cls(char);
 
