@@ -8,8 +8,11 @@
 #ifndef NB_DELAY_H
 #define NB_DELAY_H
 
+#include "common.h"
+
+void delay_s(uint8 s);
+void delay_ms(uint8 ms);
 bool delayMs(uint8 ms);
-bool delayMs(uint16 ms);
 bool delayS(uint8 s);
 
 #endif
