@@ -118,7 +118,7 @@ architecture arch of gpuChip is
 	signal idle_x, idle_r							: std_logic;
 	signal db_enable_x, db_enable_r				: std_logic;
 	signal not_fb										: std_logic;
-	--signal mp3cmd_x, mp3cmd_r						: std_logic_vector (7 downto 0);					  -- mp3 player command register
+	signal field_color_x, field_color_r			: std_logic_vector (7 downto 0);				  -- software controllable interlace field color
 
 	--internal signals
    signal sysReset 										: std_logic;  -- system reset
@@ -315,7 +315,8 @@ begin
       clk             => sdram_clk1x,   -- use the resync'ed master clock so VGA generator is in sync with SDRAM
       wr              => rdDone0,       -- write to pixel buffer when the data read from SDRAM is available
       pixel_data_in   => pixels, 		 -- pixel data from SDRAM
-      full            => full,          -- indicates when the pixel buffer is full
+		field_color		 => field_color_r, -- interlace field color  
+		full            => full,          -- indicates when the pixel buffer is full
       eof             => eof,           -- indicates when the VGA generator has finished a video frame
       r               => pin_red,       -- RGB components (output)
       g               => pin_green,
@@ -387,7 +388,6 @@ begin
 	target_address	<= target_address_r;
 	source_lines	<= source_lines_r;
 	alphaOp			<= alphaOp_r;
-	--pin_mp3_port	<= mp3_cmd_r (3 downto 0);
 	
 	front_buffer	<= front_buffer_r when db_enable_r = '1' else YES;	
 	not_fb			<= (not front_buffer_r) when db_enable_r = '1' else YES;
@@ -405,6 +405,7 @@ begin
 		alphaOp_x			<= alphaOp_r;
 		db_enable_x			<= db_enable_r;
 		front_buffer_x 	<= front_buffer_r;
+		field_color_x		<= field_color_r;
 		idle_x			 	<= idle_r;
 			
 		case state_r is
@@ -427,7 +428,7 @@ begin
 						when "1000" => alphaOp_x							 <= port_in(0);
 						when "1001" => db_enable_x 						 <= port_in(0);
 						when "1010" => front_buffer_x						 <= port_in(0);
-						--when "1111"	=> mp3_cmd_x							 <= port_in;
+						when "1011"	=> field_color_x						 <= port_in;
 						when others =>
 					end case;				
 				end if;
@@ -474,6 +475,7 @@ begin
    	
 		--reset stuff
 		if (sysReset = YES) then
+			field_color_r <= x"00";
 		   state_r <= INIT;
 		end if;
 
@@ -485,6 +487,7 @@ begin
      	alphaOp_r			<= alphaOp_x;
 	   front_buffer_r		<= front_buffer_x;
 		db_enable_r			<= db_enable_x;
+		field_color_r 		<= field_color_x;
 		idle_r		 		<= idle_x;
 	
 	  end if;
