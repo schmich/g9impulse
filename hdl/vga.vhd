@@ -20,6 +20,7 @@ package vga_pckg is
       clk             : in  std_logic;  -- master clock
       wr              : in  std_logic;  -- write-enable for pixel buffer
       pixel_data_in   : in  std_logic_vector(15 downto 0);  -- input databus to pixel buffer
+	   field_color		 : in  std_logic_vector(7 downto 0);  -- interlace field color
       full            : out std_logic;  -- pixel buffer full
       eof             : out std_logic;  -- end of vga frame
       r, g, b         : out std_logic_vector(NUM_RGB_BITS-1 downto 0);  -- R,G,B color output buses
@@ -75,7 +76,8 @@ entity vga is
     clk             : in  std_logic;    -- master clock
     wr              : in  std_logic;    -- write-enable for pixel buffer
     pixel_data_in   : in  std_logic_vector(15 downto 0);  -- input databus to pixel buffer
-    full            : out std_logic;    -- pixel buffer full
+	 field_color 	  : in std_logic_vector(7 downto 0);
+	 full            : out std_logic;    -- pixel buffer full
     eof             : out std_logic;    -- end of vga frame
     r, g, b         : out std_logic_vector(NUM_RGB_BITS-1 downto 0);  -- R,G,B color output buses
     hsync_n         : out std_logic;    -- horizontal sync pulse
@@ -322,11 +324,11 @@ begin
     -- store the pixel data from the buffer instead of shifting the pixel data
     -- if a read operation was initiated in the previous cycle.
     if rd_r = YES then
-	 	if fifo_empty = '1' then				--ERIC
-			pixel_data_x <= x"0000";			--ERIC
-		else											--ERIC
+	 	if fifo_empty = '1' then							--ERIC
+			pixel_data_x <= field_color & field_color;--ERIC
+		else														--ERIC
      		pixel_data_x <= pixel_data_out;
-	   end if;										--ERIC
+	   end if;													--ERIC
     end if;
 
     -- the current pixel is in the lower bits of the pixel data shift register
