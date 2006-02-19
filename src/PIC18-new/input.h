@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-typedef struct _Input
+typedef struct Input
 {
     bool buttonAPressed;
     bool buttonBPressed;
@@ -19,9 +19,9 @@ typedef struct _Input
     bool anyInput;
 } Input;
 
+void high_isr(void);
+void inputInit(void);
+Input* getInputEvent(void);
+Input* getInputStatus(void);
 
-void inputInit();
-Input* getInputEvent();
-Input* getInputStatus();
-
-#endif
+#endif // INPUT_H

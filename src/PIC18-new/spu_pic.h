@@ -5,9 +5,11 @@
 //*
 //**************************************************************
 
-#ifndef SPU_OPS_H
-#define SPU_OPS_H
+#ifndef SPU_PIC_H
+#define SPU_PIC_H
 
-void playmusic (char track);
+#include "common.h"
+
+void playMusic(uint8 track);
 
 #endif

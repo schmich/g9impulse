@@ -1,32 +1,58 @@
-SB=/cygdrive/c/Program\ Files/SourceBoost
-CC=$(SB)/boostc.pic18.exe
-CFLAGS=-O0 -W1 -t 18F4620
-LINK=$(SB)/boostlink.pic.exe
-LIBS="C:\Program Files\SourceBoost\Lib\libc.pic18.lib" "C:\Program Files\SourceBoost\Lib\rand.pic18.lib"
-LFLAGS=$(LIBS) -O0 -t 18F4620
+MCC_DIR=/cygdrive/c/MCC18
+MCC_WIN_DIR=c:\MCC18
+CC=$(MCC_DIR)/bin/mcc18.exe
+CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" -k -mL -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa- -D_DEBUG
+LINK=$(MCC_DIR)/bin/mplink.exe
+LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" 18f4620.lkr
+LFLAGS=$(LIBS)
 
-intro.hex: gpu_pic.obj intro.obj main.obj spu_pic.obj input.obj nb_delay.obj nb_delay.obj input.obj
-	$(LINK) $(LFLAGS) $^ -p $(@:.hex=)
+starcell.hex: gpu_pic.o intro.o main.o spu_pic.o input.o delay.o delay.o input.o entity.o player.o image.o sprite.o memory.o sralloc.o f16.o enemy.o
+	$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
+	cp $@ ../../assets
 
-gpu_pic.obj: gpu_pic.c gpu_pic.h common.h types.h
-	$(CC) $(CFLAGS) $<
+enemy.o: enemy.c enemy.h
+	$(CC) $(CFLAGS) $< -fo=$@
 
-intro.obj: intro.c gpu_pic.h spu_pic.h intro.h common.h types.h input.h nb_delay.h
-	$(CC) $(CFLAGS) $<
+f16.o: f16.c f16.h enemy.h
+	$(CC) $(CFLAGS) $< -fo=$@
 
-main.obj: main.c intro.h gpu_pic.h spu_pic.h input.h nb_delay.h
-	$(CC) $(CFLAGS) $<
+sralloc.o: sralloc.c sralloc.h
+	$(CC) $(CFLAGS) $< -fo=$@
 
-spu_pic.obj: spu_pic.c spu_pic.h
-	$(CC) $(CFLAGS) $<
+memory.o: memory.c memory.h
+	$(CC) $(CFLAGS) $< -fo=$@
 
-nb_delay.obj: nb_delay.c nb_delay.h
-	$(CC) $(CFLAGS) $<
+player.o: player.c player.h entity.h
+	$(CC) $(CFLAGS) $< -fo=$@
 
-input.obj: input.c input.h
-	$(CC) $(CFLAGS) $<
+entity.o: entity.c entity.h common.h gpu_pic.h animation.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+image.o: image.c image.h gpu_pic.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+sprite.o: sprite.c sprite.h image.h gpu_pic.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+gpu_pic.o: gpu_pic.c gpu_pic.h common.h types.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+intro.o: intro.c gpu_pic.h spu_pic.h intro.h common.h types.h input.h delay.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+main.o: main.c intro.h gpu_pic.h spu_pic.h input.h delay.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+spu_pic.o: spu_pic.c spu_pic.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+delay.o: delay.c delay.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+input.o: input.c input.h
+	$(CC) $(CFLAGS) $< -fo=$@
 
 clean:
-	rm -f *.obj *.hex *.lst *.cof *.stat *.tree *.asm *.casm
+	rm -f *.obj *.hex *.lst *.cof *.stat *.tree *.asm *.casm *.o *.map
 
 .PHONY: clean

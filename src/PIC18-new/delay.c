@@ -2,7 +2,7 @@
 
 #include <delays.h>
 #include "input.h"
-#include "nb_delay.h"
+#include "delay.h"
 
 void delay_ms(uint8 ms)
 {
