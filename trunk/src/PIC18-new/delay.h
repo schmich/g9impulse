@@ -5,8 +5,8 @@
 //*
 //**************************************************************
 
-#ifndef NB_DELAY_H
-#define NB_DELAY_H
+#ifndef DELAY_H
+#define DELAY_H
 
 #include "common.h"
 

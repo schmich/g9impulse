@@ -1,4 +1,3 @@
-#include <system.h>
 #include "input.h"
 
 #define INPUT_RIGHT_BUTTON  0
@@ -18,15 +17,23 @@ Input theEmptyInput;
 
 bool theNewInputFlag = false;
 
-void interrupt()
+#pragma code high_vector=0x08
+void interrupt_at_high_vector(void)
+{
+	_asm GOTO high_isr _endasm
+}
+#pragma code
+
+#pragma interrupt high_isr
+void high_isr(void)
 {
     char tempEvent;
     char key;
     bool pressed;
 
-    if (pir1 & 0b00100000)
+    if (PIR1 & 0b00100000)
     {
-        tempEvent = rcreg;
+        tempEvent = RCREG;
 
         key = tempEvent & INPUT_KEY_MASK;
         pressed = tempEvent & INPUT_PRESSED_EVENT_FLAG;
@@ -72,7 +79,7 @@ void interrupt()
     }
 }
 
-Input* getInputEvent()
+Input* getInputEvent(void)
 {
     if (theNewInputFlag)
     {
@@ -85,27 +92,26 @@ Input* getInputEvent()
     }
 }    
 
-Input* getInputStatus()
+Input* getInputStatus(void)
 {
     return &theInput;
 }
 
 //initialize serial port for continuous receive
-void inputInit()
+void inputInit(void)
 {
-    set_bit(trisc, 7);
-    set_bit(trisc, 6);
-    spbrg = 80;
-    clear_bit(txsta, BRGH); 
-    clear_bit(baudcon, BRG16);
-    clear_bit(txsta, SYNC);
-    set_bit(rcsta, SPEN);
-    set_bit(txsta, TXEN);
-    set_bit(rcsta, CREN);
-    //enable interrupts
-    set_bit(pie1, RCIE);
-    set_bit(intcon, PEIE);
-    set_bit(intcon, GIE);
+	TRISCbits.TRISC7 = 1;
+	TRISCbits.TRISC6 = 1;
+	SPBRG = 80;
+	TXSTAbits.BRGH = 0;
+	TXSTAbits.SYNC = 0;
+	BAUDCONbits.BRG16 = 0;
+	RCSTAbits.SPEN = 1;
+	TXSTAbits.TXEN = 1;
+	RCSTAbits.CREN = 1;
+	PIE1bits.RCIE = 1;
+	INTCONbits.PEIE = 1;
+	INTCONbits.GIE = 1;
 
     // initialize empty input to empty!
     theEmptyInput.buttonAPressed = false;
