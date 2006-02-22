@@ -17,13 +17,6 @@ Input theEmptyInput;
 
 bool theNewInputFlag = false;
 
-#pragma code high_vector=0x08
-void interrupt_at_high_vector(void)
-{
-	_asm GOTO high_isr _endasm
-}
-#pragma code
-
 #pragma interrupt high_isr
 void high_isr(void)
 {
@@ -78,6 +71,13 @@ void high_isr(void)
         theNewInputFlag = true;
     }
 }
+
+#pragma code high_vector=0x08
+void interrupt_at_high_vector(void)
+{
+	_asm GOTO high_isr _endasm
+}
+#pragma code
 
 Input* getInputEvent(void)
 {

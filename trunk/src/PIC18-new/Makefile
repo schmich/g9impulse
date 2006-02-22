@@ -1,14 +1,23 @@
 MCC_DIR=/cygdrive/c/MCC18
 MCC_WIN_DIR=c:\MCC18
 CC=$(MCC_DIR)/bin/mcc18.exe
-CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" -k -mL -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa- -D_DEBUG
+CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" -k -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa- -D_DEBUG
 LINK=$(MCC_DIR)/bin/mplink.exe
 LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" 18f4620.lkr
 LFLAGS=$(LIBS)
 
-starcell.hex: gpu_pic.o intro.o main.o spu_pic.o input.o delay.o delay.o input.o entity.o player.o image.o sprite.o memory.o sralloc.o f16.o updateable.o behavior.o background.o destroyable.o animation.o
+starcell.hex: gpu_pic.o intro.o main.o spu_pic.o input.o delay.o delay.o input.o entity.o player.o image.o sprite.o memory.o sralloc.o f16.o updateable.o behavior.o background.o destroyable.o animation.o list.o world.o bullet.o
 	$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
 	cp $@ ../../assets
+
+bullet.o: bullet.c bullet.h projectile.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+world.o: world.c world.h destroyable.h
+	$(CC) $(CFLAGS) $< -fo=$@
+    
+list.o: list.c list.h destroyable.h
+	$(CC) $(CFLAGS) $< -fo=$@
 
 animation.o: animation.c animation.h destroyable.h
 	$(CC) $(CFLAGS) $< -fo=$@
@@ -68,6 +77,6 @@ input.o: input.c input.h
 	$(CC) $(CFLAGS) $< -fo=$@
 
 clean:
-	rm -f *.obj *.hex *.lst *.cof *.stat *.tree *.asm *.casm *.o *.map
+	rm -f *.obj *.hex *.lst *.cof *.stat *.tree *.asm *.casm *.o *.map *.err
 
 .PHONY: clean

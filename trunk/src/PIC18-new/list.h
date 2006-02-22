@@ -2,20 +2,26 @@
 #define LIST_H
 
 #include "common.h"
+#include "destroyable.h"
 
-/*typedef struct Node
+typedef struct Node
 {
     void* data;
-    Node* next;
+    struct Node* next;
+    struct Node* prev;
 } Node;
 
 typedef struct List
 {
+    DESTROYABLE_BASE;
+
+    Node*  head;
+    Node*  tail;
     uint16 size;
-    uint16 capacity;
 } List;
 
-List createList();
-void appendElement(*/
+List* createList(void);
+void appendElement(List* list, void* data);
+void removeNode(List* list, Node* node);
 
 #endif // LIST_H

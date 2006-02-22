@@ -2,13 +2,14 @@
 #define BEHAVIOR_H
 
 #include "common.h"
+#include "updateable.h"
 
 typedef struct Boring
 {
     BEHAVIOR_BASE;
-    uint8 speed;
+    int8 speed;
 } Boring;
 
-Boring* createBoring(uint8 speed);
+Boring* createBoring(int8 speed);
 
 #endif // BEHAVIOR_H

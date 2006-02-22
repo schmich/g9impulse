@@ -4,9 +4,8 @@
 #include "common.h"
 #include "updateable.h"
 
-#define KILLABLE_BASE \
-    UPDATEABLE_BASE; \
-    uint8 health;
+#define KILLABLE_BASE UPDATEABLE_BASE; \
+                      uint8 health
 
 typedef struct Killable
 {

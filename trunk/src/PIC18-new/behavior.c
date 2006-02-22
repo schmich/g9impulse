@@ -1,16 +1,18 @@
-#include "boring.h"
+#include "behavior.h"
 
-static void updateBoring(Updateable* who)
+static void updateBoring(Updateable* who, World* world)
 {
-    who->position.y += who->behavior->speed;
+    Boring* behavior = (Boring*)who->behavior;
+    who->position.y += behavior->speed;
+
     if ((who->position.y + entityHeight(who)) > SCREEN_HEIGHT)
         who->position.y = SCREEN_HEIGHT - entityHeight(who);
 }
 
-Boring* createBoring(uint8 speed)
+Boring* createBoring(int8 speed)
 {
     Boring* b = new(Boring);
-    b->destroy = nullDestroy();
+    b->destroy = nullDestroy;
     b->speed = speed;
     b->update = updateBoring;
 

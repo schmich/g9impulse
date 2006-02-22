@@ -7,4 +7,6 @@
 #include "memory.h"
 #include "screen.h"
 
+#define NULL 0
+
 #endif // COMMON_H

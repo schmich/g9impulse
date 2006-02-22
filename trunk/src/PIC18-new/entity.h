@@ -5,11 +5,10 @@
 #include "animation.h"
 #include "destroyable.h"
 
-#define ENTITY_BASE \
-    DESTROYABLE_BASE; \
-    Point      position; \
-    Animation* animation; \
-    uint8      currentFrame;
+#define ENTITY_BASE DESTROYABLE_BASE; \
+                    Point      position; \
+                    Animation* animation; \
+                    uint8      currentFrame
 
 typedef struct Entity
 {
@@ -26,5 +25,7 @@ void animationIncrement(Entity* what);
 void animationDecrement(Entity* what);
 void animationBeginning(Entity* what);
 void animationEnding(Entity* what);
+
+Image* currentImage(Entity* what);
 
 #endif // ENTITY_H
