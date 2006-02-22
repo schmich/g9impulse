@@ -2,24 +2,25 @@
 #define ENTITY_H
 
 #include "common.h"
-#include "gpu_pic.h"
 #include "animation.h"
+#include "destroyable.h"
+
+#define ENTITY_BASE \
+    DESTROYABLE_BASE; \
+    Point      position; \
+    Animation* animation; \
+    uint8      currentFrame;
 
 typedef struct Entity
 {
-    //
-    // do not reorder these
-    //
-    uint8      type;
-    Point      position;
-    Animation* animation;
-    uint8      currentFrame;
+    ENTITY_BASE;
 } Entity;
 
 void drawEntity(Entity* what);
 
 uint8 entityWidth(Entity* what);
 uint8 entityHeight(Entity* what);
+Point entityCenter(Entity* what);
 
 void animationIncrement(Entity* what);
 void animationDecrement(Entity* what);

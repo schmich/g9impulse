@@ -19,7 +19,6 @@ typedef struct Input
     bool anyInput;
 } Input;
 
-void high_isr(void);
 void inputInit(void);
 Input* getInputEvent(void);
 Input* getInputStatus(void);
