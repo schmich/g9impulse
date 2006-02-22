@@ -4,8 +4,7 @@
 #include "common.h"
 #include "killable.h"
 
-#define ENEMY_BASE \
-    KILLABLE_BASE;
+#define ENEMY_BASE KILLABLE_BASE
 
 typedef struct Enemy
 {

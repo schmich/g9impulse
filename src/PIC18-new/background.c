@@ -1,6 +1,7 @@
 #include "background.h"
+#include "animation.h"
 
-static void scrollBackground(Updateable* bg)
+static void scrollBackground(Updateable* bg, World* world)
 {
     currentImage(bg)->address -= currentImage(bg)->width;
 }
@@ -13,16 +14,19 @@ static void destroyBackground(Background* bg)
 
 Background* createBackground(Image image)
 {
+    Animation* anim = createAnimation();
+
     Background* bg = new(Background);
     bg->destroy = destroyBackground;
     bg->behavior = createBehavior(scrollBackground);
     bg->position = makePoint(0, 0);
-    bg->currentFrame = 0;
 
-    Animation* a = createAnimation();
-    a->images = newArray(Image, 1);
-    a->images[0] = image;
-    a->numImages = 1;
+    anim->images = newArray(Image, 1);
+    anim->images[0] = image;
+    anim->numImages = 1;
+    bg->animation = anim;
 
-    bg->animation = a;
+    animationBeginning(bg);
+
+    return bg;
 }

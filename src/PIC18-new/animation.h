@@ -13,6 +13,6 @@ typedef struct Animation
     uint8   numImages;
 } Animation;
 
-Animation* createAnimation();
+Animation* createAnimation(void);
 
 #endif // ANIMATION_H

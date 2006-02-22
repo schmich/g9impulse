@@ -7,38 +7,36 @@
 #include "player.h"
 #include "f16.h"
 #include "behavior.h"
+#include "world.h"
 
 void playGame(void)
 {
-    Background* background = createBackground(makeImage(0x002BAD40, 0xA0, 0xF0));
+    uint8 buffer = 0;
+    Node* curr = NULL;
     Player* player = createPlayer(makePoint(80, 80));
-    F16* plane = createF16(makePoint(20, -500), 10, createBoring(2));
-    F16* plane2 = createF16(makePoint(100, -400), 10, createBoring(1));
-
-    uint8 buffer;
+    World* world = createWorld(player);
 
     setDoubleBuffer(true);
+    setFieldColor(0);
+
+    addUpdateable(world, createBackground(makeOpaqueImage(0x002BAD40, 0xA0, 0xF0)));
+    addUpdateable(world, player);
+    addUpdateable(world, createF16(makePoint(20, -500), 10, createBoring(2)));
+    addUpdateable(world, createF16(makePoint(100, -400), 10, createBoring(1)));
 
     while (player->health > 0)
     {
-        drawEntity(background);
-        drawEntity(player);
-        drawEntity(plane);
-        drawEntity(plane2);
+        for (curr = world->updateables->head; curr != NULL; curr = curr->next)
+            drawEntity(curr->data);
 
-        update(plane);
-        update(plane2);
-        update(background);
-        update(player);
+        for (curr = world->updateables->head; curr != NULL; curr = curr->next)
+            update(curr->data, world);
 
         flipBuffer(&buffer);
         delay_ms(16);
     }
 
-    destroy(plane2);
-    destroy(plane);
-    destroy(player);
-    destroy(background);
+    destroy(world);
 }
     
 void main()
@@ -49,6 +47,8 @@ void main()
     gpuInit();
     inputInit();
     delay_ms(10);               // wait for system to boot
+
+    setFieldColor(0);
 
 #ifndef _DEBUG
     showBootSplash();

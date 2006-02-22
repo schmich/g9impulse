@@ -7,7 +7,8 @@ Image* currentImage(Entity* what)
 
 void drawEntity(Entity* what)
 {
-    drawImage(currentImage(what), what->position, true);
+    Image* curr = currentImage(what);
+    drawImage(curr, what->position, curr->transparent);
 }
 
 uint8 entityWidth(Entity* what)

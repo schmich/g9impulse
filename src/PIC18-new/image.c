@@ -3,9 +3,21 @@
 Image makeImage(uint32 address, uint8 width, uint8 height)
 {
     Image image;
-    image.address = address;
-    image.width   = width;
-    image.height  = height;
+    image.address     = address;
+    image.width       = width;
+    image.height      = height;
+    image.transparent = true;
+
+    return image;
+}
+
+Image makeOpaqueImage(uint32 address, uint8 width, uint8 height)
+{
+    Image image;
+    image.address     = address;
+    image.width       = width;
+    image.height      = height;
+    image.transparent = false;
 
     return image;
 }
@@ -13,16 +25,28 @@ Image makeImage(uint32 address, uint8 width, uint8 height)
 Image* createImage(uint32 address, uint8 width, uint8 height)
 {
     Image* image = new(Image);
-    image->address = address;
-    image->width = width;
-    image->height = height;
+    image->address     = address;
+    image->width       = width;
+    image->height      = height;
+    image->transparent = true;
+
+    return image;
+}
+
+Image* createOpaqueImage(uint32 address, uint8 width, uint8 height)
+{
+    Image* image = new(Image);
+    image->address     = address;
+    image->width       = width;
+    image->height      = height;
+    image->transparent = false;
 
     return image;
 }
 
 void destroyImage(Image* image)
 {
-    free((void*)image);
+    free(image);
 }
 
 void drawImage(Image* image, Point where, bool isTransparent)

@@ -9,6 +9,7 @@ typedef struct Image
     uint32 address;
     uint8  width;
     uint8  height;
+    bool   transparent;
 } Image;
 
 typedef struct Point
@@ -19,6 +20,10 @@ typedef struct Point
 
 Image makeImage(uint32 address, uint8 width, uint8 height);
 Image* createImage(uint32 address, uint8 width, uint8 height);
+
+Image makeOpaqueImage(uint32 address, uint8 width, uint8 height);
+Image* createOpaqueImage(uint32 address, uint8 width, uint8 height);
+
 void destroyImage(Image* image);
 
 void drawImage(Image* image, Point where, bool isTransparent);

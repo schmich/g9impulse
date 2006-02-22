@@ -1,4 +1,6 @@
 #include "player.h"
+#include "input.h"
+#include "bullet.h"
 
 #define PLAYER_MAX_MOMENTUM_Y 13
 #define PLAYER_MAX_MOMENTUM_X 10
@@ -34,99 +36,99 @@ static void destroyPlayer(Player* who)
     destroyAnimation();
 }
 
-static void updatePlayer(Player* who)
+static void updatePlayer(Player* who, World* world)
 {
     Input* input = getInputStatus();
     uint8 width;
     uint8 height;
 
-    if (input->buttonBPressed)
+    if (getInputEvent()->buttonBPressed)
     {
-        //Point tip = entityCenter(player);
-        //tip.y = player->position.y;
+        Point tip = entityCenter(who);
+        tip.y = who->position.y;
 
-        //addProjectile(world, createBullet(tip, TEAM_PLAYER));
+        addProjectile(world, createBullet(tip));
     }
 
     if (input->leftPressed)
     {
-        player->position.x -= 1;
+        who->position.x -= 1;
 
-        if (--player->momentum.x < -(PLAYER_MAX_MOMENTUM_X / 2))
+        if (--who->momentum.x < -(PLAYER_MAX_MOMENTUM_X / 2))
         {
-            if (player->momentum.x < -PLAYER_MAX_MOMENTUM_X)
-                player->momentum.x = -PLAYER_MAX_MOMENTUM_X;
+            if (who->momentum.x < -PLAYER_MAX_MOMENTUM_X)
+                who->momentum.x = -PLAYER_MAX_MOMENTUM_X;
 
-            rollLeft(player);
+            rollLeft(who);
         }
     }
     else if (input->rightPressed)
     {
-        player->position.x += 1;
+        who->position.x += 1;
 
-        if (++player->momentum.x > (PLAYER_MAX_MOMENTUM_X / 2))
+        if (++who->momentum.x > (PLAYER_MAX_MOMENTUM_X / 2))
         {
-            if (player->momentum.x > PLAYER_MAX_MOMENTUM_X)
-                player->momentum.x = PLAYER_MAX_MOMENTUM_X;
+            if (who->momentum.x > PLAYER_MAX_MOMENTUM_X)
+                who->momentum.x = PLAYER_MAX_MOMENTUM_X;
 
-            rollRight(player);
+            rollRight(who);
         }
     }
     else
     {
-        if (player->momentum.x < 0)
-            ++player->momentum.x;
-        else if (player->momentum.x > 0)
-            --player->momentum.x;
+        if (who->momentum.x < 0)
+            ++who->momentum.x;
+        else if (who->momentum.x > 0)
+            --who->momentum.x;
 
-        if ((player->momentum.x > -(PLAYER_MAX_MOMENTUM_X / 2)) &&
-            (player->momentum.x < (PLAYER_MAX_MOMENTUM_X / 2)))
-            noRoll(player);
+        if ((who->momentum.x > -(PLAYER_MAX_MOMENTUM_X / 2)) &&
+            (who->momentum.x < (PLAYER_MAX_MOMENTUM_X / 2)))
+            noRoll(who);
     }
 
     if (input->upPressed)
     {
-        if (--player->momentum.y < -PLAYER_MAX_MOMENTUM_Y)
-            player->momentum.y = -PLAYER_MAX_MOMENTUM_Y;
+        if (--who->momentum.y < -PLAYER_MAX_MOMENTUM_Y)
+            who->momentum.y = -PLAYER_MAX_MOMENTUM_Y;
     }
     else if (input->downPressed)
     {
-        if (++player->momentum.y > PLAYER_MAX_MOMENTUM_Y)
-            player->momentum.y = PLAYER_MAX_MOMENTUM_Y;
+        if (++who->momentum.y > PLAYER_MAX_MOMENTUM_Y)
+            who->momentum.y = PLAYER_MAX_MOMENTUM_Y;
     }
     else
     {
-        if (player->momentum.y < 0)
-            ++player->momentum.y;
-        else if (player->momentum.y > 0)
-            --player->momentum.y;
+        if (who->momentum.y < 0)
+            ++who->momentum.y;
+        else if (who->momentum.y > 0)
+            --who->momentum.y;
     }
 
-    player->position.x += player->momentum.x / 4;
-    player->position.y += player->momentum.y / 3;
+    who->position.x += who->momentum.x / 4;
+    who->position.y += who->momentum.y / 3;
 
-    if (player->position.x < 0)
+    if (who->position.x < 0)
     {
-        player->position.x = 0;
-    }
-    else
-    {
-        width = entityWidth(player);
-
-        if ((player->position.x + width) > SCREEN_WIDTH)
-            player->position.x = SCREEN_WIDTH - width;
-    }
-
-    if (player->position.y < 25) // HACK no magic constant (height of border)
-    {
-        player->position.y = 25;
+        who->position.x = 0;
     }
     else
     {
-        height = entityHeight(player);
+        width = entityWidth(who);
 
-        if ((player->position.y + height) > (SCREEN_HEIGHT + 5))
-            player->position.y = (SCREEN_HEIGHT + 5) - height;
+        if ((who->position.x + width) > SCREEN_WIDTH)
+            who->position.x = SCREEN_WIDTH - width;
+    }
+
+    if (who->position.y < 25) // HACK no magic constant (height of border)
+    {
+        who->position.y = 25;
+    }
+    else
+    {
+        height = entityHeight(who);
+
+        if ((who->position.y + height) > (SCREEN_HEIGHT + 5))
+            who->position.y = (SCREEN_HEIGHT + 5) - height;
     }
 }
 
@@ -134,7 +136,7 @@ Player* createPlayer(Point where)
 {
     Player* player = new(Player);
     player->destroy = destroyPlayer;
-    player->update = updatePlayer;
+    player->behavior = createBehavior(updatePlayer);
     player->position = where;
 
     player->animation = playerAnimation();

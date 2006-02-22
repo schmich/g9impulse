@@ -4,10 +4,9 @@
 #include "common.h"
 
 struct Destroyable;
-typedef void (*DestroyFn)(Destroyable* what);
+typedef near rom void (*DestroyFn)(struct Destroyable*);
 
-#define DESTROYABLE_BASE \
-    DestroyFn destroy;
+#define DESTROYABLE_BASE DestroyFn destroy
 
 typedef struct Destroyable
 {
@@ -16,6 +15,6 @@ typedef struct Destroyable
 
 void destroy(Destroyable* what);
 void destroyStatic(Destroyable* what);
-Destroyable* nullDestroy();
+void nullDestroy(Destroyable* what);
 
 #endif // DESTROYABLE_H
