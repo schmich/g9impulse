@@ -6,11 +6,26 @@ LINK=$(MCC_DIR)/bin/mplink.exe
 LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" 18f4620.lkr
 LFLAGS=$(LIBS)
 
-starcell.hex: gpu_pic.o intro.o main.o spu_pic.o input.o delay.o delay.o input.o entity.o player.o image.o sprite.o memory.o sralloc.o f16.o enemy.o
+starcell.hex: gpu_pic.o intro.o main.o spu_pic.o input.o delay.o delay.o input.o entity.o player.o image.o sprite.o memory.o sralloc.o f16.o updateable.o behavior.o background.o destroyable.o animation.o
 	$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
 	cp $@ ../../assets
 
-enemy.o: enemy.c enemy.h
+animation.o: animation.c animation.h destroyable.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+destroyable.o: destroyable.c destroyable.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+background.o: background.c background.h updateable.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+behavior.o: behavior.c behavior.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+updateable.o: updateable.c updateable.h entity.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+enemy.o: enemy.c enemy.h updateable.h
 	$(CC) $(CFLAGS) $< -fo=$@
 
 f16.o: f16.c f16.h enemy.h

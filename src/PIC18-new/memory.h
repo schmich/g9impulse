@@ -3,6 +3,9 @@
 
 #include "types.h"
 
+#define new(T) ((T*)alloc(sizeof(T)))
+#define newArray(T, C) ((T*)alloc(sizeof(T) * (C)))
+
 void* alloc(uint8 size);
 void free(void* ptr);
 void memoryInit(void);

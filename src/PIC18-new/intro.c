@@ -574,20 +574,20 @@ bool showScene3(void)
     char j = 0;
     bool pressed = false;
 
-    Sprite* cannon1 = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* cannon2 = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* cannon3 = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* credit1 = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* credit2 = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* credit3 = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* credit4 = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* credit5 = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* credit6 = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* grid = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* plane_1 = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* plane_2 = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* tech_1 = (Sprite*)alloc(sizeof(Sprite));
-    Sprite* tech_2 = (Sprite*)alloc(sizeof(Sprite));
+    Sprite* cannon1 = new(Sprite);
+    Sprite* cannon2 = new(Sprite);
+    Sprite* cannon3 = new(Sprite);
+    Sprite* credit1 = new(Sprite);
+    Sprite* credit2 = new(Sprite);
+    Sprite* credit3 = new(Sprite);
+    Sprite* credit4 = new(Sprite);
+    Sprite* credit5 = new(Sprite);
+    Sprite* credit6 = new(Sprite);
+    Sprite* grid = new(Sprite);
+    Sprite* plane_1 = new(Sprite);
+    Sprite* plane_2 = new(Sprite);
+    Sprite* tech_1 = new(Sprite);
+    Sprite* tech_2 = new(Sprite);
 
     cannon1->image.address = 0x0005308A;
     cannon1->image.height = 186;

@@ -21,7 +21,6 @@ Image makeImage(uint32 address, uint8 width, uint8 height);
 Image* createImage(uint32 address, uint8 width, uint8 height);
 void destroyImage(Image* image);
 
-void drawBackground(Image* background);
 void drawImage(Image* image, Point where, bool isTransparent);
 
 Point makePoint(int16 x, int16 y);

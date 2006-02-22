@@ -20,6 +20,15 @@ uint8 entityHeight(Entity* what)
     return currentImage(what)->height;
 }
 
+Point entityCenter(Entity* what)
+{
+    Point p;
+    p.x = what->position.x + (entityWidth(what) / 2);
+    p.y = what->position.y + (entityHeight(what) / 2);
+
+    return p;
+}
+
 void animationIncrement(Entity* what)
 {
     if (++what->currentFrame > what->animation->numImages)

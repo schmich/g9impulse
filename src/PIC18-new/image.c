@@ -12,7 +12,7 @@ Image makeImage(uint32 address, uint8 width, uint8 height)
 
 Image* createImage(uint32 address, uint8 width, uint8 height)
 {
-    Image* image = (Image*)alloc(sizeof(Image));
+    Image* image = new(Image);
     image->address = address;
     image->width = width;
     image->height = height;
@@ -28,11 +28,6 @@ void destroyImage(Image* image)
 void drawImage(Image* image, Point where, bool isTransparent)
 {
     draw(image->address, image->width, image->height, where.x, where.y, isTransparent);
-}
-
-void drawBackground(Image* background)
-{
-    drawFullscreen(background->address);
 }
 
 Point makePoint(int16 x, int16 y)
