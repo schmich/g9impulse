@@ -1,39 +1,28 @@
 #include "common.h"
-#include "delay.h"
 #include "intro.h"
-#include "sprite.h"
+#include "delay.h"
 #include "input.h"
-#include "background.h"
 #include "player.h"
-#include "f16.h"
-#include "behavior.h"
 #include "world.h"
+#include "level1.h"
 
 void playGame(void)
 {
     uint8 buffer = 0;
-    Node* curr = NULL;
     Player* player = createPlayer(makePoint(80, 80));
-    World* world = createWorld(player);
+    World* world = createWorld(player, createLevel1());
 
     setDoubleBuffer(true);
     setFieldColor(0);
 
-    addUpdateable(world, createBackground(makeOpaqueImage(0x002BAD40, 0xA0, 0xF0)));
-    addUpdateable(world, player);
-    addUpdateable(world, createF16(makePoint(20, -500), 10, createBoring(2)));
-    addUpdateable(world, createF16(makePoint(100, -400), 10, createBoring(1)));
-
     while (player->health > 0)
     {
-        for (curr = world->updateables->head; curr != NULL; curr = curr->next)
-            drawEntity(curr->data);
-
-        for (curr = world->updateables->head; curr != NULL; curr = curr->next)
-            update(curr->data, world);
+        drawWorld(world);
+        updateWorld(world);
+        collideWorld(world);
 
         flipBuffer(&buffer);
-        delay_ms(16);
+        delay_ms(10);
     }
 
     destroy(world);

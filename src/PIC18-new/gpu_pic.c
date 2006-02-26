@@ -104,9 +104,9 @@ void flipBuffer(uint8* buf)
 
 void drawData(void)
 {
-    PORTA = 0b00000010;                    //initialize draw
-    PORTA = 0b00000000;                    //draw command recieved, so turn off draw bit
-    while (!(PORTD & 0b10000000))        //hang here till we recieve idle from GPU
+    PORTA = 0b00000010;           //initialize draw
+    PORTA = 0b00000000;           //draw command recieved, so turn off draw bit
+    while (!(PORTD & 0b10000000)) //hang here till we recieve idle from GPU
     {
     }
 }
@@ -129,7 +129,7 @@ void drawFullscreen(uint32 address)
     drawData();
 }
 
-void draw(uint32 address, uint8 width, uint8 height, int16 x, int16 y, bool isTransparent)
+void draw(uint32 address, uint16 width, uint16 height, int16 x, int16 y, bool isTransparent)
 {
     //
     // we are assuming a screen of 160 addresses x 240 lines
@@ -152,7 +152,8 @@ void draw(uint32 address, uint8 width, uint8 height, int16 x, int16 y, bool isTr
         if (drawWidth <= 0)
             return;
     }
-    else if (x < 0)
+
+    if (x < 0)
     {
         //
         // left clipping
@@ -174,12 +175,13 @@ void draw(uint32 address, uint8 width, uint8 height, int16 x, int16 y, bool isTr
         if (drawHeight <= 0)
             return;
     }
-    else if (y < 0)
+
+    if (y < 0)
     {
         //
         // top clipping
         //
-        readAddress += (-y * SCREEN_WIDTH);
+        readAddress += (int32)((int32)(-y) * SCREEN_WIDTH);
 
         drawHeight -= -y;
         if (drawHeight <= 0)

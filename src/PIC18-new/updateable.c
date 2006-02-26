@@ -1,8 +1,13 @@
 #include "updateable.h"
 
-void update(Updateable* who, World* world)
+uint8 update(Updateable* who, World* world)
 {
-    who->behavior->update(who, world);
+    return who->behavior->update(who, world);
+}
+
+uint8 nullUpdate(Updateable* who, World* world)
+{
+    return UPDATE_KEEP;
 }
 
 Behavior* createBehavior(UpdateFn update)
