@@ -1,39 +1,23 @@
 #include "player.h"
 #include "input.h"
 #include "bullet.h"
+#include "explosion.h"
+#include "player.anim.inl"
 
 #define PLAYER_MAX_MOMENTUM_Y 13
 #define PLAYER_MAX_MOMENTUM_X 10
 
-static Animation theAnimation;
-static bool theInitAnimation = false;
-
-static Animation* playerAnimation(void)
-{
-    if (!theInitAnimation)
-    {
-        theAnimation.numImages = 3;
-        theAnimation.images = newArray(Image, theAnimation.numImages);
-
-        theAnimation.images[0] = makeImage(0x000D7A20, 16, 28);   // centered
-        theAnimation.images[1] = makeImage(0x000D8BA0, 16, 28);   // right
-        theAnimation.images[2] = makeImage(0x000D9D20, 16, 28);   // left
-
-        theInitAnimation = true;
-    }
-
-    return &theAnimation;
-}
-
-static void destroyAnimation(void)
-{
-    destroyStatic(&theAnimation);
-    theInitAnimation = false;
-}
-
 static void destroyPlayer(Player* who)
 {
     destroyAnimation();
+}
+
+static void killPlayer(Player* who)
+{
+    Explosion* e = createExplosion(makePoint(0, 0), EXPLOSION_LARGE, 7);
+    alignCenter(e, who);
+
+    addUpdateable(world, e);
 }
 
 static uint8 updatePlayer(Player* who, World* world)
@@ -145,6 +129,7 @@ Player* createPlayer(Point where)
     player->destroy = destroyPlayer;
     player->behavior = createBehavior(updatePlayer);
     player->position = where;
+    player->kill = killPlayer;
 
     player->animation = playerAnimation();
     animationBeginning(player);

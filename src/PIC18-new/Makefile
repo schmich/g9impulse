@@ -10,16 +10,16 @@ starcell.hex: gpu_pic.o intro.o main.o spu_pic.o input.o delay.o delay.o input.o
 	$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
 	cp $@ ../../assets
 
-cloud.o: cloud.c cloud.h
+cloud.o: cloud.c cloud.h cloud.anim.inl
 	$(CC) $(CFLAGS) $< -fo=$@
 
 level.o: level.c level.h
 	$(CC) $(CFLAGS) $< -fo=$@
 
-level1.o: level1.c level1.h
+level1.o: level1.c level1.h level1.lvl.inl
 	$(CC) $(CFLAGS) $< -fo=$@
 
-plasma.o: plasma.c plasma.h projectile.h
+plasma.o: plasma.c plasma.h plasma.anim.inl projectile.h
 	$(CC) $(CFLAGS) $< -fo=$@
 
 projectile.o: projectile.c projectile.h
@@ -31,10 +31,10 @@ collision.o: collision.c collision.h
 killable.o: killable.c killable.h updateable.h
 	$(CC) $(CFLAGS) $< -fo=$@
 
-explosion.o: explosion.c explosion.h updateable.h
+explosion.o: explosion.c explosion.h explosion.anim.inl updateable.h
 	$(CC) $(CFLAGS) $< -fo=$@
 
-bullet.o: bullet.c bullet.h projectile.h
+bullet.o: bullet.c bullet.h bullet.anim.inl projectile.h
 	$(CC) $(CFLAGS) $< -fo=$@
 
 world.o: world.c world.h destroyable.h
@@ -61,7 +61,7 @@ updateable.o: updateable.c updateable.h entity.h
 enemy.o: enemy.c enemy.h updateable.h
 	$(CC) $(CFLAGS) $< -fo=$@
 
-f16.o: f16.c f16.h enemy.h
+f16.o: f16.c f16.h f16.anim.inl enemy.h
 	$(CC) $(CFLAGS) $< -fo=$@
 
 sralloc.o: sralloc.c sralloc.h
@@ -70,7 +70,7 @@ sralloc.o: sralloc.c sralloc.h
 memory.o: memory.c memory.h
 	$(CC) $(CFLAGS) $< -fo=$@
 
-player.o: player.c player.h entity.h
+player.o: player.c player.h player.anim.inl entity.h
 	$(CC) $(CFLAGS) $< -fo=$@
 
 entity.o: entity.c entity.h common.h gpu_pic.h animation.h
@@ -100,7 +100,13 @@ delay.o: delay.c delay.h
 input.o: input.c input.h
 	$(CC) $(CFLAGS) $< -fo=$@
 
+%.anim.inl: animations/%.anim
+	scripts/anim.rb $< > $@
+
+%.lvl.inl: levels/%.lvl
+	scripts/level.rb $< > $@
+
 clean:
-	rm -f *.obj *.hex *.lst *.cof *.stat *.tree *.asm *.casm *.o *.map *.err
+	rm -f *.obj *.hex *.lst *.cof *.stat *.tree *.asm *.casm *.o *.map *.err *.anim.inl *.lvl.inl
 
 .PHONY: clean

@@ -9,13 +9,12 @@
 void playGame(void)
 {
     uint8 buffer = 0;
-    Player* player = createPlayer(makePoint(80, 80));
-    World* world = createWorld(player, createLevel1());
+    World* world = createWorld(createPlayer(makePoint(80, 200)), createLevel1());
 
     setDoubleBuffer(true);
     setFieldColor(0);
 
-    while (player->health > 0)
+    while (active(world))
     {
         drawWorld(world);
         updateWorld(world);
