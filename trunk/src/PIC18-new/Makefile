@@ -6,9 +6,33 @@ LINK=$(MCC_DIR)/bin/mplink.exe
 LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" 18f4620.lkr
 LFLAGS=$(LIBS)
 
-starcell.hex: gpu_pic.o intro.o main.o spu_pic.o input.o delay.o delay.o input.o entity.o player.o image.o sprite.o memory.o sralloc.o f16.o updateable.o behavior.o background.o destroyable.o animation.o list.o world.o bullet.o
+starcell.hex: gpu_pic.o intro.o main.o spu_pic.o input.o delay.o delay.o input.o entity.o player.o image.o sprite.o memory.o sralloc.o f16.o updateable.o behavior.o background.o destroyable.o animation.o list.o world.o bullet.o explosion.o killable.o collision.o projectile.o plasma.o level1.o level.o cloud.o
 	$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
 	cp $@ ../../assets
+
+cloud.o: cloud.c cloud.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+level.o: level.c level.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+level1.o: level1.c level1.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+plasma.o: plasma.c plasma.h projectile.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+projectile.o: projectile.c projectile.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+collision.o: collision.c collision.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+killable.o: killable.c killable.h updateable.h
+	$(CC) $(CFLAGS) $< -fo=$@
+
+explosion.o: explosion.c explosion.h updateable.h
+	$(CC) $(CFLAGS) $< -fo=$@
 
 bullet.o: bullet.c bullet.h projectile.h
 	$(CC) $(CFLAGS) $< -fo=$@

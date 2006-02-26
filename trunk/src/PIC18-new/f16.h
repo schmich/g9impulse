@@ -9,6 +9,6 @@ typedef struct F16
     ENEMY_BASE;
 } F16;
 
-F16* createF16(Point where, uint8 health, Behavior* behavior);
+F16* createF16(int8 x, uint8 recess, uint8 health, Behavior* behavior);
 
 #endif // F16_H

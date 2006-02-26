@@ -1,6 +1,6 @@
 #include "image.h"
 
-Image makeImage(uint32 address, uint8 width, uint8 height)
+Image makeImage(uint32 address, uint16 width, uint16 height)
 {
     Image image;
     image.address     = address;
@@ -11,7 +11,7 @@ Image makeImage(uint32 address, uint8 width, uint8 height)
     return image;
 }
 
-Image makeOpaqueImage(uint32 address, uint8 width, uint8 height)
+Image makeOpaqueImage(uint32 address, uint16 width, uint16 height)
 {
     Image image;
     image.address     = address;
@@ -22,7 +22,7 @@ Image makeOpaqueImage(uint32 address, uint8 width, uint8 height)
     return image;
 }
 
-Image* createImage(uint32 address, uint8 width, uint8 height)
+Image* createImage(uint32 address, uint16 width, uint16 height)
 {
     Image* image = new(Image);
     image->address     = address;
@@ -33,7 +33,7 @@ Image* createImage(uint32 address, uint8 width, uint8 height)
     return image;
 }
 
-Image* createOpaqueImage(uint32 address, uint8 width, uint8 height)
+Image* createOpaqueImage(uint32 address, uint16 width, uint16 height)
 {
     Image* image = new(Image);
     image->address     = address;

@@ -12,7 +12,7 @@
 
 void gpuInit(void);
 
-void draw(uint32 address, uint8 width, uint8 height, int16 x, int16 y, bool isTransparent);
+void draw(uint32 address, uint16 width, uint16 height, int16 x, int16 y, bool isTransparent);
 void drawFullscreen(uint32 address);
 
 void load_alphaOp(bool alphaOp);

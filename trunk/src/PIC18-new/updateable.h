@@ -6,8 +6,11 @@
 #include "destroyable.h"
 #include "world.h"
 
+#define UPDATE_KEEP    0
+#define UPDATE_REMOVE  1
+
 struct Updateable;
-typedef near rom void (*UpdateFn)(struct Updateable*, World*);
+typedef near rom uint8 (*UpdateFn)(struct Updateable*, World*);
 
 #define BEHAVIOR_BASE DESTROYABLE_BASE; \
                       UpdateFn update
@@ -25,7 +28,9 @@ typedef struct Updateable
     UPDATEABLE_BASE;
 } Updateable;
 
-void update(Updateable* who, World* world);
+uint8 update(Updateable* who, World* world);
 Behavior* createBehavior(UpdateFn update);
+
+uint8 nullUpdate(Updateable* who, World* world);
 
 #endif // UPDATEABLE_H

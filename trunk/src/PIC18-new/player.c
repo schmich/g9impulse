@@ -36,7 +36,7 @@ static void destroyPlayer(Player* who)
     destroyAnimation();
 }
 
-static void updatePlayer(Player* who, World* world)
+static uint8 updatePlayer(Player* who, World* world)
 {
     Input* input = getInputStatus();
     uint8 width;
@@ -47,7 +47,12 @@ static void updatePlayer(Player* who, World* world)
         Point tip = entityCenter(who);
         tip.y = who->position.y;
 
-        addProjectile(world, createBullet(tip));
+        //
+        // HACK fudge factor, center bullet
+        //
+        tip.x--;
+
+        addPlayerProjectile(world, createBullet(tip, -7));
     }
 
     if (input->leftPressed)
@@ -130,6 +135,8 @@ static void updatePlayer(Player* who, World* world)
         if ((who->position.y + height) > (SCREEN_HEIGHT + 5))
             who->position.y = (SCREEN_HEIGHT + 5) - height;
     }
+
+    return UPDATE_KEEP;
 }
 
 Player* createPlayer(Point where)
@@ -140,7 +147,7 @@ Player* createPlayer(Point where)
     player->position = where;
 
     player->animation = playerAnimation();
-    animationBeginning((Entity*)player);
+    animationBeginning(player);
 
     player->health = 5;
     player->momentum.x = 0;
