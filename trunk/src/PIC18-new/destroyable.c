@@ -10,8 +10,3 @@ void destroy(Destroyable* what)
     what->destroy(what);
     free(what);
 }
-
-void destroyStatic(Destroyable* what)
-{
-    what->destroy(what);
-}

@@ -16,6 +16,8 @@ typedef struct World
 {
     DESTROYABLE_BASE;
 
+    bool    active;
+
     List*   updateables;
     List*   enemies;
     List*   playerProjectiles;
@@ -28,6 +30,8 @@ typedef struct World
 } World;
 
 World* createWorld(Player* player, Level* level);
+
+bool active(World* world);
 
 void drawWorld(World* world);
 void updateWorld(World* world);

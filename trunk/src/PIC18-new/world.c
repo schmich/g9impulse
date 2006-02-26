@@ -54,7 +54,14 @@ World* createWorld(Player* player, Level* level)
     w->player = player;
     w->level = level;
 
+    w->active = true;
+
     return w;
+}
+
+bool active(World* w)
+{
+    return w->active;
 }
 
 void addUpdateable(World* world, Updateable* u)
@@ -241,5 +248,15 @@ void collideWorld(World* world)
             enemy = removeEnemy(world, enemy);
         else
             enemy = enemy->next;
+    }
+
+    proj = collides(world->player, world->enemyProjectiles);
+    if (proj != NULL)
+    {
+        impact(proj->data, player, world);
+        if (damage(player, ((Projectile*)proj->data)->damage))
+            kill(player, world);
+
+        // world->active = false;
     }
 }

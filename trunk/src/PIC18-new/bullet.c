@@ -1,24 +1,7 @@
 #include "bullet.h"
 #include "behavior.h"
 #include "explosion.h"
-
-static Animation theAnimation;
-static bool theInitAnimation = false;
-
-static Animation* bulletAnimation(void)
-{
-    if (!theInitAnimation)
-    {
-        theAnimation.numImages = 1;
-        theAnimation.images = newArray(Image, theAnimation.numImages);
-
-        theAnimation.images[0] = makeImage(0x000D97B2, 2, 6);
-
-        theInitAnimation = true;
-    }
-
-    return &theAnimation;
-}
+#include "bullet.anim.inl"
 
 static void destroyBullet(Bullet* b)
 {

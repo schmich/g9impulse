@@ -1,24 +1,7 @@
 #include "plasma.h"
 #include "behavior.h"
 #include "explosion.h"
-
-static Animation theAnimation;
-static bool theInitAnimation = false;
-
-static Animation* plasmaAnimation(void)
-{
-    if (!theInitAnimation)
-    {
-        theAnimation.numImages = 1;
-        theAnimation.images = newArray(Image, theAnimation.numImages);
-
-        theAnimation.images[0] = makeImage(0x000D97BB, 4, 7);
-
-        theInitAnimation = true;
-    }
-
-    return &theAnimation;
-}
+#include "plasma.anim.inl"
 
 static void destroyPlasma(Plasma* p)
 {

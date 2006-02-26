@@ -2,31 +2,7 @@
 #include "explosion.h"
 #include "plasma.h"
 #include "behavior.h"
-
-static Animation theAnimation;
-static bool theInitAnimation = false;
-
-static Animation* f16Animation(void)
-{
-    if (!theInitAnimation)
-    {
-        theAnimation.numImages = 2;
-        theAnimation.images = newArray(Image, theAnimation.numImages);
-
-        theAnimation.images[0] = makeImage(0x000DA7D0, 15, 49);
-        theAnimation.images[1] = makeImage(0x000DAEA1, 15, 49);
-
-        theInitAnimation = true;
-    }
-
-    return &theAnimation;
-}
-
-static void destroyAnimation(void)
-{
-    destroyStatic(&theAnimation);
-    theInitAnimation = false;
-}
+#include "f16.anim.inl"
 
 static void destroyF16(F16* who)
 {
@@ -35,10 +11,10 @@ static void destroyF16(F16* who)
 
 static void killF16(F16* who, World* world)
 {
-    Explosion* ex = createExplosion(makePoint(0, 0), EXPLOSION_SMALL, 5);
-    alignCenter(ex, who);
+    Explosion* e = createExplosion(makePoint(0, 0), EXPLOSION_SMALL, 5);
+    alignCenter(e, who);
 
-    addUpdateable(world, ex);
+    addUpdateable(world, e);
 }
 
 static uint8 shootF16(F16* who, World* world)
