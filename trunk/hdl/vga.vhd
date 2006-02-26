@@ -1,3 +1,26 @@
+--ECE395 GPU:
+--VGA Driver Subunit
+--=====================================================
+--Designed by:
+--Zuofu Cheng
+--James Cavanaugh
+--Eric Sands
+--
+--of the University of Illinois at Urbana Champaign
+--under the direction of Dr. Lippold Haken
+--====================================================
+--
+--Heavily based off of HDL examples provided by XESS Corporation
+--www.xess.com
+--
+--Based in part on Doug Hodson's work which in turn
+--was based off of the XSOC from Gray Research LLC.
+--										
+--
+--release under the GNU General Public License
+--and kindly hosted by www.opencores.org
+
+
 library IEEE, unisim;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;

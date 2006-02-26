@@ -63,7 +63,10 @@ package Blitter_pckg is
 	  line_size					: in std_logic_vector(7 downto 0);
 	  alphaOp					: in std_logic;  -- if true then current operation is a blend alphaOp
 	  front_buffer				: in std_logic;  -- if false, then we are writing to back buffer
-	  blit_done					: out std_logic --line has been completely copied
+	  blit_done					: out std_logic; --line has been completely copied
+
+	  replace_color_a			: in std_logic_vector(7 downto 0);
+	  replace_color_b			: in std_logic_vector(7 downto 0)
 	  );
 	end component Blitter;
 end package Blitter_pckg;
@@ -114,7 +117,10 @@ entity Blitter is
 	  line_size					: in std_logic_vector(7 downto 0);
 	  alphaOp					: in std_logic;  -- if true then current operation is a blend alphaOp
 	  front_buffer				: in std_logic;  -- if false, then we are writing to back buffer
-	  blit_done					: out std_logic --line has been completely copied
+	  blit_done					: out std_logic; --line has been completely copied
+	  
+	  replace_color_a			: in std_logic_vector(7 downto 0);
+	  replace_color_b			: in std_logic_vector(7 downto 0)
 	  );
 end Blitter;
 
@@ -163,7 +169,7 @@ architecture Behavioral of Blitter is
 
   signal q_write : std_logic; 
   signal b_write : std_logic;
-
+  signal pixel_from_replacer_s : std_logic_vector(15 downto 0);
 
 begin
 
@@ -203,7 +209,12 @@ begin
   
   --if not doing an AlphaOp, we can directly copy pixel, wire vram input to blend result register
   
-  dIn <=  blend_data_r when alphaOp = YES else out_q;	
+  pixel_from_replacer_s (15 downto 8) <= replace_color_b when out_q(15 downto 8) = replace_color_a else out_q(15 downto 8);
+  pixel_from_replacer_s (7 downto 0) <= replace_color_b when out_q(7 downto 0) = replace_color_a else out_q(7 downto 0);
+  
+  dIn <=  blend_data_r when alphaOp = YES else pixel_from_replacer_s;	
+  
+  
   
    -- memory test controller state machine operations
   combinatorial : process(state_r, addr_r, current_line_r,
