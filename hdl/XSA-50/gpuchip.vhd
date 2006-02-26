@@ -64,7 +64,6 @@ entity gpuChip is
 		pin_load		  : in std_logic;
 		pin_start	  : in std_logic;
 		pin_done		  : out std_logic;
-		pin_flip_buffer: in std_logic;
 
 		-- vga port connections
 		pin_red     : out std_logic_vector(1 downto 0);
@@ -119,6 +118,9 @@ architecture arch of gpuChip is
 	signal db_enable_x, db_enable_r				: std_logic;
 	signal not_fb										: std_logic;
 	signal field_color_x, field_color_r			: std_logic_vector (7 downto 0);				  -- software controllable interlace field color
+	signal replace_color_a_x, replace_color_a_r	: std_logic_vector (7 downto 0);				  -- color replacement feature
+	signal replace_color_b_x, replace_color_b_r	: std_logic_vector (7 downto 0);				  -- color replacement feature
+	
 
 	--internal signals
    signal sysReset 										: std_logic;  -- system reset
@@ -357,7 +359,9 @@ begin
 	 line_size		 =>line_size,
 	 alphaOp			 =>alphaOp,
 	 blit_done		 =>blit_done,
-	 front_buffer	 =>not_fb
+	 front_buffer	 =>not_fb,
+	 replace_color_a => replace_color_a_r,
+	 replace_color_b => replace_color_b_r
 	 );
 
 --------------------------------------------------------------------------------------------------------------
@@ -407,6 +411,8 @@ begin
 		front_buffer_x 	<= front_buffer_r;
 		field_color_x		<= field_color_r;
 		idle_x			 	<= idle_r;
+		replace_color_a_x <= replace_color_a_r;
+		replace_color_b_x <= replace_color_b_r;
 			
 		case state_r is
 			when INIT =>
@@ -429,6 +435,8 @@ begin
 						when "1001" => db_enable_x 						 <= port_in(0);
 						when "1010" => front_buffer_x						 <= port_in(0);
 						when "1011"	=> field_color_x						 <= port_in;
+						when "1100" => replace_color_a_x					 <= port_in;
+						when "1101" => replace_color_b_x					 <= port_in;
 						when others =>
 					end case;				
 				end if;
@@ -456,42 +464,46 @@ begin
    -- update the SDRAM address counter
    process(sdram_clk1x)
    begin
-     if rising_edge(sdram_clk1x) then
+		if rising_edge(sdram_clk1x) then
 		
-		 --VGA Related Stuff
-		 if eof = YES then
-         drawframe <= not drawframe; 					 -- draw every other scan frame
-
-		 -- reset the address at the end of a video frame depending on which buffer is the front
-		 if (front_buffer = YES) then
-		 	vga_address <= x"000000";
-		 else
-			vga_address <= x"00E000"; 
-		 end if;
-			
-		 elsif (earlyOpBegun0 = YES) then
-		  	vga_address <= vga_address + 1;           -- go to the next address once the read of the current address has begun
-		 end if;
-   	
-		--reset stuff
-		if (sysReset = YES) then
-			field_color_r <= x"00";
-		   state_r <= INIT;
-		end if;
-
- 		state_r 				<= state_x;
-		source_address_r	<= source_address_x;
-		target_address_r 	<= target_address_x;
-		source_lines_r		<= source_lines_x;
-		line_size_r 		<= line_size_x;
-     	alphaOp_r			<= alphaOp_x;
-	   front_buffer_r		<= front_buffer_x;
-		db_enable_r			<= db_enable_x;
-		field_color_r 		<= field_color_x;
-		idle_r		 		<= idle_x;
+		--VGA Related Stuff
+			if eof = YES then
+				drawframe <= not drawframe; 					 -- draw every other scan frame
+				
+				 -- reset the address at the end of a video frame depending on which buffer is the front
+				if (front_buffer = YES) then
+					vga_address <= x"000000";
+				else
+					vga_address <= x"00E000"; 
+				end if;
+					
+			elsif (earlyOpBegun0 = YES) then
+				vga_address <= vga_address + 1;           -- go to the next address once the read of the current address has begun
+			end if;
 	
-	  end if;
-   end process;
+		
+			--reset stuff
+			if (sysReset = YES) then
+				field_color_r <= x"00";
+				replace_color_a_r <= x"00";
+				replace_color_b_r <= x"00"; 
+				state_r <= INIT;
+			end if;
+			
+			state_r 				<= state_x;
+			source_address_r	<= source_address_x;
+			target_address_r 	<= target_address_x;
+			source_lines_r		<= source_lines_x;
+			line_size_r 		<= line_size_x;
+			alphaOp_r			<= alphaOp_x;
+			front_buffer_r		<= front_buffer_x;
+			db_enable_r			<= db_enable_x;
+			field_color_r 		<= field_color_x;
+			idle_r		 		<= idle_x;
+			replace_color_a_r <= replace_color_a_x;
+			replace_color_b_r <= replace_color_b_x;			
+		end if;
+	end process;
 
 	--process reset circuitry
 	process(sdram_bufclk)
