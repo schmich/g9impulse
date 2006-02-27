@@ -120,7 +120,7 @@ architecture arch of gpuChip is
 	signal field_color_x, field_color_r			: std_logic_vector (7 downto 0);				  -- software controllable interlace field color
 	signal replace_color_a_x, replace_color_a_r	: std_logic_vector (7 downto 0);				  -- color replacement feature
 	signal replace_color_b_x, replace_color_b_r	: std_logic_vector (7 downto 0);				  -- color replacement feature
-	
+	signal drawpending_x, drawpending_r			: std_logic;
 
 	--internal signals
    signal sysReset 										: std_logic;  -- system reset
@@ -413,6 +413,7 @@ begin
 		idle_x			 	<= idle_r;
 		replace_color_a_x <= replace_color_a_r;
 		replace_color_b_x <= replace_color_b_r;
+		drawpending_x		<= drawpending_r;
 			
 		case state_r is
 			when INIT =>
@@ -442,10 +443,15 @@ begin
 				end if;
 		
 				if (pin_start = YES) then
+					drawpending_x <= YES;
 					idle_x <= NO;
+				end if;
+				
+				if (drawpending_r = YES and drawframe = NO) then
+					drawpending_x <= NO;
 					state_x <= DRAW;
 				end if;
-
+				
 			when DRAW =>
 			   blit_begin <= YES;
 				if (blit_done = YES) then
@@ -502,6 +508,7 @@ begin
 			idle_r		 		<= idle_x;
 			replace_color_a_r <= replace_color_a_x;
 			replace_color_b_r <= replace_color_b_x;			
+			drawpending_r		<= drawpending_x;
 		end if;
 	end process;
 
