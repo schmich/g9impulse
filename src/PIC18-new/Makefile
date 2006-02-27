@@ -2,17 +2,17 @@ OUT=starcell.hex
 MCC_DIR=/cygdrive/c/MCC18
 MCC_WIN_DIR=c:\MCC18
 CC=$(MCC_DIR)/bin/mcc18.exe
-CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" /i.. /iapi /ienemies /iprojectiles /ibehaviors /ilevels -k -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" /i.. /isdk /ienemies /iprojectiles /ibehaviors /ilevels -k -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
 LINK=$(MCC_DIR)/bin/mplink.exe
 LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" 18f4620.lkr
 LFLAGS=$(LIBS)
 
 DEPC=gcc
-DEPFLAGS=-MM -MG -I$(MCC_DIR)/h -Iapi -Ienemies -Iprojectiles -Ibehaviors -Ilevels -D__18F4620
+DEPFLAGS=-MM -MG -I$(MCC_DIR)/h -Isdk -Ienemies -Iprojectiles -Ibehaviors -Ilevels -D__18F4620
 
 SRCS=$(shell find . -iname '*.c')
 OBJS0=$(SRCS:.c=.o)
-OBJS1=$(patsubst ./api/%.o,./%.o,$(OBJS0))
+OBJS1=$(patsubst ./sdk/%.o,./%.o,$(OBJS0))
 OBJS2=$(patsubst ./enemies/%.o,./%.o,$(OBJS1))
 OBJS3=$(patsubst ./projectiles/%.o,./%.o,$(OBJS2))
 OBJS4=$(patsubst ./behaviors/%.o,./%.o,$(OBJS3))
@@ -50,7 +50,7 @@ $(OUT): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) $< -fo=$@
 
-%.o: api/%.c
+%.o: sdk/%.c
 	$(CC) $(CFLAGS) $< -fo=$@
 
 %.o: enemies/%.c
