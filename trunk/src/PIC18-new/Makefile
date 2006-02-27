@@ -2,16 +2,21 @@ OUT=starcell.hex
 MCC_DIR=/cygdrive/c/MCC18
 MCC_WIN_DIR=c:\MCC18
 CC=$(MCC_DIR)/bin/mcc18.exe
-CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" -k -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" /i.. /iapi /ienemies /iprojectiles /ibehaviors /ilevels -k -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
 LINK=$(MCC_DIR)/bin/mplink.exe
 LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" 18f4620.lkr
 LFLAGS=$(LIBS)
 
 DEPC=gcc
-DEPFLAGS=-MM -MG -I$(MCC_DIR)/h -D__18F4620
+DEPFLAGS=-MM -MG -I$(MCC_DIR)/h -Iapi -Ienemies -Iprojectiles -Ibehaviors -Ilevels -D__18F4620
 
-SRCS=$(shell find . -maxdepth 1 -iname '*.c')
-OBJS=$(SRCS:.c=.o)
+SRCS=$(shell find . -iname '*.c')
+OBJS0=$(SRCS:.c=.o)
+OBJS1=$(patsubst ./api/%.o,./%.o,$(OBJS0))
+OBJS2=$(patsubst ./enemies/%.o,./%.o,$(OBJS1))
+OBJS3=$(patsubst ./projectiles/%.o,./%.o,$(OBJS2))
+OBJS4=$(patsubst ./behaviors/%.o,./%.o,$(OBJS3))
+OBJS=$(patsubst ./levels/%.o,./%.o,$(OBJS4))
 DEPFILE=.deps
 
 DEBUG=false
@@ -33,32 +38,37 @@ all: $(DEPFILE) $(OUT)
 release: all
 
 $(OUT): $(OBJS)
-	@echo -n "Linking $(OUT)..."
-	@$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
-	@cp $@ ../../assets
-	@echo "done"
+	$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
+	cp $@ ../../assets
 
-%.anim.inl: animations/%.anim scripts/anim.rb
-	@echo -n "Generating animation $(patsubst animations/%,%,$<)..."
-	@scripts/anim.rb $< > $@
-	@echo "done"
+%.anim.inl: animations/%.anim
+	scripts/anim.rb $< > $@
 
-%.lvl.inl: levels/%.lvl scripts/level.rb
-	@echo -n "Generating level $(patsubst levels/%,%,$<)..."
-	@scripts/level.rb $< > $@
-	@echo "done"
+%.lvl.inl: levels/%.lvl
+	scripts/level.rb $< > $@
 
 %.o: %.c
-	@echo -n "Compiling $<..."
-	@$(CC) $(CFLAGS) $< -fo=$@
-	@echo "done"
+	$(CC) $(CFLAGS) $< -fo=$@
+
+%.o: api/%.c
+	$(CC) $(CFLAGS) $< -fo=$@
+
+%.o: enemies/%.c
+	$(CC) $(CFLAGS) $< -fo=$@
+
+%.o: projectiles/%.c
+	$(CC) $(CFLAGS) $< -fo=$@
+
+%.o: behaviors/%.c
+	$(CC) $(CFLAGS) $< -fo=$@
+
+%.o: levels/%.c
+	$(CC) $(CFLAGS) $< -fo=$@
 
 -include $(DEPFILE)
 
 $(DEPFILE):
-	@echo -n "Generating dependencies..."
-	@$(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE)
-	@echo "done"
+	$(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE)
 
 clean:
 	rm -f *.obj *.hex *.lst *.cof *.stat *.tree *.asm *.casm *.o *.map *.err *.anim.inl *.lvl.inl

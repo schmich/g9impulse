@@ -1,0 +1,17 @@
+[fireball]
+0x000DBBAC      2       6       -- directly down
+--0x000DBBA9      3       5
+--0x000DBBA6      3       5
+--0x000DBC43      3       4
+--0x000DBA60      3       3       -- directly left
+--0x000DB7E3      3       5
+--0x000DB7E6      3       5
+--0x000DB7E9      3       5
+--0x000DB74C      2       6       -- directly up
+--0x000DB7EE      2       5
+--0x000DB7F0      3       5
+--0x000DB7F3      3       5
+--0x000DBA76      4       3       -- directly right
+--0x000DBC53      3       4
+--0x000DBB10      3       6
+--0x000DBB0E      2       6

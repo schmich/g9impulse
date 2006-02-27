@@ -1,5 +1,5 @@
 #include "cloud.h"
-#include "behavior.h"
+#include "boring.h"
 #include "cloud.anim.inl"
 
 static void destroyCloud(Cloud* c)
