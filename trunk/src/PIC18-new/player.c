@@ -2,6 +2,7 @@
 #include "input.h"
 #include "bullet.h"
 #include "explosion.h"
+#include "world.h"
 #include "player.anim.inl"
 
 #define PLAYER_MAX_MOMENTUM_Y 13
@@ -9,10 +10,10 @@
 
 static void destroyPlayer(Player* who)
 {
-    destroyAnimation();
+    destroy(who->behavior);
 }
 
-static void killPlayer(Player* who)
+static void killPlayer(Player* who, World* world)
 {
     Explosion* e = createExplosion(makePoint(0, 0), EXPLOSION_LARGE, 7);
     alignCenter(e, who);
@@ -134,7 +135,7 @@ Player* createPlayer(Point where)
     player->animation = playerAnimation();
     animationBeginning(player);
 
-    player->health = 5;
+    player->health = 2;
     player->momentum.x = 0;
     player->momentum.y = 0;
     player->heat = 0;

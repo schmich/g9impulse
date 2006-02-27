@@ -29,7 +29,7 @@ static void spawn(World* w, uint16 time)
 puts """
 static Level theLevel =
 {
-    NULL, spawn, 0,
+    NULL, NULL, spawn, 0,
     {
         #{timings.join(",\n        ")},
         0
@@ -49,11 +49,17 @@ def writeInit(name, background)
     puts """
 static bool theLevelInit = false;
 
+static void destroyLevel(Level* level)
+{
+    destroy(level->background);
+}
+
 Level* create#{upname}(void)
 {
     if (!theLevelInit)
     {
         theLevel.background = createBackground(makeOpaqueImage(#{background}, 0xA0, 0xF0));
+        theLevel.destroy = destroyLevel;
         theLevelInit = true;
     }
 

@@ -14,6 +14,7 @@ typedef struct Destroyable
 } Destroyable;
 
 void destroy(Destroyable* what);
+void destroyStatic(Destroyable* what);
 void nullDestroy(Destroyable* what);
 
 #endif // DESTROYABLE_H
