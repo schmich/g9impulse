@@ -1,5 +1,5 @@
 #include "explosion.h"
-#include "behavior.h"
+#include "animator.h"
 #include "explosion.anim.inl"
 
 static void destroyExplosion(Explosion* e)

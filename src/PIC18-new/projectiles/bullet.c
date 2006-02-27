@@ -1,5 +1,5 @@
 #include "bullet.h"
-#include "behavior.h"
+#include "boring.h"
 #include "explosion.h"
 #include "bullet.anim.inl"
 

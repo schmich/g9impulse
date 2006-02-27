@@ -54,16 +54,16 @@ File.open(filename) { |file|
     lineNum = 1
     file.each_line { |line|
         case line
+            when /^\-\-/,/^\s*$/
             when /\s*\[([A-Za-z][\w ]*)\]\s*/
                 animations << [name, images] if not name.nil?
                 name = $1
                 images = []
-            when /\s*(0[xX][0-9A-Fa-f]+|\d+)\s+(0[xX][0-9A-Fa-f]+|\d+)\s+(0[xX][0-9A-Fa-f]+|\d+)\s*/
+            when /\s*(0[xX][0-9A-Fa-f]+|\d+)\s+(0[xX][0-9A-Fa-f]+|\d+)\s+(0[xX][0-9A-Fa-f]+|\d+)(\-\-.*)?/
                 addr = $1
                 width = $2
                 height = $3
                 images << [addr, width, height]
-            when /^#/,/^\s*$/
             when /.*/
                 puts "Invalid syntax, line #{lineNum}"
                 exit(-1)
