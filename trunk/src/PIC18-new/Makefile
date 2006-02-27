@@ -1,23 +1,29 @@
-OUT=starcell.hex
+BINARY=starcell.hex
+
 MCC_DIR=/cygdrive/c/MCC18
 MCC_WIN_DIR=c:\MCC18
+
+DIRS=$(shell find -E . -type d -maxdepth 1 -iregex '(\./[^\.].*)|(^\.)')
+MCC_INC=$(patsubst %,/i%,$(DIRS))
+GCC_INC=$(patsubst %,-I%,$(DIRS))
+
 CC=$(MCC_DIR)/bin/mcc18.exe
-CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" /i.. /isdk /ienemies /iprojectiles /ibehaviors /ilevels -k -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" $(MCC_INC) -k -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
 LINK=$(MCC_DIR)/bin/mplink.exe
 LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" 18f4620.lkr
 LFLAGS=$(LIBS)
 
 DEPC=gcc
-DEPFLAGS=-MM -MG -I$(MCC_DIR)/h -Isdk -Ienemies -Iprojectiles -Ibehaviors -Ilevels -D__18F4620
+DEPFLAGS=-MM -MG -I$(MCC_DIR)/h $(GCC_INC) -D__18F4620
 
 SRCS=$(shell find . -iname '*.c')
-OBJS0=$(SRCS:.c=.o)
-OBJS1=$(patsubst ./sdk/%.o,./%.o,$(OBJS0))
-OBJS2=$(patsubst ./enemies/%.o,./%.o,$(OBJS1))
-OBJS3=$(patsubst ./projectiles/%.o,./%.o,$(OBJS2))
-OBJS4=$(patsubst ./behaviors/%.o,./%.o,$(OBJS3))
-OBJS=$(patsubst ./levels/%.o,./%.o,$(OBJS4))
-DEPFILE=.deps
+FLAT_SRCS=$(shell find . -iname '*.c' | ruby -p -e '$$_ = $$_[/[^\/]+\.c$$/] + "\n"')
+OBJS=$(patsubst %,$(BUILD_DIR)/%,$(FLAT_SRCS:.c=.o))
+
+BUILD_DIR=.build
+DEPFILE=$(BUILD_DIR)/deps
+OUT=$(BUILD_DIR)/$(BINARY)
 
 DEBUG=false
 
@@ -37,6 +43,9 @@ all: $(DEPFILE) $(OUT)
 
 release: all
 
+test:
+	@echo $(OBJS)
+
 $(OUT): $(OBJS)
 	$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
 	cp $@ ../../assets
@@ -47,31 +56,22 @@ $(OUT): $(OBJS)
 %.lvl.inl: levels/%.lvl
 	scripts/level.rb $< > $@
 
-%.o: %.c
-	$(CC) $(CFLAGS) $< -fo=$@
+$(BUILD_DIR)/%.o: $(shell find . -iname '%.c')
+	$(CC) $(CFLAGS) $(shell find . -iname $(shell basename $@ .o).c) -fo=$@
 
-%.o: sdk/%.c
-	$(CC) $(CFLAGS) $< -fo=$@
+ifeq '' '$(findstring clean,$(MAKECMDGOALS))'
+    -include $(DEPFILE)
+endif
 
-%.o: enemies/%.c
-	$(CC) $(CFLAGS) $< -fo=$@
-
-%.o: projectiles/%.c
-	$(CC) $(CFLAGS) $< -fo=$@
-
-%.o: behaviors/%.c
-	$(CC) $(CFLAGS) $< -fo=$@
-
-%.o: levels/%.c
-	$(CC) $(CFLAGS) $< -fo=$@
-
--include $(DEPFILE)
-
-$(DEPFILE):
+$(DEPFILE): $(BUILD_DIR)
 	$(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE)
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
 
 clean:
 	rm -f *.obj *.hex *.lst *.cof *.stat *.tree *.asm *.casm *.o *.map *.err *.anim.inl *.lvl.inl
+	rm -rf .build
 
 depclean:
 	rm -f $(DEPFILE)
