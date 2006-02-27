@@ -18,3 +18,8 @@ bool damage(Killable* who, uint8 damage)
         return false;
     }
 }
+
+bool dead(Killable* who)
+{
+    return who->health == 0;
+}

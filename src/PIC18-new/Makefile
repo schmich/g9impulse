@@ -1,112 +1,78 @@
+OUT=starcell.hex
 MCC_DIR=/cygdrive/c/MCC18
 MCC_WIN_DIR=c:\MCC18
 CC=$(MCC_DIR)/bin/mcc18.exe
-CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" -k -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa- -D_DEBUG
+CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" -k -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
 LINK=$(MCC_DIR)/bin/mplink.exe
 LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" 18f4620.lkr
 LFLAGS=$(LIBS)
 
-starcell.hex: gpu_pic.o intro.o main.o spu_pic.o input.o delay.o delay.o input.o entity.o player.o image.o sprite.o memory.o sralloc.o f16.o updateable.o behavior.o background.o destroyable.o animation.o list.o world.o bullet.o explosion.o killable.o collision.o projectile.o plasma.o level1.o level.o cloud.o
-	$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
-	cp $@ ../../assets
+DEPC=gcc
+DEPFLAGS=-MM -MG -I$(MCC_DIR)/h -D__18F4620
 
-cloud.o: cloud.c cloud.h cloud.anim.inl
-	$(CC) $(CFLAGS) $< -fo=$@
+SRCS=$(shell find . -maxdepth 1 -iname '*.c')
+OBJS=$(SRCS:.c=.o)
+DEPFILE=.deps
 
-level.o: level.c level.h
-	$(CC) $(CFLAGS) $< -fo=$@
+DEBUG=false
 
-level1.o: level1.c level1.h level1.lvl.inl
-	$(CC) $(CFLAGS) $< -fo=$@
+ifeq ($(MAKECMDGOALS),)
+	DEBUG=true
+endif
 
-plasma.o: plasma.c plasma.h plasma.anim.inl projectile.h
-	$(CC) $(CFLAGS) $< -fo=$@
+ifeq ($(MAKECMDGOALS),all)
+	DEBUG=true
+endif
 
-projectile.o: projectile.c projectile.h
-	$(CC) $(CFLAGS) $< -fo=$@
+ifeq ($(DEBUG),true)
+	CFLAGS += -D_DEBUG
+endif
 
-collision.o: collision.c collision.h
-	$(CC) $(CFLAGS) $< -fo=$@
+all: $(DEPFILE) $(OUT)
 
-killable.o: killable.c killable.h updateable.h
-	$(CC) $(CFLAGS) $< -fo=$@
+release: all
 
-explosion.o: explosion.c explosion.h explosion.anim.inl updateable.h
-	$(CC) $(CFLAGS) $< -fo=$@
+$(OUT): $(OBJS)
+	@echo -n "Linking $(OUT)..."
+	@$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
+	@cp $@ ../../assets
+	@echo "done"
 
-bullet.o: bullet.c bullet.h bullet.anim.inl projectile.h
-	$(CC) $(CFLAGS) $< -fo=$@
+%.anim.inl: animations/%.anim scripts/anim.rb
+	@echo -n "Generating animation $(patsubst animations/%,%,$<)..."
+	@scripts/anim.rb $< > $@
+	@echo "done"
 
-world.o: world.c world.h destroyable.h
-	$(CC) $(CFLAGS) $< -fo=$@
-    
-list.o: list.c list.h destroyable.h
-	$(CC) $(CFLAGS) $< -fo=$@
+%.lvl.inl: levels/%.lvl scripts.level.rb
+	@echo -n "Generating level $(patsubst levels/%,%,$<)..."
+	@scripts/level.rb $< > $@
+	@echo "done"
 
-animation.o: animation.c animation.h destroyable.h
-	$(CC) $(CFLAGS) $< -fo=$@
+%.o: %.c
+	@echo -n "Compiling $<..."
+	@$(CC) $(CFLAGS) $< -fo=$@
+	@echo "done"
 
-destroyable.o: destroyable.c destroyable.h
-	$(CC) $(CFLAGS) $< -fo=$@
+-include $(DEPFILE)
 
-background.o: background.c background.h updateable.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-behavior.o: behavior.c behavior.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-updateable.o: updateable.c updateable.h entity.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-enemy.o: enemy.c enemy.h updateable.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-f16.o: f16.c f16.h f16.anim.inl enemy.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-sralloc.o: sralloc.c sralloc.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-memory.o: memory.c memory.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-player.o: player.c player.h player.anim.inl entity.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-entity.o: entity.c entity.h common.h gpu_pic.h animation.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-image.o: image.c image.h gpu_pic.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-sprite.o: sprite.c sprite.h image.h gpu_pic.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-gpu_pic.o: gpu_pic.c gpu_pic.h common.h types.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-intro.o: intro.c gpu_pic.h spu_pic.h intro.h common.h types.h input.h delay.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-main.o: main.c intro.h gpu_pic.h spu_pic.h input.h delay.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-spu_pic.o: spu_pic.c spu_pic.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-delay.o: delay.c delay.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-input.o: input.c input.h
-	$(CC) $(CFLAGS) $< -fo=$@
-
-%.anim.inl: animations/%.anim
-	scripts/anim.rb $< > $@
-
-%.lvl.inl: levels/%.lvl
-	scripts/level.rb $< > $@
+$(DEPFILE):
+	@echo -n "Generating dependencies..."
+	@$(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE)
+	@echo "done"
 
 clean:
 	rm -f *.obj *.hex *.lst *.cof *.stat *.tree *.asm *.casm *.o *.map *.err *.anim.inl *.lvl.inl
 
-.PHONY: clean
+depclean:
+	rm -f $(DEPFILE)
+
+realclean: clean depclean
+superclean: realclean
+ultraclean: realclean
+megaclean: realclean
+uberclean: realclean
+crazyclean: realclean
+
+.PHONY: all release clean depclean realclean \
+	superclean ultraclean megaclean \
+	uberclean crazyclean

@@ -18,5 +18,6 @@ typedef struct Killable
 
 void kill(Killable* who, World* world);
 bool damage(Killable* who, uint8 damage);
+bool dead(Killable* who);
 
 #endif // KILLABLE_H

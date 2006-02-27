@@ -6,6 +6,7 @@
 #include "background.h"
 #include "collision.h"
 #include "level.h"
+#include "artifact.h"
 
 static void destroyWorld(World* w)
 {
@@ -29,14 +30,19 @@ static void destroyWorld(World* w)
     for_each (curr, w->underlays)
         destroy(curr->data);
 
+    for_each (curr, w->artifacts)
+        destroy(curr->data);
+
     destroy(w->updateables);
     destroy(w->enemies);
     destroy(w->playerProjectiles);
     destroy(w->enemyProjectiles);
     destroy(w->overlays);
     destroy(w->underlays);
+    destroy(w->artifacts);
 
     destroy(w->player);
+    destroyStatic(w->level);
 }
 
 World* createWorld(Player* player, Level* level)
@@ -50,6 +56,7 @@ World* createWorld(Player* player, Level* level)
     w->enemyProjectiles = createList();
     w->overlays = createList();
     w->underlays = createList();
+    w->artifacts = createList();
 
     w->player = player;
     w->level = level;
@@ -94,6 +101,11 @@ void addUnderlay(World* world, Updateable* u)
     appendElement(world->underlays, u);
 }
 
+void addArtifact(World* world, Artifact* a)
+{
+    appendElement(world->artifacts, a);
+}
+
 Node* removeUpdateable(World* world, Node* u)
 {
     destroy(u->data);
@@ -130,6 +142,12 @@ Node* removeUnderlay(World* world, Node* u)
     return removeNode(world->underlays, u);
 }
 
+Node* removeArtifact(World* world, Node* a)
+{
+    destroy(a->data);
+    return removeNode(world->artifacts, a);
+}
+
 void drawWorld(World* world)
 {
     Node* curr;
@@ -142,7 +160,8 @@ void drawWorld(World* world)
     for_each (curr, world->enemies)
         drawEntity(curr->data);
 
-    drawEntity(world->player);
+    if (!dead(world->player))
+        drawEntity(world->player);
 
     for_each (curr, world->playerProjectiles)
         drawEntity(curr->data);
@@ -161,7 +180,9 @@ void updateWorld(World* world)
 {
     Node* curr;
 
-    update(world->player, world);
+    if (!dead(world->player))
+        update(world->player, world);
+
     update(world->level->background, world);
     updateLevel(world->level, world);
     
@@ -218,12 +239,16 @@ void updateWorld(World* world)
         else
             curr = curr->next;
     }
+
+    if (dead(world->player) && (world->updateables->head == NULL))
+        world->active = false;
 }
 
 void collideWorld(World* world)
 {
     Node* proj;
     Node* enemy;
+    Node* artifact;
     bool killed;
     
     enemy = world->enemies->head;
@@ -250,13 +275,24 @@ void collideWorld(World* world)
             enemy = enemy->next;
     }
 
-    proj = collides(world->player, world->enemyProjectiles);
-    if (proj != NULL)
+    if (!dead(world->player))
     {
-        impact(proj->data, player, world);
-        if (damage(player, ((Projectile*)proj->data)->damage))
-            kill(player, world);
+        proj = collides(world->player, world->enemyProjectiles);
+        if (proj != NULL)
+        {
+            impact(proj->data, world->player, world);
 
-        // world->active = false;
+            if (damage(world->player, ((Projectile*)proj->data)->damage))
+                kill(world->player, world);
+
+            removeEnemyProjectile(world, proj);
+        }
+
+        artifact = collides(world->player, world->artifacts);
+        if (artifact != NULL)
+        {
+            affect(artifact->data, world->player, world);
+            removeArtifact(world, artifact);
+        }
     }
 }

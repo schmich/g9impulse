@@ -14,6 +14,8 @@ void playGame(void)
     setDoubleBuffer(true);
     setFieldColor(0);
 
+    flipBuffer(&buffer);
+
     while (active(world))
     {
         drawWorld(world);

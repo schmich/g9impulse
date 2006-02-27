@@ -7,6 +7,17 @@ void nullDestroy(Destroyable* what)
 
 void destroy(Destroyable* what)
 {
+    if (what == NULL)
+        return;
+
     what->destroy(what);
     free(what);
+}
+
+void destroyStatic(Destroyable* what)
+{
+    if (what == NULL)
+        return;
+
+    what->destroy(what);
 }

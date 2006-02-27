@@ -2,6 +2,7 @@
 #define LEVEL_H
 
 #include "common.h"
+#include "destroyable.h"
 #include "background.h"
 #include "world.h"
 
@@ -9,6 +10,7 @@ typedef near rom void (*SpawnFn)(World*, uint16);
 
 typedef struct Level
 {
+    DESTROYABLE_BASE;
     Background*      background;
     SpawnFn          spawn;
     uint16           currentEvent;

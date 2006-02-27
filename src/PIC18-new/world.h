@@ -9,6 +9,7 @@ typedef struct Player Player;
 typedef struct Background Background;
 typedef struct Updateable Updateable;
 typedef struct Projectile Projectile;
+typedef struct Artifact Artifact;
 typedef struct Enemy Enemy;
 typedef struct Level Level;
 
@@ -24,6 +25,7 @@ typedef struct World
     List*   enemyProjectiles;
     List*   overlays;
     List*   underlays;
+    List*   artifacts;
 
     Player* player;
     Level*  level;
@@ -43,6 +45,7 @@ void addEnemyProjectile(World* world, Projectile* p);
 void addEnemy(World* world, Enemy* e);
 void addOverlay(World* world, Updateable* u);
 void addUnderlay(World* world, Updateable* u);
+void addArtifact(World* world, Artifact* a);
 
 Node* removeUpdateable(World* world, Node* u);
 Node* removePlayerProjectile(World* world, Node* p);
@@ -50,5 +53,6 @@ Node* removeEnemyProjectile(World* world, Node* p);
 Node* removeEnemy(World* world, Node* e);
 Node* removeOverlay(World* world, Node* u);
 Node* removeUnderlay(World* world, Node* u);
+Node* removeArtifact(World* world, Node* a);
 
 #endif // WORLD_H

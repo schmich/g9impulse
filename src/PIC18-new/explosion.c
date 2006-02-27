@@ -23,6 +23,14 @@ Explosion* createExplosion(Point where, uint8 size, uint8 frames)
         case EXPLOSION_SMALL:
             e->animation = smallAnimation();
             break;
+
+        case EXPLOSION_MEDIUM:
+            e->animation = mediumAnimation();
+            break;
+
+        case EXPLOSION_LARGE:
+            e->animation = largeAnimation();
+            break;
     }
 
     animationBeginning(e);
