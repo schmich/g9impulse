@@ -43,7 +43,7 @@ $(OUT): $(OBJS)
 	@scripts/anim.rb $< > $@
 	@echo "done"
 
-%.lvl.inl: levels/%.lvl scripts.level.rb
+%.lvl.inl: levels/%.lvl scripts/level.rb
 	@echo -n "Generating level $(patsubst levels/%,%,$<)..."
 	@scripts/level.rb $< > $@
 	@echo "done"
