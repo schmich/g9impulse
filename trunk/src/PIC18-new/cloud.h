@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "updateable.h"
+#include "fraction.h"
 
 #define CLOUD_TINY   0
 #define CLOUD_SMALL  1
@@ -12,9 +13,8 @@
 typedef struct Cloud
 {
     UPDATEABLE_BASE;
-    int8 speed;
 } Cloud;
 
-Cloud* createCloud(int8 x, uint8 recess, uint8 speed, uint8 size);
+Cloud* createCloud(int16 x, int16 recess, Fraction speed, uint8 size);
 
 #endif // CLOUD_H

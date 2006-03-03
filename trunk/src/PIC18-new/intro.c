@@ -270,18 +270,18 @@ bool showScene1(void)
     drawSprite(&lines);
     
     //glitch stuff up
-    for (i = 0; i < 50; i++)
+    for (i = 0; i < 10; i++)
     {
         bars.image.address = 0x000713E0;
         lines.image.address = 0x000821E0;
         drawSprite(&bars);
         drawSprite(&lines);
-        if (delayMs(5)) return true;
+        if (delayMs(25)) return true;
         bars.image.address = 0x000706C0;
         lines.image.address = 0x0002CEC0;
         drawSprite(&bars);
         drawSprite(&lines);
-        if (delayMs(5)) return true;            
+        if (delayMs(25)) return true;            
     }    
 
     //draw overlay

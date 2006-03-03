@@ -17,7 +17,7 @@ static void killF16(F16* who, World* world)
     addUpdateable(world, e);
 }
 
-F16* createF16(int8 x, uint8 recess, uint8 health, Behavior* behavior)
+F16* createF16(int16 x, int16 recess, uint8 health, Behavior* behavior)
 {
     Behavior** chain;
     int16 height;

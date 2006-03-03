@@ -44,30 +44,37 @@ all: $(DEPFILE) $(OUT)
 release: all
 
 $(OUT): $(OBJS)
-	$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
-	cp $@ ../../assets
+	@echo -n "Linking $(shell basename $@)..."
+	@$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)" 2>&1 >/dev/null
+	@cp $@ ../../assets
+	@echo "done"
 
 %.anim.inl: animations/%.anim
-	scripts/anim.rb $< > $@
-	mv $@ $(BUILD_DIR)/$@
+	@echo -n "Generating animation $@..."
+	@scripts/anim.rb $< > $@
+	@echo "done"
 
 %.lvl.inl: levels/%.lvl
-	scripts/level.rb $< > $@
-	mv $@ $(BUILD_DIR)/$@
-
-$(BUILD_DIR)/%.o: %.o
-	mv $< $@
+	@echo -n "Generating level $@..."
+	@scripts/level.rb $< > $@
+	@echo "done"
 
 %.o:
-	$(CC) $(CFLAGS) $(shell find . -iname $(shell basename $@ .o).c) -fo=$@
+	@echo -n "Compiling $(shell basename $(@:.o=.c))..."
+	@$(CC) $(CFLAGS) $(shell find . -iname $(shell basename $@ .o).c) -fo=$@
+	@echo "done"
 
 ifeq '' '$(findstring clean,$(MAKECMDGOALS))'
     -include $(DEPFILE)
 endif
 
 $(DEPFILE):
-	mkdir -p $(BUILD_DIR)
-	$(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE)
+	@echo -n "Generating dependencies..."
+	@mkdir -p $(BUILD_DIR)
+	@$(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE).tmp
+	@cat $(DEPFILE).tmp | sed 's/^\(.*\.o\)/$(BUILD_DIR)\/\1/' > $(DEPFILE)
+	@rm -f $(DEPFILE).tmp
+	@echo "done"
 
 clean:
 	rm -f *.obj *.hex *.lst *.cof *.stat *.tree *.asm *.casm *.o *.map *.err *.anim.inl *.lvl.inl

@@ -24,7 +24,7 @@ Plasma* createPlasma(Point where, int8 speed)
     p->destroy = destroyPlasma;
 
     chain = newArray(Behavior*, 2);
-    chain[0] = createBoring(speed);
+    chain[0] = createBoring(makeWhole(speed));
     chain[1] = createSeek();
     p->behavior = createChainBehavior(chain, 2);
  

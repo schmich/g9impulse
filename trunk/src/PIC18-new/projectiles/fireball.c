@@ -17,7 +17,7 @@ Fireball* createFireball(Point where, int8 speed)
 {
     Fireball* f = new(Fireball);
     f->destroy = destroyFireball;
-    f->behavior = createBoring(speed);
+    f->behavior = createBoring(makeWhole(speed));
  
     f->impact = impactFireball;
     f->position = where;

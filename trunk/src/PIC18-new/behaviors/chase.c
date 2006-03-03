@@ -1,4 +1,5 @@
 #include "chase.h"
+#include "player.h"
 
 static uint8 updateChase(Updateable* who, World* world)
 {
