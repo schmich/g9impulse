@@ -3,9 +3,14 @@
 static uint8 updateBoring(Updateable* who, World* world)
 {
     Boring* b = who->behavior;
-    who->position.y += b->vertSpeed;
 
-    if (b->vertSpeed > 0)
+    if (++b->counter == b->vertSpeed.denominator)
+    {
+        who->position.y += b->vertSpeed.numerator;
+        b->counter = 0;
+    }
+
+    if (b->vertSpeed.numerator > 0)
     {
         //
         // heading downscreen
@@ -25,12 +30,13 @@ static uint8 updateBoring(Updateable* who, World* world)
     return UPDATE_KEEP;
 }
 
-Boring* createBoring(int8 vertSpeed)
+Boring* createBoring(Fraction vertSpeed)
 {
     Boring* b = new(Boring);
     b->destroy = nullDestroy;
     b->update = updateBoring;
     b->vertSpeed = vertSpeed;
+    b->counter = 0;
 
     return b;
 }

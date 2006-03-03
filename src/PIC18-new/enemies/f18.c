@@ -17,7 +17,7 @@ static void killF18(F18* who, World* world)
     addUpdateable(world, e);
 }
 
-F18* createF18(int8 x, uint8 recess, uint8 health, Behavior* behavior)
+F18* createF18(int16 x, int16 recess, uint8 health, Behavior* behavior)
 {
     Behavior** chain;
     int16 height;

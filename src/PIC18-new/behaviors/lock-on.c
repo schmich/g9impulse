@@ -1,5 +1,6 @@
 #include "lock-on.h"
 #include "fireball.h"
+#include "player.h"
 
 static uint8 updateLockOn(Updateable* who, World* world)
 {

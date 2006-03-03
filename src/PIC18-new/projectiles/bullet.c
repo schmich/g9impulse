@@ -19,7 +19,7 @@ Bullet* createBullet(Point where, int8 speed)
 
     Bullet* b = new(Bullet);
     b->destroy = destroyBullet;
-    b->behavior = createBoring(speed);
+    b->behavior = createBoring(makeWhole(speed));
     b->impact = impactBullet;
     b->position = where;
     b->damage = 1;

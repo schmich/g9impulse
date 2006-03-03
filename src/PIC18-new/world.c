@@ -7,6 +7,9 @@
 #include "collision.h"
 #include "level.h"
 #include "artifact.h"
+#include "health.anim.inl"
+
+Entity* theHealthEntity = NULL;
 
 static void destroyWorld(World* w)
 {
@@ -62,6 +65,16 @@ World* createWorld(Player* player, Level* level)
     w->level = level;
 
     w->active = true;
+
+    if (!theHealthEntity)
+    {
+        theHealthEntity = new(Entity);
+        theHealthEntity->destroy = nullDestroy;
+        theHealthEntity->position = makePoint(130, 230);
+        theHealthEntity->animation = healthAnimation();
+
+        animationBeginning(theHealthEntity);
+    }
 
     return w;
 }
@@ -162,6 +175,9 @@ void drawWorld(World* world)
 
     if (!dead(world->player))
         drawEntity(world->player);
+
+    theHealthEntity->currentFrame = 6 - world->player->health;
+    drawEntity(theHealthEntity);
 
     for_each (curr, world->playerProjectiles)
         drawEntity(curr->data);
@@ -293,6 +309,16 @@ void collideWorld(World* world)
         {
             affect(artifact->data, world->player, world);
             removeArtifact(world, artifact);
+        }
+
+        enemy = collides(world->player, world->enemies);
+        if (enemy != NULL)
+        {
+            if (damage(world->player, 2))
+                kill(world->player, world);
+
+            kill(enemy->data, world);
+            removeEnemy(world, enemy);
         }
     }
 }

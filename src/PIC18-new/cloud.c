@@ -7,7 +7,7 @@ static void destroyCloud(Cloud* c)
     destroy(c->behavior);
 }
 
-Cloud* createCloud(int8 x, uint8 recess, uint8 speed, uint8 size)
+Cloud* createCloud(int16 x, int16 recess, Fraction speed, uint8 size)
 {
     int16 height;
 

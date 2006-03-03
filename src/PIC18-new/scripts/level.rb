@@ -86,6 +86,7 @@ File.open(filename) { |file|
     lineNum = 1
     file.each_line { |line|
         case line
+            when /^\-\-/,/^\s*$/
             when /\s*\[([A-Za-z][\w ]*)\]\s*/
                 levelName = $1
                 captureBackground = true 

@@ -135,7 +135,7 @@ Player* createPlayer(Point where)
     player->animation = playerAnimation();
     animationBeginning(player);
 
-    player->health = 2;
+    player->health = 6;
     player->momentum.x = 0;
     player->momentum.y = 0;
     player->heat = 0;

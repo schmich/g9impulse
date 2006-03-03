@@ -1,0 +1,8 @@
+[health]
+0x0011116A      30      8   -- health = 6 (full)
+0x00111188      30      8   -- health = 5
+0x001111A6      30      8   -- health = 4
+0x001111C4      30      8   -- health = 3
+0x001111E2      30      8   -- health = 2
+0x0011166A      30      8   -- health = 1
+0x00111688      30      8   -- health = 0 (empty)

@@ -9,6 +9,6 @@ typedef struct F18
     ENEMY_BASE;
 } F18;
 
-F18* createF18(int8 x, uint8 recess, uint8 health, Behavior* behavior);
+F18* createF18(int16 x, int16 recess, uint8 health, Behavior* behavior);
 
 #endif // F18_H

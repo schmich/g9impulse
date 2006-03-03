@@ -1,4 +1,5 @@
 #include "seek.h"
+#include "player.h"
 
 static uint8 updateSeek(Updateable* who, World* world)
 {

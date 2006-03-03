@@ -3,6 +3,8 @@
 
 [200]
 spawnManyF18(w, 0, false);
+addOverlay(w, createCloud(20, 10, makeWhole(1), CLOUD_MEDIUM));
+addOverlay(w, createCloud(100, 250, makeWhole(1), CLOUD_SMALL));
 
 [300]
 spawnManyF18(w, 100, true);
@@ -12,23 +14,23 @@ addEnemy(w, createF18(100, 0, 1, createChase(2, 1)));
 
 [450]
 addEnemy(w, createF18(140, 0, 1, createChase(2, 1))); 
-addEnemy(w, createF16(140, 0, 1, createBoring(2)));
+addEnemy(w, createF16(140, 0, 1, createBoring(makeWhole(2))));
 
 [475]
-addEnemy(w, createF16(130, 0, 1, createBoring(2)));
+addEnemy(w, createF16(130, 0, 1, createBoring(makeWhole(2))));
 
 [500]
 addEnemy(w, createF18(20, 0, 1, createChase(2, 1)));
 addEnemy(w, createF18(40, 0, 1, createChase(3, 1)));
-addOverlay(w, createCloud(20, 0, 1, CLOUD_TINY));
-addOverlay(w, createCloud(80, 30, 1, CLOUD_MEDIUM));
+addOverlay(w, createCloud(20, 0, makeWhole(1), CLOUD_TINY));
+addOverlay(w, createCloud(80, 30, makeWhole(1), CLOUD_MEDIUM));
 
 [650]
-addUnderlay(w, createCloud(-30, 0, 1, CLOUD_LARGE));
+addUnderlay(w, createCloud(-30, 0, makeWhole(1), CLOUD_LARGE));
 addEnemy(w, createF18(10, 0, 1, createChase(3, 1)));
 addEnemy(w, createF18(90, 0, 1, createChase(1, 1)));
 
 [750]
 spawnTripleF16(w, 60);
-addUnderlay(w, createCloud(90, 0, 1, CLOUD_SMALL));
-addOverlay(w, createCloud(10, 20, 1, CLOUD_MEDIUM));
+addUnderlay(w, createCloud(90, 0, makeWhole(1), CLOUD_SMALL));
+addOverlay(w, createCloud(10, 20, makeWhole(1), CLOUD_MEDIUM));
