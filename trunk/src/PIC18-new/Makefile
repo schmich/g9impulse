@@ -3,7 +3,7 @@ BINARY=starcell.hex
 MCC_DIR=/cygdrive/c/MCC18
 MCC_WIN_DIR=c:\MCC18
 
-DIRS=$(shell find -E . -type d -maxdepth 1 -iregex '(\./[^\.].*)|(^\.)')
+DIRS=$(shell find . -maxdepth 1 -type d)
 MCC_INC=$(patsubst %,/i%,$(DIRS))
 GCC_INC=$(patsubst %,-I%,$(DIRS))
 
@@ -43,31 +43,31 @@ all: $(DEPFILE) $(OUT)
 
 release: all
 
-test:
-	@echo $(OBJS)
-
 $(OUT): $(OBJS)
 	$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
 	cp $@ ../../assets
 
 %.anim.inl: animations/%.anim
 	scripts/anim.rb $< > $@
+	mv $@ $(BUILD_DIR)/$@
 
 %.lvl.inl: levels/%.lvl
 	scripts/level.rb $< > $@
+	mv $@ $(BUILD_DIR)/$@
 
-$(BUILD_DIR)/%.o: $(shell find . -iname '%.c')
+$(BUILD_DIR)/%.o: %.o
+	mv $< $@
+
+%.o:
 	$(CC) $(CFLAGS) $(shell find . -iname $(shell basename $@ .o).c) -fo=$@
 
 ifeq '' '$(findstring clean,$(MAKECMDGOALS))'
     -include $(DEPFILE)
 endif
 
-$(DEPFILE): $(BUILD_DIR)
-	$(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE)
-
-$(BUILD_DIR):
+$(DEPFILE):
 	mkdir -p $(BUILD_DIR)
+	$(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE)
 
 clean:
 	rm -f *.obj *.hex *.lst *.cof *.stat *.tree *.asm *.casm *.o *.map *.err *.anim.inl *.lvl.inl
