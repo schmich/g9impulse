@@ -1,0 +1,7 @@
+#!/bin/sh
+
+$* >&/dev/null
+if [ $? -ne 0 ]; then
+    echo "failed!"
+    $*
+fi
