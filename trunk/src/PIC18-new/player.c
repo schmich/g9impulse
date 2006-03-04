@@ -4,15 +4,17 @@
 #include "world.h"
 #include "projectile.h"
 #include "boring.h"
+#include "input-shoot.h"
 #include "player.anim.inl"
 #include "bullet.anim.inl"
 
 #define PLAYER_MAX_MOMENTUM_Y 13
 #define PLAYER_MAX_MOMENTUM_X 10
 
-static void destroyPlayer(Player* who)
+static void destroyPlayer(Player* p)
 {
-    destroy(who->behavior);
+    destroy(p->behavior);
+    destroy(p->weapon);
 }
 
 static void killPlayer(Player* who, World* world)
@@ -34,25 +36,6 @@ static uint8 updatePlayer(Player* who, World* world)
     Input* input = getInputStatus();
     uint8 width;
     uint8 height;
-
-    if (getInputEvent()->buttonBPressed)
-    {
-        Point tip = entityCenter(who);
-        tip.y = who->position.y;
-
-        //
-        // HACK fudge factor, center bullet
-        //
-        tip.x--;
-
-        bullet = createProjectile(bulletAnimation(), 0,
-                                  createBoring(makeWhole(-7)),
-                                  1,
-                                  tip,
-                                  impactProjectile);
-                
-        addPlayerProjectile(world, bullet);
-    }
 
     if (input->leftPressed)
     {
@@ -140,11 +123,17 @@ static uint8 updatePlayer(Player* who, World* world)
 
 Player* createPlayer(Point where)
 {
+    Behavior** bs;
+
     Player* player = new(Player);
     player->destroy = destroyPlayer;
-    player->behavior = createBehavior(updatePlayer);
     player->position = where;
     player->kill = killPlayer;
+
+    bs = newArray(Behavior*, 2);
+    bs[0] = createBehavior(updatePlayer);
+    bs[1] = createInputShoot();
+    player->behavior = createChainBehavior(bs, 2);
 
     player->animation = playerAnimation();
     animationBeginning(player);
@@ -154,6 +143,11 @@ Player* createPlayer(Point where)
     player->momentum.y = 0;
     player->heat = 0;
 
+    player->weapon = createProjectile(bulletAnimation(), 0,
+                                      createBoring(makeWhole(-7)),
+                                      1,
+                                      makePoint(0, 0),
+                                      impactProjectile);
     return player;
 }
 
