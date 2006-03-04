@@ -1,10 +1,9 @@
 #include "lock-on.h"
-#include "fireball.h"
+#include "enemy.h"
 #include "player.h"
 
-static uint8 updateLockOn(Updateable* who, World* world)
+static uint8 updateLockOn(Enemy* who, World* world)
 {
-    Fireball* f;
     int16 diff;
     int16 threshold = 10;
     LockOn* lo = who->behavior;
@@ -13,13 +12,7 @@ static uint8 updateLockOn(Updateable* who, World* world)
     if ((diff <= threshold) && (diff >= -threshold))
     {
         if (rand() < lo->frequency)
-        {
-            f = createFireball(makePoint(0, 0), 5);
-            alignCenterBottom(f, who);
-            f->position.y += entityHeight(f);
-
-            addEnemyProjectile(world, f);
-        }
+            fire(who, world);
     }
 
     return UPDATE_KEEP;

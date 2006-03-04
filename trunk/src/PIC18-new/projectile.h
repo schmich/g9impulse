@@ -16,6 +16,13 @@ typedef struct Projectile
     PROJECTILE_BASE;
 } Projectile;
 
+Projectile* createProjectile(Animation* anim,
+                             uint8 initFrame,
+                             Behavior* behavior,
+                             uint8 damage,
+                             Point where,
+                             ImpactFn onImpact);
+
 void impact(Projectile* proj, Entity* who, World* world);
 
 #endif // PROJECTILE_H
