@@ -2,7 +2,7 @@
 #define IMAGE_H
 
 #include "common.h"
-#include "gpu_pic.h"
+#include "gpu.h"
 
 typedef struct Image
 {

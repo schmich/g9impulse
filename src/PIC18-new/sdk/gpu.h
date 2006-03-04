@@ -5,8 +5,8 @@
 //*
 //**************************************************************
 
-#ifndef GPU_PIC_H
-#define GPU_PIC_H
+#ifndef GPU_H
+#define GPU_H
 
 #include "common.h"
 
@@ -25,4 +25,4 @@ void setFieldColor(uint8 color);
 void setDoubleBuffer(bool doubleBuffer);
 void flipBuffer(uint8* buf);
 
-#endif // GPU_PIC_H
+#endif // GPU_H

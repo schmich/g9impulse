@@ -1,4 +1,4 @@
-#include "gpu_pic.h"
+#include "gpu.h"
 
 //Loads the source address (registers 0, 1, and 2) into the GPU 
 void load_s_addr(uint32 address)
