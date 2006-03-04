@@ -49,14 +49,14 @@ $(OUT): $(OBJS)
 	@cp $@ ../../assets
 	@echo "done"
 
-%.anim.inl: animations/%.anim scripts/anim.rb
+%.anim.inl: animations/%.anim tools/anim.rb
 	@echo -n "Generating animation $@..."
-	@scripts/anim.rb $< > $@
+	@tools/anim.rb $< > $@
 	@echo "done"
 
-%.lvl.inl: levels/%.lvl scripts/level.rb
+%.lvl.inl: levels/%.lvl tools/level.rb
 	@echo -n "Generating level $@..."
-	@scripts/level.rb $< > $@
+	@tools/level.rb $< > $@
 	@echo "done"
 
 %.o:
