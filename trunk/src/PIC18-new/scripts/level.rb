@@ -52,6 +52,7 @@ static bool theLevelInit = false;
 static void destroyLevel(Level* level)
 {
     destroy(level->background);
+    level->currentEvent = 0;
 }
 
 Level* create#{upname}(void)

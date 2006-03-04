@@ -5,7 +5,7 @@
 #include "updateable.h"
 
 struct Projectile;
-typedef near rom void (*ImpactFn)(struct Projectile*, Entity*, World*);
+typedef near rom void (*ImpactFn)(struct Projectile*, Sprite*, World*);
 
 #define PROJECTILE_BASE UPDATEABLE_BASE; \
                         uint8 damage; \
@@ -23,6 +23,6 @@ Projectile* createProjectile(Animation* anim,
                              Point where,
                              ImpactFn onImpact);
 
-void impact(Projectile* proj, Entity* who, World* world);
+void impact(Projectile* proj, Sprite* who, World* world);
 
 #endif // PROJECTILE_H

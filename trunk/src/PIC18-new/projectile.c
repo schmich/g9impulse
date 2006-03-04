@@ -24,7 +24,7 @@ Projectile* createProjectile(Animation* anim,
     return p;
 }
 
-void impact(Projectile* proj, Entity* who, World* world)
+void impact(Projectile* proj, Sprite* who, World* world)
 {
     proj->impact(proj, who, world); 
 }

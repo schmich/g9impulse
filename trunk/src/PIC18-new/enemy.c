@@ -3,7 +3,17 @@
 static void destroyEnemy(Enemy* e)
 {
     destroy(e->behavior);
-    destroy(e->weapon);
+}
+
+static void fireEnemy(Entity* e, World* w)
+{
+    Projectile* p;
+    e->spawnProjectile(&p);
+
+    alignCenterBottom(p, e);
+    p->position.y += spriteHeight(p);
+
+    addEnemyProjectile(w, p);
 }
 
 Enemy* createEnemy(Animation* anim,
@@ -11,7 +21,7 @@ Enemy* createEnemy(Animation* anim,
                    Behavior* behavior,
                    uint8 health,
                    Point where,
-                   Projectile* weapon,
+                   SpawnFn onProjectileSpawn,
                    KillFn onKill)
 {
     Enemy* e = new(Enemy);
@@ -20,20 +30,10 @@ Enemy* createEnemy(Animation* anim,
     e->position = where;
     e->health = health;
     e->kill = onKill;
+    e->fire = fireEnemy;
     e->animation = anim;
     e->currentFrame = initFrame;
-    e->weapon = weapon;
+    e->spawnProjectile = onProjectileSpawn;
 
     return e;
-}
-
-void fire(Enemy* e, World* w)
-{
-    Projectile* p = new(Projectile);
-    *p = *e->weapon;
-
-    alignCenterBottom(p, e);
-    p->position.y += spriteHeight(p);
-
-    addEnemyProjectile(w, p);
 }

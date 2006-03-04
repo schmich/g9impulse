@@ -1,8 +1,8 @@
 #include "random-shoot.h"
 #include "player.h"
-#include "enemy.h"
+#include "entity.h"
 
-static uint8 updateRandomShoot(Enemy* who, World* world)
+static uint8 updateRandomShoot(Entity* who, World* world)
 {
     RandomShoot* r = who->behavior;
 

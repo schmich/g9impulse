@@ -2,11 +2,9 @@
 #define ENEMY_H
 
 #include "common.h"
-#include "killable.h"
-#include "projectile.h"
+#include "entity.h"
 
-#define ENEMY_BASE KILLABLE_BASE; \
-                   Projectile* weapon
+#define ENEMY_BASE ENTITY_BASE
 
 typedef struct Enemy
 {
@@ -18,9 +16,7 @@ Enemy* createEnemy(Animation* anim,
                    Behavior* behavior,
                    uint8 health,
                    Point where,
-                   Projectile* weapon,
+                   SpawnFn onProjectileSpawn,
                    KillFn onKill);
-
-void fire(Enemy* e, World* w);
 
 #endif // ENEMY_H

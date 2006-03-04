@@ -4,6 +4,7 @@
 #include "world.h"
 #include "projectile.h"
 #include "boring.h"
+#include "chain.h"
 #include "input-shoot.h"
 #include "player.anim.inl"
 #include "bullet.anim.inl"
@@ -14,7 +15,6 @@
 static void destroyPlayer(Player* p)
 {
     destroy(p->behavior);
-    destroy(p->weapon);
 }
 
 static void killPlayer(Player* who, World* world)
@@ -25,9 +25,29 @@ static void killPlayer(Player* who, World* world)
     addUpdateable(world, e);
 }
 
+static void firePlayer(Entity* player, World* world)
+{
+    Projectile* p;
+    player->spawnProjectile(&p);
+
+    alignCenterTop(p, player);
+    p->position.y -= spriteHeight(p);
+
+    addPlayerProjectile(world, p);
+}
+
 static void impactProjectile(Projectile* p, Sprite* s, World* world)
 {
     addUpdateable(world, createExplosion(p->position, EXPLOSION_TINY, 10));
+}
+
+static void spawnProjectilePlayer(Projectile** p)
+{
+    *p = createProjectile(bulletAnimation(), 0,
+                          createBoring(makeFraction(-1,4)),
+                          1,
+                          makePoint(0, 0),
+                          impactProjectile);
 }
 
 static uint8 updatePlayer(Player* who, World* world)
@@ -129,6 +149,7 @@ Player* createPlayer(Point where)
     player->destroy = destroyPlayer;
     player->position = where;
     player->kill = killPlayer;
+    player->fire = firePlayer;
 
     bs = newArray(Behavior*, 2);
     bs[0] = createBehavior(updatePlayer);
@@ -143,11 +164,8 @@ Player* createPlayer(Point where)
     player->momentum.y = 0;
     player->heat = 0;
 
-    player->weapon = createProjectile(bulletAnimation(), 0,
-                                      createBoring(makeWhole(-7)),
-                                      1,
-                                      makePoint(0, 0),
-                                      impactProjectile);
+    player->spawnProjectile = spawnProjectilePlayer;
+
     return player;
 }
 
