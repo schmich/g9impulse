@@ -1,0 +1,15 @@
+mini
+    animation: faa
+    asdf: fasdf
+
+100
+    spawn: mini
+    spawn: mini
+
+major
+    a: b
+    c: d
+
+800
+    e: f
+    fwef: qwee
