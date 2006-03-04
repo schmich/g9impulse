@@ -2,16 +2,15 @@
 #define PLAYER_H
 
 #include "common.h"
-#include "killable.h"
+#include "entity.h"
 #include "projectile.h"
 
 typedef struct Player
 {
-    KILLABLE_BASE;
+    ENTITY_BASE;
 
     Point       momentum;
     uint8       heat;
-    Projectile* weapon;
 } Player;
 
 Player* createPlayer(Point where);

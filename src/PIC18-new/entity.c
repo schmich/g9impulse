@@ -1,11 +1,11 @@
-#include "killable.h"
+#include "entity.h"
 
-void kill(Killable* who, World* world)
+void kill(Entity* who, World* world)
 {
     who->kill(who, world);
 }
 
-bool damage(Killable* who, uint8 damage)
+bool damage(Entity* who, uint8 damage)
 {
     if (damage >= who->health)
     {
@@ -19,7 +19,12 @@ bool damage(Killable* who, uint8 damage)
     }
 }
 
-bool dead(Killable* who)
+bool dead(Entity* who)
 {
     return who->health == 0;
+}
+
+void fire(Entity* e, World* w)
+{
+    e->fire(e, w);
 }

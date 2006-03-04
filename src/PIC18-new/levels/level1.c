@@ -18,22 +18,24 @@ static void killEnemy(Enemy* who, World* world)
     addUpdateable(world, e);
 }
 
-static void impactProjectile(Projectile* p, Entity* e, World* world)
+static void impactProjectile(Projectile* p, Sprite* s, World* world)
 {
     addUpdateable(world, createExplosion(p->position, EXPLOSION_TINY, 10));
+}
+
+static void spawnP(Projectile** p)
+{
+    *p = createProjectile(plasmaAnimation(), 0,
+                          createBoring(makeWhole(5)),
+                          1,
+                          makePoint(0, 0),
+                          impactProjectile);
 }
 
 static void spawnF(World* w)
 {
     Behavior** bs;
     Enemy* e;
-
-    Projectile* p = createProjectile(plasmaAnimation(), 0,
-                                     createBoring(makeWhole(5)),
-                                     1,
-                                     makePoint(0, 0),
-                                     impactProjectile);
-
 
     bs = newArray(Behavior*, 2);
     bs[0] = createBoring(makeWhole(2));
@@ -42,8 +44,8 @@ static void spawnF(World* w)
     e = createEnemy(f16Animation(), 0, 
                     createChainBehavior(bs, 2),
                     2, 
-                    makePoint(80, -40),
-                    p,
+                    makePoint(20, -40),
+                    spawnP,
                     killEnemy);
     addEnemy(w, e);
 }

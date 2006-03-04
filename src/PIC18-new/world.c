@@ -9,7 +9,7 @@
 #include "artifact.h"
 #include "health.anim.inl"
 
-Entity* theHealthEntity = NULL;
+Sprite* theHealthSprite = NULL;
 
 static void destroyWorld(World* w)
 {
@@ -66,14 +66,14 @@ World* createWorld(Player* player, Level* level)
 
     w->active = true;
 
-    if (!theHealthEntity)
+    if (!theHealthSprite)
     {
-        theHealthEntity = new(Entity);
-        theHealthEntity->destroy = nullDestroy;
-        theHealthEntity->position = makePoint(130, 230);
-        theHealthEntity->animation = healthAnimation();
+        theHealthSprite = new(Sprite);
+        theHealthSprite->destroy = nullDestroy;
+        theHealthSprite->position = makePoint(130, 230);
+        theHealthSprite->animation = healthAnimation();
 
-        animationBeginning(theHealthEntity);
+        animationBeginning(theHealthSprite);
     }
 
     return w;
@@ -165,31 +165,31 @@ void drawWorld(World* world)
 {
     Node* curr;
 
-    drawEntity(world->level->background);
+    drawSprite(world->level->background);
 
     for_each (curr, world->underlays)
-        drawEntity(curr->data);
+        drawSprite(curr->data);
 
     for_each (curr, world->enemies)
-        drawEntity(curr->data);
+        drawSprite(curr->data);
 
     if (!dead(world->player))
-        drawEntity(world->player);
+        drawSprite(world->player);
 
-    theHealthEntity->currentFrame = 6 - world->player->health;
-    drawEntity(theHealthEntity);
+    theHealthSprite->currentFrame = 6 - world->player->health;
+    drawSprite(theHealthSprite);
 
     for_each (curr, world->playerProjectiles)
-        drawEntity(curr->data);
+        drawSprite(curr->data);
 
     for_each (curr, world->enemyProjectiles)
-        drawEntity(curr->data);
+        drawSprite(curr->data);
 
     for_each (curr, world->updateables)
-        drawEntity(curr->data);
+        drawSprite(curr->data);
 
     for_each (curr, world->overlays)
-        drawEntity(curr->data);
+        drawSprite(curr->data);
 }
 
 void updateWorld(World* world)

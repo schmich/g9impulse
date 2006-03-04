@@ -9,8 +9,8 @@ static uint8 updateSeek(Updateable* who, World* world)
 
     if (!s->locked)
     {
-        pc = seekCenter(world->player);
-        mc = seekCenter(who);
+        pc = spriteCenter(world->player);
+        mc = spriteCenter(who);
 
         if (pc.x > mc.x)
             s->horizSpeed = 1;

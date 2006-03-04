@@ -20,6 +20,11 @@ void playGame(void)
         updateWorld(world);
         collideWorld(world);
 
+        //
+        // HACK drawing bug, uncomment to exploit
+        //
+        //draw(0x000D97B2, 2, 6, 87, 1, true);
+
         flipBuffer(&buffer);
         delay_ms(10);
     }

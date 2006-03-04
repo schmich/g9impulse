@@ -11,7 +11,7 @@ CC=$(MCC_DIR)/bin/mcc18.exe
 CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" $(MCC_INC) -k -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
 
 LINK=$(MCC_DIR)/bin/mplink.exe
-LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" 18f4620.lkr
+LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" sdk/18f4620.lkr
 LFLAGS=$(LIBS)
 
 DEPC=gcc
@@ -45,7 +45,7 @@ release: all
 
 $(OUT): $(OBJS)
 	@echo -n "Linking $(shell basename $@)..."
-	@$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)" 2>&1 >/dev/null
+	@$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
 	@cp $@ ../../assets
 	@echo "done"
 

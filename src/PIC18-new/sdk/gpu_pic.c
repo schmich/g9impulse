@@ -139,16 +139,16 @@ void draw(uint32 address, uint16 width, uint16 height, int16 x, int16 y, bool is
     int16 drawWidth = (int16)width;
     int16 drawHeight = (int16)height;
 
-    int16 extentX;
-    int16 extentY;
+    int16 right;
+    int16 bottom;
 
-    extentX = x + (int16)width;
-    if (extentX > SCREEN_WIDTH)
+    right = x + (int16)width;
+    if (right > SCREEN_WIDTH)
     {
         //
         // right clipping
         //
-        drawWidth -= (extentX - SCREEN_WIDTH);
+        drawWidth -= (right - SCREEN_WIDTH);
         if (drawWidth <= 0)
             return;
     }
@@ -158,20 +158,20 @@ void draw(uint32 address, uint16 width, uint16 height, int16 x, int16 y, bool is
         //
         // left clipping
         //
-        readAddress += -x;
+        readAddress += (int32)(-x);
 
         drawWidth -= -x;
         if (drawWidth <= 0)
             return;
     }
 
-    extentY = y + (int16)height;
-    if (extentY > SCREEN_HEIGHT)
+    bottom = y + (int16)height;
+    if (bottom > SCREEN_HEIGHT)
     {
         //
         // bottom clipping
         //
-        drawHeight -= (extentY - SCREEN_HEIGHT);
+        drawHeight -= (bottom - SCREEN_HEIGHT);
         if (drawHeight <= 0)
             return;
     }
