@@ -1,6 +1,6 @@
 #include "intro.h"
 #include "input.h"
-#include "spu_pic.h"
+#include "spu.h"
 #include "delay.h"
 #include "figure.h"
 

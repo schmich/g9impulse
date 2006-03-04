@@ -5,8 +5,8 @@
 //*
 //**************************************************************
 
-#ifndef SPU_PIC_H
-#define SPU_PIC_H
+#ifndef SPU_H
+#define SPU_H
 
 #include "common.h"
 

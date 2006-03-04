@@ -1,4 +1,4 @@
-#include "spu_pic.h"
+#include "spu.h"
 #include "delay.h"
 
 // plays the sound file specified by track

@@ -1,6 +1,6 @@
 #include "sralloc.h"
 #include "memory.h"
-#include "gpu_pic.h"
+#include "gpu.h"
 
 void* alloc(uint8 size)
 {
