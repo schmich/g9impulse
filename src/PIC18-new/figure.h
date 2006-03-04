@@ -1,10 +1,10 @@
-#ifndef SPRITE_H
-#define SPRITE_H
+#ifndef FIGURE_H
+#define FIGURE_H
 
 #include "image.h"
 #include "gpu_pic.h"
 
-typedef struct Sprite
+typedef struct Figure
 {
     Image image;
     Point position;
@@ -18,8 +18,8 @@ typedef struct Sprite
     char  b;
     char  x;
     char  y;
-} Sprite;
+} Figure;
 
-void drawSprite(Sprite* sprite);
+void drawFigure(Figure* figure);
 
-#endif // SPRITE_H
+#endif // FIGURE_H

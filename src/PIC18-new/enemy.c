@@ -3,6 +3,7 @@
 static void destroyEnemy(Enemy* e)
 {
     destroy(e->behavior);
+    destroy(e->weapon);
 }
 
 Enemy* createEnemy(Animation* anim,

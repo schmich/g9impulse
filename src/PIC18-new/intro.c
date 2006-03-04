@@ -2,13 +2,13 @@
 #include "input.h"
 #include "spu_pic.h"
 #include "delay.h"
-#include "sprite.h"
+#include "figure.h"
 
 void cls(uint8 color)
 {
     //clear screen and also check for exiting
     char i;
-    Sprite me;
+    Figure me;
 
     me.image.height = 24;
     me.image.width = 160;
@@ -27,7 +27,7 @@ void cls(uint8 color)
         me.image.address = 0x000B9C80;
     for ( i = 0; i < 10; i++)
     {
-        drawSprite(&me);
+        drawFigure(&me);
         me.position.y += 24;
     }
     return;
@@ -57,13 +57,13 @@ bool showScene1(void)
     char i = 0;
     char j = 0;
 
-    Sprite near_future;
-    Sprite eye_anim;
-    Sprite eye_mask;
-    Sprite compass;
-    Sprite lines;
-    static Sprite bars;
-    static Sprite outline;
+    Figure near_future;
+    Figure eye_anim;
+    Figure eye_mask;
+    Figure compass;
+    Figure lines;
+    static Figure bars;
+    static Figure outline;
         
     //initalize graphics to original settings
     
@@ -128,15 +128,15 @@ bool showScene1(void)
     if (delayS(1)) return true;
     playMusic (1);
     if (delayMs(500)) return true;
-    drawSprite(&near_future);
+    drawFigure(&near_future);
     if (delayMs(250)) return true;
     near_future.image.address = 0X00025EE0;
     cls(0);
-    drawSprite(&near_future);
+    drawFigure(&near_future);
     if (delayMs(250)) return true;
     near_future.image.address = 0X000265C0;
     cls(0);
-    drawSprite(&near_future);
+    drawFigure(&near_future);
     if (delayS(2)) return true;
     //black screen - dramatic pause
     cls(0);
@@ -144,8 +144,8 @@ bool showScene1(void)
     //draw eye open animation
     for (i = 0; i < 5; i++)
     {
-        drawSprite(&eye_mask);
-        drawSprite(&eye_anim);
+        drawFigure(&eye_mask);
+        drawFigure(&eye_anim);
         eye_anim.image.address += 0x00000020;
         if (delayMs(100)) return true;
     }
@@ -153,13 +153,13 @@ bool showScene1(void)
     j = 30;
     for ( i = 0; i < 5; i++)//slow down
     {
-        drawSprite(&compass);//1
+        drawFigure(&compass);//1
         compass.image.address += 0x0000002E;
         if (delayMs(j)) return true;
-        drawSprite(&compass);//2
+        drawFigure(&compass);//2
         compass.image.address += 0x0000002E;
         if(delayMs(j)) return true;
-        drawSprite(&compass);//3
+        drawFigure(&compass);//3
         compass.image.address -= 0x0000005C;    
         if (delayMs(j)) return true;
         j+= 15;
@@ -168,43 +168,43 @@ bool showScene1(void)
     for ( i = 0; i < 5; i++)//reverse
     {
         compass.image.address += 0x0000005C;
-        drawSprite(&compass);//3
+        drawFigure(&compass);//3
         compass.image.address -= 0x0000002E;
         if (delayMs(j)) return true;
-        drawSprite(&compass);//2
+        drawFigure(&compass);//2
         compass.image.address -= 0x0000002E;
         if (delayMs(j)) return true;
-        drawSprite(&compass);//1
+        drawFigure(&compass);//1
         if (delayMs(j)) return true;
         j+= 15;
     }
     j=150;
     for ( i = 0; i < 3; i++)//speed up
     {
-        drawSprite(&compass);//1
+        drawFigure(&compass);//1
         compass.image.address += 0x0000002E;
         if (delayMs(j)) return true;
-        drawSprite(&compass);//2
+        drawFigure(&compass);//2
         compass.image.address += 0x0000002E;
         if (delayMs(j)) return true;
-        drawSprite(&compass);//3
+        drawFigure(&compass);//3
         compass.image.address -= 0x0000005C;    
         if (delayMs(j)) return true;
         j-= 60;
     }
-    drawSprite(&lines);
-    drawSprite(&bars);
+    drawFigure(&lines);
+    drawFigure(&bars);
 
     j=10;
     for (i = 0; i < 2; i++)//slow down
     {
-        drawSprite(&compass);
+        drawFigure(&compass);
         compass.image.address += 0x0000002E;
         if (delayMs(j)) return true;
-        drawSprite(&compass);//2
+        drawFigure(&compass);//2
         compass.image.address += 0x0000002E;
         if (delayMs(j)) return true;
-        drawSprite(&compass);//3
+        drawFigure(&compass);//3
         compass.image.address -= 0x0000005C;    
         if (delayMs(j)) return true;
         j+= 40;
@@ -214,16 +214,16 @@ bool showScene1(void)
     lines.image.width = 0x4B;
     bars.image.address += 0x00000960;
     bars.image.width = 0x35;
-    drawSprite(&lines);
-    drawSprite(&bars);
+    drawFigure(&lines);
+    drawFigure(&bars);
     
-    drawSprite(&compass);
+    drawFigure(&compass);
     compass.image.address += 0x0000002E;
     if (delayMs(j)) return true;
-    drawSprite(&compass);//2
+    drawFigure(&compass);//2
     compass.image.address += 0x0000002E;
     if (delayMs(j)) return true;
-    drawSprite(&compass);//3
+    drawFigure(&compass);//3
     compass.image.address -= 0x0000005C;    
     if (delayMs(j)) return true;
     j+= 40;
@@ -231,25 +231,25 @@ bool showScene1(void)
     lines.image.address = 0x0002AE40;
     lines.image.width = 0x53;
     bars.image.address += 0x0000960;
-    drawSprite(&lines);
-    drawSprite(&bars);
+    drawFigure(&lines);
+    drawFigure(&bars);
     
-    drawSprite(&compass);
+    drawFigure(&compass);
     compass.image.address += 0x0000002E;
     if (delayMs(j)) return true;
-    drawSprite(&compass);//2
+    drawFigure(&compass);//2
     compass.image.address += 0x0000002E;
     if (delayMs(j)) return true;
-    drawSprite(&compass);//3
+    drawFigure(&compass);//3
     compass.image.address -= 0x0000005C;    
     if (delayMs(j)) return true;
-    drawSprite(&compass);//1
+    drawFigure(&compass);//1
     
     lines.image.address = 0x0002BE80;
     bars.image.address += 0x00000961;
     bars.image.width = 0x36;
-    drawSprite(&lines);
-    drawSprite(&bars);
+    drawFigure(&lines);
+    drawFigure(&bars);
     if (delayMs(200)) return true;
         
     lines.image.address = 0x0002CEC0;
@@ -258,47 +258,47 @@ bool showScene1(void)
     lines.position.x = 72;
     lines.position.y = 75;
     bars.image.address += 0x00000960;
-    drawSprite(&bars);    
-    drawSprite(&lines);
+    drawFigure(&bars);    
+    drawFigure(&lines);
     if (delayMs(50)) return true;
     bars.image.address = 0x000713E0;
     bars.image.height = 21;
     bars.image.width = 62;
     bars.position.x = 4;
     bars.position.y = 80;
-    drawSprite(&bars);
-    drawSprite(&lines);
+    drawFigure(&bars);
+    drawFigure(&lines);
     
     //glitch stuff up
     for (i = 0; i < 10; i++)
     {
         bars.image.address = 0x000713E0;
         lines.image.address = 0x000821E0;
-        drawSprite(&bars);
-        drawSprite(&lines);
+        drawFigure(&bars);
+        drawFigure(&lines);
         if (delayMs(25)) return true;
         bars.image.address = 0x000706C0;
         lines.image.address = 0x0002CEC0;
-        drawSprite(&bars);
-        drawSprite(&lines);
+        drawFigure(&bars);
+        drawFigure(&lines);
         if (delayMs(25)) return true;            
     }    
 
     //draw overlay
     
-    drawSprite(&outline);        
+    drawFigure(&outline);        
 
     for (i = 0; i < 30; i++)
     {
         bars.image.address = 0x000713E0;
         lines.image.address = 0x000821E0;
-        drawSprite(&bars);
-        drawSprite(&lines);
+        drawFigure(&bars);
+        drawFigure(&lines);
         if (delayMs(5)) return true;
         bars.image.address = 0x000706C0;
         lines.image.address = 0x0002CEC0;
-        drawSprite(&bars);
-        drawSprite(&lines);
+        drawFigure(&bars);
+        drawFigure(&lines);
         if (delayMs(5)) return true;            
     }        
 
@@ -306,9 +306,9 @@ bool showScene1(void)
     eye_anim.image.address = 0x00026D20;
     for (i = 0; i < 5; i++)
     {
-        drawSprite(&eye_mask);            
-        drawSprite(&eye_anim);
-        drawSprite(&outline);
+        drawFigure(&eye_mask);            
+        drawFigure(&eye_anim);
+        drawFigure(&outline);
         eye_anim.image.address -= 0x00000020;
         if (delayMs(50)) return true;
     }
@@ -316,25 +316,25 @@ bool showScene1(void)
     eye_anim.image.address = 0x00026CA0;
     for (i = 0; i < 5; i++)
     {
-        drawSprite(&eye_mask);
-        drawSprite(&eye_anim);
-        drawSprite(&outline);
+        drawFigure(&eye_mask);
+        drawFigure(&eye_anim);
+        drawFigure(&outline);
         eye_anim.image.address += 0x00000020;
         if (delayMs(50)) return true;
     }
     if (delayMs(250)) return true;
     //draw rest of overlay
-    drawSprite(&eye_mask);
+    drawFigure(&eye_mask);
     outline.position.x = 24;
     outline.image.address = 0x00027DAB;
     outline.image.width = 46;
-    drawSprite(&outline);
-    drawSprite(&compass);
+    drawFigure(&outline);
+    drawFigure(&compass);
     if (delayMs(200)) return true;
     outline.image.address = 0x00027DD9;
     outline.image.width = 60;
-    drawSprite(&outline);
-    drawSprite(&compass);
+    drawFigure(&outline);
+    drawFigure(&compass);
     if (delayS(2)) return true;
     //if no input, return falses
     return false;
@@ -347,21 +347,21 @@ bool showScene2(void)
     
     //initalize graphics to original settings
     
-    Sprite pilot;
-    Sprite screen0;
-    Sprite screen1;
-    Sprite screen2;
-    Sprite screen3;
-    static Sprite screen4;
-    static Sprite screen5;
-    static Sprite screen6;
-    static Sprite screen7;
-    static Sprite boot0;
-    static Sprite boot1;
-    static Sprite boot2;
-    static Sprite boot3;
-    static Sprite boot4;
-    static Sprite boot5;
+    Figure pilot;
+    Figure screen0;
+    Figure screen1;
+    Figure screen2;
+    Figure screen3;
+    static Figure screen4;
+    static Figure screen5;
+    static Figure screen6;
+    static Figure screen7;
+    static Figure boot0;
+    static Figure boot1;
+    static Figure boot2;
+    static Figure boot3;
+    static Figure boot4;
+    static Figure boot5;
 
     pilot.image.address = 0x000AB180;//0x000A4740;
     pilot.image.height = 170;
@@ -485,40 +485,40 @@ bool showScene2(void)
         
     cls(0);
     if (delayS(1)) return true;
-    drawSprite(&pilot);
+    drawFigure(&pilot);
     if (delayMs(200)) return true;
-    drawSprite(&screen0);
+    drawFigure(&screen0);
     //flash newest screen
     for (i = 0; i < 10; i++)
     {
         cls(0);
-        drawSprite(&pilot);
+        drawFigure(&pilot);
         if (delayMs(25)) return true;
-        drawSprite(&screen0);
+        drawFigure(&screen0);
         if (delayMs(25)) return true;
     }    
-    drawSprite(&screen1);    
+    drawFigure(&screen1);    
     for (i = 0; i < 10; i++)
     {
         cls(0);
-        drawSprite(&pilot);
-        drawSprite(&screen0);
+        drawFigure(&pilot);
+        drawFigure(&screen0);
         if (delayMs(25)) return true;
-        drawSprite(&screen1);
+        drawFigure(&screen1);
         if (delayMs(25)) return true;
     }    
     
-    drawSprite(&screen2);
-    drawSprite(&screen3);        
+    drawFigure(&screen2);
+    drawFigure(&screen3);        
     for (i = 0; i < 10; i++)
     {
         cls(0);
-        drawSprite(&pilot);
-        drawSprite(&screen0);
-        drawSprite(&screen1);
+        drawFigure(&pilot);
+        drawFigure(&screen0);
+        drawFigure(&screen1);
         if (delayMs(25)) return true;
-        drawSprite(&screen2);
-        drawSprite(&screen3);
+        drawFigure(&screen2);
+        drawFigure(&screen3);
         if (delayMs(25)) return true;
         if (i == 3)
             pilot.image.address = 0x000AB1CD;
@@ -526,23 +526,23 @@ bool showScene2(void)
 
 
     if (delayMs(255)) return true;
-    drawSprite(&screen4);
-    drawSprite(&screen5);
-    drawSprite(&screen6);
-    drawSprite(&screen7);
+    drawFigure(&screen4);
+    drawFigure(&screen5);
+    drawFigure(&screen6);
+    drawFigure(&screen7);
     for (i = 0; i < 10; i++)
     {
         cls(0);
-        drawSprite(&pilot);
-        drawSprite(&screen0);
-        drawSprite(&screen1);
-        drawSprite(&screen2);
-        drawSprite(&screen3);
+        drawFigure(&pilot);
+        drawFigure(&screen0);
+        drawFigure(&screen1);
+        drawFigure(&screen2);
+        drawFigure(&screen3);
         if (delayMs(25)) return true;
-        drawSprite(&screen4);
-        drawSprite(&screen5);
-        drawSprite(&screen6);
-        drawSprite(&screen7);
+        drawFigure(&screen4);
+        drawFigure(&screen5);
+        drawFigure(&screen6);
+        drawFigure(&screen7);
         if (delayMs(25)) return true;
         if (i == 7)
             pilot.image.address = 0x000A4740;
@@ -550,19 +550,19 @@ bool showScene2(void)
     }    
 
     if (delayS(1)) return true;
-    drawSprite(&boot0);
+    drawFigure(&boot0);
     if (delayMs(255)) return true;
     if (delayMs(255)) return true;
-    drawSprite(&boot1);
+    drawFigure(&boot1);
     if (delayMs(255)) return true;
     if (delayMs(255)) return true;
     if (delayMs(255)) return true;
-    drawSprite(&boot2);
+    drawFigure(&boot2);
     if (delayS(2)) return true;
-    drawSprite(&boot3);
+    drawFigure(&boot3);
     if (delayMs(255)) return true;
-    drawSprite(&boot4);
-    drawSprite(&boot5);
+    drawFigure(&boot4);
+    drawFigure(&boot5);
     if (delayS(3)) return true;
     //if no input, return falses
     return false;
@@ -574,20 +574,20 @@ bool showScene3(void)
     char j = 0;
     bool pressed = false;
 
-    Sprite* cannon1 = new(Sprite);
-    Sprite* cannon2 = new(Sprite);
-    Sprite* cannon3 = new(Sprite);
-    Sprite* credit1 = new(Sprite);
-    Sprite* credit2 = new(Sprite);
-    Sprite* credit3 = new(Sprite);
-    Sprite* credit4 = new(Sprite);
-    Sprite* credit5 = new(Sprite);
-    Sprite* credit6 = new(Sprite);
-    Sprite* grid = new(Sprite);
-    Sprite* plane_1 = new(Sprite);
-    Sprite* plane_2 = new(Sprite);
-    Sprite* tech_1 = new(Sprite);
-    Sprite* tech_2 = new(Sprite);
+    Figure* cannon1 = new(Figure);
+    Figure* cannon2 = new(Figure);
+    Figure* cannon3 = new(Figure);
+    Figure* credit1 = new(Figure);
+    Figure* credit2 = new(Figure);
+    Figure* credit3 = new(Figure);
+    Figure* credit4 = new(Figure);
+    Figure* credit5 = new(Figure);
+    Figure* credit6 = new(Figure);
+    Figure* grid = new(Figure);
+    Figure* plane_1 = new(Figure);
+    Figure* plane_2 = new(Figure);
+    Figure* tech_1 = new(Figure);
+    Figure* tech_2 = new(Figure);
 
     cannon1->image.address = 0x0005308A;
     cannon1->image.height = 186;
@@ -705,32 +705,32 @@ bool showScene3(void)
 
     //draw cannon and some credits
     //leadin animations
-    drawSprite(cannon1);
+    drawFigure(cannon1);
     if (delayMs(200)) { pressed = true; goto exit; }
     
-    drawSprite(credit1);
-    drawSprite(credit2);
+    drawFigure(credit1);
+    drawFigure(credit2);
     //speed up
     for (i = 0; i < 25; i++)
     {
-        drawSprite(cannon2);
+        drawFigure(cannon2);
         if (delayMs(125 - (i * 4))) { pressed = true; goto exit; }
-        drawSprite(cannon3);
+        drawFigure(cannon3);
         if (delayMs(125 - (i * 4))) { pressed = true; goto exit; }
     }
     //slow down
     for (i = 0; i < 25; i++)
     {
-        drawSprite(cannon2);
+        drawFigure(cannon2);
         if (delayMs(25 + (i * 4))) { pressed = true; goto exit; }
-        drawSprite(cannon3);
+        drawFigure(cannon3);
         if (delayMs(25 + (i * 4))) { pressed = true; goto exit; }
     }
     //leadout animations
     if (delayMs(125)) { pressed = true; goto exit; }
-    drawSprite(cannon2);
+    drawFigure(cannon2);
     if (delayMs(200)) { pressed = true; goto exit; }
-    drawSprite(cannon1);
+    drawFigure(cannon1);
     if (delayMs(200)) { pressed = true; goto exit; }
     cls(0);
     if (delayMs(255)) { pressed = true; goto exit; }
@@ -738,11 +738,11 @@ bool showScene3(void)
     //scroll plane up
     for (i = 0; i < 70; i++)
     {
-        drawSprite(grid);
-        drawSprite(plane_1);
-        drawSprite(plane_2);
-        drawSprite(credit3);
-        drawSprite(credit4);
+        drawFigure(grid);
+        drawFigure(plane_1);
+        drawFigure(plane_2);
+        drawFigure(credit3);
+        drawFigure(credit4);
         grid->image.address += 160;
         plane_1->image.address += 160;
         plane_2->image.address += 160;
@@ -763,22 +763,22 @@ bool showScene3(void)
         plane_2->position.x -= 1;
 
         cls(0);    
-        drawSprite(grid);
-        drawSprite(plane_1);
-        drawSprite(plane_2);
+        drawFigure(grid);
+        drawFigure(plane_1);
+        drawFigure(plane_2);
         if (delayMs(20)) { pressed = true; goto exit; }
     }
     
     //scroll plane up with overlay
     for (i = 0; i < 70; i++)
     {
-        drawSprite(grid);
-        drawSprite(plane_1);
-        drawSprite(plane_2);
-        drawSprite(tech_1);
-        drawSprite(tech_2);
-        drawSprite(credit5);
-        drawSprite(credit6);
+        drawFigure(grid);
+        drawFigure(plane_1);
+        drawFigure(plane_2);
+        drawFigure(tech_1);
+        drawFigure(tech_2);
+        drawFigure(credit5);
+        drawFigure(credit6);
         
         grid->image.address += 160;
         plane_1->image.address += 160;
@@ -818,12 +818,12 @@ bool showScene4(void)
     char j = 0;
     char front_buffer = 0;
 
-    Sprite skyline;
-    Sprite engine;
-    Sprite plane_1;
-    Sprite plane_2;
-    Sprite plane_3;
-    static Sprite plane_4;
+    Figure skyline;
+    Figure engine;
+    Figure plane_1;
+    Figure plane_2;
+    Figure plane_3;
+    static Figure plane_4;
 
     skyline.image.address = 0x00090510;
     skyline.image.height = 240;
@@ -883,11 +883,11 @@ bool showScene4(void)
     for (i = 0; i <81 ; i++)
     {
         cls(0);
-        drawSprite(&skyline);
-        drawSprite(&plane_1);
-        drawSprite(&plane_2);
-        drawSprite(&plane_3);
-        drawSprite(&plane_4);
+        drawFigure(&skyline);
+        drawFigure(&plane_1);
+        drawFigure(&plane_2);
+        drawFigure(&plane_3);
+        drawFigure(&plane_4);
         flipBuffer(&front_buffer);
         //do some slide fx here
         skyline.image.width +=2;
@@ -911,9 +911,9 @@ bool showScene4(void)
     plane_3.position.y ++;
     for ( i = 0; i < 5; i++)
     {
-        drawSprite(&plane_2);
-        drawSprite(&plane_3);
-        drawSprite(&engine);
+        drawFigure(&plane_2);
+        drawFigure(&plane_3);
+        drawFigure(&engine);
         if (delayMs(255 - (i * 16))) return true;
         engine.image.address -= 29;
     }
@@ -951,7 +951,7 @@ bool showScene5(void)
         121
     };
 
-    Sprite takeoff;
+    Figure takeoff;
 
     takeoff.image.address = takeoff_addr[0];
     takeoff.image.height = takeoff_lines[0];
@@ -968,7 +968,7 @@ bool showScene5(void)
     {
         for ( j = 0; j < 8; j++)
         {
-            drawSprite(&takeoff);
+            drawFigure(&takeoff);
             takeoff.image.address = takeoff_addr[j];
             takeoff.image.height = takeoff_lines[j];
             delay_ms (60 - (i * 4));
@@ -980,7 +980,7 @@ bool showScene5(void)
     {
         for ( j = 0; j < 8; j++)
         {
-            drawSprite(&takeoff);
+            drawFigure(&takeoff);
             takeoff.image.address = takeoff_addr[j];
             takeoff.image.height = takeoff_lines[j];
             if (delayMs(40)) return true;
@@ -995,7 +995,7 @@ bool showScene6(void)
 {
     char i = 0;
     char j = 0;
-    Sprite reflect;
+    Figure reflect;
 
     reflect.image.address = 0x0E1140;
     reflect.image.height = 90;
@@ -1010,7 +1010,7 @@ bool showScene6(void)
     {
         for ( j = 0; j < 10; j++)
         {
-            drawSprite(&reflect);
+            drawFigure(&reflect);
             reflect.image.address += 0x3840;
             if (delayMs(80)) return true;
 
@@ -1027,7 +1027,7 @@ void showBootSplash(void)
 {
     char i = 0;
     char j = 0;
-    Sprite frame;
+    Figure frame;
 
     setDoubleBuffer(false);
 
@@ -1047,7 +1047,7 @@ void showBootSplash(void)
     for (i = 0; i <  21; i++)
     {
         //show 'left' frame
-        drawSprite(&frame);
+        drawFigure(&frame);
         if (i == 0)
         {
             delay_ms(250);
@@ -1060,7 +1060,7 @@ void showBootSplash(void)
         else
             delay_ms(60);
         frame.image.address += 80;
-        drawSprite(&frame);
+        drawFigure(&frame);
         if (i > 18)
             delay_ms(100);
         else
@@ -1080,7 +1080,7 @@ bool showTitle(void)
     char i;
     
     Input* event;
-    Sprite me;
+    Figure me;
 
     setDoubleBuffer(false);
 
@@ -1110,7 +1110,7 @@ bool showTitle(void)
     
     for (i = 0; i < 19; i++)
     {
-        drawSprite(&me);
+        drawFigure(&me);
         me.image.address += 0x9600;
         delay_ms(100);
     }
