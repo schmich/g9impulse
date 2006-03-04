@@ -44,12 +44,7 @@ Image* createOpaqueImage(uint32 address, uint16 width, uint16 height)
     return image;
 }
 
-void destroyImage(Image* image)
-{
-    free(image);
-}
-
-void drawImage(Image* image, Point where, bool isTransparent)
+void drawImage(rom Image* image, Point where, bool isTransparent)
 {
     draw(image->address, image->width, image->height, where.x, where.y, isTransparent);
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-def writeAnim(name, images)
+def writeAnim(name, images, poolName, poolOffset)
     while name.match(/\s+(.)/)
         up = $1.upcase
         name[/\s+(.)/] = up
@@ -13,10 +13,8 @@ def writeAnim(name, images)
     initName = animName.clone
     initName += 'Init'
 
-    imageInit = []
     images.each_with_index { |image, i|
         addr, width, height = image
-        imageInit << "#{animName}.images[#{i}] = makeImage(#{addr}, #{width}, #{height});"
     }
 
     puts "static Animation #{animName};"
@@ -28,9 +26,7 @@ static Animation* #{name}Animation(void)
     if (!#{initName})
     {
         #{animName}.numImages = #{images.length};
-        #{animName}.images = newArray(Image, #{images.length});
-
-        #{imageInit.join("\n        ")}
+        #{animName}.images = (rom Image*)(#{poolName} + #{poolOffset});
 
         #{initName} = true;
     }
@@ -82,7 +78,24 @@ animations.each { |animation|
     end
 }
 
+poolName = "the_" + filename.gsub(/[^\w]+/, '_') + "_pool"
+puts "const near rom uint8 #{poolName}[] = "
+puts "{"
 animations.each { |animation|
     name, images = animation
-    writeAnim(name.strip, images)
+    images.each { |image|
+        addr, width, height = image
+        puts "#{addr} & 0xFF, (#{addr} >> 8) & 0xFF, (#{addr} >> 16) & 0xFF, (#{addr} >> 24) & 0xFF,"
+        puts "#{width} & 0xFF, (#{width} >> 8) & 0xFF, #{height} & 0xFF, (#{height} >> 8) & 0xFF,"
+        puts "1,"
+    }
+}
+puts "};"
+
+poolOffset = 0
+animations.each { |animation|
+    name, images = animation
+    writeAnim(name.strip, images, poolName, poolOffset)
+
+    poolOffset += images.length * (4 + 2 + 2 + 1)
 }

@@ -44,7 +44,7 @@ static void impactProjectile(Projectile* p, Sprite* s, World* world)
 static void spawnProjectilePlayer(Projectile** p)
 {
     *p = createProjectile(bulletAnimation(), 0,
-                          createBoring(makeFraction(-1,4)),
+                          createBoring(makeWhole(-7)),
                           1,
                           makePoint(0, 0),
                           impactProjectile);

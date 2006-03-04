@@ -1,5 +1,36 @@
 [level1]
 0x002C4340
 
-[400]
-spawnF(w);
+[200]
+spawnManyF18(w, 40, false);
+addOverlay(w, createCloud(20, 10, makeWhole(1), CLOUD_MEDIUM));
+addOverlay(w, createCloud(100, 250, makeWhole(1), CLOUD_SMALL));
+
+[300]
+spawnManyF18(w, 100, true);
+
+[500]
+spawnManyF16(w, 50, false);
+addOverlay(w, createCloud(20, 0, makeWhole(1), CLOUD_TINY));
+addOverlay(w, createCloud(80, 30, makeWhole(1), CLOUD_MEDIUM));
+
+[520]
+spawnManyF16(w, 90, true);
+
+[650]
+addUnderlay(w, createCloud(-30, 0, makeWhole(1), CLOUD_LARGE));
+spawnManyF18(w, 40, false);
+
+[680]
+spawnManyF18(w, 60, false);
+
+[710]
+spawnManyF18(w, 120, true);
+
+[740]
+spawnManyF18(w, 100, true);
+
+[800]
+spawnLineF16(w, 10, 7)
+addUnderlay(w, createCloud(90, 0, makeWhole(1), CLOUD_SMALL));
+addOverlay(w, createCloud(10, 20, makeWhole(1), CLOUD_MEDIUM));

@@ -1,13 +1,13 @@
 #include "sprite.h"
 
-Image* currentImage(Sprite* what)
+rom Image* currentImage(Sprite* what)
 {
     return &what->animation->images[what->currentFrame];
 }
 
 void drawSprite(Sprite* what)
 {
-    Image* curr = currentImage(what);
+    rom Image* curr = currentImage(what);
     drawImage(curr, what->position, curr->transparent);
 }
 

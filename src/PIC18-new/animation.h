@@ -8,8 +8,8 @@
 typedef struct Animation
 {
     DESTROYABLE_BASE;
-    Image*  images;
-    uint8   numImages;
+    rom Image*  images;
+    uint8       numImages;
 } Animation;
 
 Animation* createAnimation(void);

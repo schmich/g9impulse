@@ -49,12 +49,12 @@ $(OUT): $(OBJS)
 	@cp $@ ../../assets
 	@echo "done"
 
-%.anim.inl: animations/%.anim
+%.anim.inl: animations/%.anim scripts/anim.rb
 	@echo -n "Generating animation $@..."
 	@scripts/anim.rb $< > $@
 	@echo "done"
 
-%.lvl.inl: levels/%.lvl
+%.lvl.inl: levels/%.lvl scripts/level.rb
 	@echo -n "Generating level $@..."
 	@scripts/level.rb $< > $@
 	@echo "done"
@@ -83,13 +83,6 @@ clean:
 depclean:
 	rm -f $(DEPFILE)
 
-realclean: clean depclean
-superclean: realclean
-ultraclean: realclean
-megaclean: realclean
-uberclean: realclean
-crazyclean: realclean
+nuke: clean depclean
 
-.PHONY: all release clean depclean realclean \
-	superclean ultraclean megaclean \
-	uberclean crazyclean
+.PHONY: all release clean depclean nuke
