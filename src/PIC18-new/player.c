@@ -1,9 +1,11 @@
 #include "player.h"
 #include "input.h"
-#include "bullet.h"
 #include "explosion.h"
 #include "world.h"
+#include "projectile.h"
+#include "boring.h"
 #include "player.anim.inl"
+#include "bullet.anim.inl"
 
 #define PLAYER_MAX_MOMENTUM_Y 13
 #define PLAYER_MAX_MOMENTUM_X 10
@@ -21,8 +23,14 @@ static void killPlayer(Player* who, World* world)
     addUpdateable(world, e);
 }
 
+static void impactProjectile(Projectile* p, Entity* e, World* world)
+{
+    addUpdateable(world, createExplosion(p->position, EXPLOSION_TINY, 10));
+}
+
 static uint8 updatePlayer(Player* who, World* world)
 {
+    Projectile* bullet;
     Input* input = getInputStatus();
     uint8 width;
     uint8 height;
@@ -37,7 +45,13 @@ static uint8 updatePlayer(Player* who, World* world)
         //
         tip.x--;
 
-        addPlayerProjectile(world, createBullet(tip, -7));
+        bullet = createProjectile(bulletAnimation(), 0,
+                                  createBoring(makeWhole(-7)),
+                                  1,
+                                  tip,
+                                  impactProjectile);
+                
+        addPlayerProjectile(world, bullet);
     }
 
     if (input->leftPressed)

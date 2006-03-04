@@ -1,29 +1,51 @@
 #include "level1.h"
-#include "f16.h"
-#include "f18.h"
 #include "boring.h"
 #include "cloud.h"
 #include "chase.h"
+#include "enemy.h"
+#include "chain.h"
+#include "random-shoot.h"
+#include "projectile.h"
+#include "explosion.h"
+#include "f16.anim.inl"
+#include "plasma.anim.inl"
 
-static void spawnTripleF16(World* w, int16 x)
+static void killEnemy(Enemy* who, World* world)
 {
-    addEnemy(w, createF16(x, 0, 2, createBoring(makeWhole(2)))); 
-    addEnemy(w, createF16(x + 15, 40, 2, createBoring(makeWhole(2)))); 
-    addEnemy(w, createF16(x + 30, 80, 2, createBoring(makeWhole(2)))); 
+    Explosion* e = createExplosion(makePoint(0, 0), EXPLOSION_SMALL, 5);
+    alignCenter(e, who);
+
+    addUpdateable(world, e);
 }
 
-static void spawnManyF18(World* w, int16 x, bool increasing)
+static void impactProjectile(Projectile* p, Entity* e, World* world)
 {
-    int16 mult;
-    if (increasing)
-        mult = 1;
-    else
-        mult = -1;
+    addUpdateable(world, createExplosion(p->position, EXPLOSION_TINY, 10));
+}
 
-    addEnemy(w, createF18(x + mult *  0, 20, 1, createChase(2, 1))); 
-    addEnemy(w, createF18(x + mult * 10, 40, 1, createChase(2, 1))); 
-    addEnemy(w, createF18(x + mult * 20, 60, 1, createChase(2, 1))); 
-    addEnemy(w, createF18(x + mult * 30, 80, 1, createChase(2, 1))); 
+static void spawnF(World* w)
+{
+    Behavior** bs;
+    Enemy* e;
+
+    Projectile* p = createProjectile(plasmaAnimation(), 0,
+                                     createBoring(makeWhole(5)),
+                                     1,
+                                     makePoint(0, 0),
+                                     impactProjectile);
+
+
+    bs = newArray(Behavior*, 2);
+    bs[0] = createBoring(makeWhole(2));
+    bs[1] = createRandomShoot(500);
+
+    e = createEnemy(f16Animation(), 0, 
+                    createChainBehavior(bs, 2),
+                    2, 
+                    makePoint(80, -40),
+                    p,
+                    killEnemy);
+    addEnemy(w, e);
 }
 
 #include "level1.lvl.inl"

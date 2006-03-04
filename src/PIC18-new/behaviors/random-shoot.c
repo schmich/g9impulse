@@ -1,21 +1,15 @@
 #include "random-shoot.h"
-#include "plasma.h"
+#include "player.h"
+#include "enemy.h"
 
-static uint8 updateRandomShoot(Updateable* who, World* world)
+static uint8 updateRandomShoot(Enemy* who, World* world)
 {
-    Plasma* p;
     RandomShoot* r = who->behavior;
 
     if (entityBottom(who) > 0)
     {
         if (rand() < r->frequency)
-        {
-            p = createPlasma(makePoint(0, 0), 5);
-            alignCenterBottom(p, who);
-            p->position.y += entityHeight(p);
-
-            addEnemyProjectile(world, p);
-        }
+            fire(who, world);
     }
 
     return UPDATE_KEEP;
