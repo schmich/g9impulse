@@ -165,7 +165,7 @@ void drawWorld(World* world)
 {
     Node* curr;
 
-    drawSprite(world->level->background);
+    drawBackground(world->level->background);
 
     for_each (curr, world->underlays)
         drawSprite(curr->data);

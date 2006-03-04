@@ -11,6 +11,7 @@ typedef struct Background
     uint8  step;
 } Background;
 
-Background* createBackground(Image image);
+Background* createBackground(void);
+void drawBackground(Background* bg);
 
 #endif // BACKGROUND_H

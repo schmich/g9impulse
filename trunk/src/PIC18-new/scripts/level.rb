@@ -59,11 +59,11 @@ Level* create#{upname}(void)
 {
     if (!theLevelInit)
     {
-        theLevel.background = createBackground(makeOpaqueImage(#{background}, 0xA0, 0xF0));
         theLevel.destroy = destroyLevel;
         theLevelInit = true;
     }
 
+    theLevel.background = createBackground();
     return &theLevel;
 }
 """

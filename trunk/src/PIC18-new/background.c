@@ -1,16 +1,11 @@
 #include "background.h"
 #include "animation.h"
-
-static void scrollBackground(Background* bg, uint16 lines)
-{
-    currentImage(bg)->address -= lines * SCREEN_WIDTH;
-}
+#include "background.anim.inl"
 
 static uint8 updateBackground(Background* bg, World* world)
 {
     if (++bg->step == 2)
     {
-        scrollBackground(bg, 1);
         bg->progress++;
         bg->step = 0;
     }
@@ -20,14 +15,11 @@ static uint8 updateBackground(Background* bg, World* world)
 
 static void destroyBackground(Background* bg)
 {
-    destroy(bg->animation);
     destroy(bg->behavior);
 }
 
-Background* createBackground(Image image)
+Background* createBackground(void)
 {
-    Animation* anim = createAnimation();
-
     Background* bg = new(Background);
     bg->destroy = destroyBackground;
     bg->behavior = createBehavior(updateBackground);
@@ -35,14 +27,19 @@ Background* createBackground(Image image)
     bg->progress = SCREEN_HEIGHT;
     bg->step = 0;
 
-    anim->images = newArray(Image, 1);
-    anim->images[0] = image;
-    anim->numImages = 1;
-    bg->animation = anim;
-
+    bg->animation = backgroundAnimation();
     animationBeginning(bg);
 
-    scrollBackground(bg, SCREEN_HEIGHT);
-
     return bg;
+}
+
+void drawBackground(Background* bg)
+{
+    rom Image* img = currentImage(bg);
+    uint32 offset = (uint32)bg->progress * SCREEN_WIDTH;
+
+    draw(img->address - offset,
+         img->width, img->height,
+         0, 0,
+         false);
 }

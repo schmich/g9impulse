@@ -1,4 +1,4 @@
 [player]
-0x000D7A20      16      28
-0x000D8BA0      16      28
-0x000D9D20      16      28
+0x000D7A20      16      28      -- center
+0x000D8BA0      16      28      -- left
+0x000D9D20      16      28      -- right

@@ -2,7 +2,7 @@
 
 static void destroyAnimation(Animation* a)
 {
-    free(a->images);
+    //free(a->images);
 }
 
 Animation* createAnimation(void)

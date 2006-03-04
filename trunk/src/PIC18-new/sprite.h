@@ -49,6 +49,6 @@ bool animationPrevious(Sprite* what);
 void animationBeginning(Sprite* what);
 void animationEnding(Sprite* what);
 
-Image* currentImage(Sprite* what);
+rom Image* currentImage(Sprite* what);
 
 #endif // SPRITE_H
