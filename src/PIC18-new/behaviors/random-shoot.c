@@ -6,7 +6,7 @@ static uint8 updateRandomShoot(Enemy* who, World* world)
 {
     RandomShoot* r = who->behavior;
 
-    if (entityBottom(who) > 0)
+    if (spriteBottom(who) > 0)
     {
         if (rand() < r->frequency)
             fire(who, world);

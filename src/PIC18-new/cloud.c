@@ -36,7 +36,7 @@ Cloud* createCloud(int16 x, int16 recess, Fraction speed, uint8 size)
 
     animationBeginning(c);
     
-    height = entityHeight(c);
+    height = spriteHeight(c);
     c->position.x = x;
     c->position.y = -height - recess;
 

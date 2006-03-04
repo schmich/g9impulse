@@ -25,7 +25,7 @@ static void killPlayer(Player* who, World* world)
     addUpdateable(world, e);
 }
 
-static void impactProjectile(Projectile* p, Entity* e, World* world)
+static void impactProjectile(Projectile* p, Sprite* s, World* world)
 {
     addUpdateable(world, createExplosion(p->position, EXPLOSION_TINY, 10));
 }
@@ -100,7 +100,7 @@ static uint8 updatePlayer(Player* who, World* world)
     }
     else
     {
-        width = entityWidth(who);
+        width = spriteWidth(who);
 
         if ((who->position.x + width) > SCREEN_WIDTH)
             who->position.x = SCREEN_WIDTH - width;
@@ -112,7 +112,7 @@ static uint8 updatePlayer(Player* who, World* world)
     }
     else
     {
-        height = entityHeight(who);
+        height = spriteHeight(who);
 
         if ((who->position.y + height) > (SCREEN_HEIGHT + 5))
             who->position.y = (SCREEN_HEIGHT + 5) - height;

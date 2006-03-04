@@ -15,7 +15,7 @@ static uint8 updateBoring(Updateable* who, World* world)
         //
         // heading downscreen
         //
-        if (entityTop(who) > SCREEN_HEIGHT)
+        if (spriteTop(who) > SCREEN_HEIGHT)
             return UPDATE_REMOVE;
     }
     else
@@ -23,7 +23,7 @@ static uint8 updateBoring(Updateable* who, World* world)
         //
         // heading upscreen
         //
-        if (entityBottom(who) < 0)
+        if (spriteBottom(who) < 0)
             return UPDATE_REMOVE;
     }
 

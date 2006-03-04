@@ -8,7 +8,7 @@ static uint8 updateLockOn(Enemy* who, World* world)
     int16 threshold = 10;
     LockOn* lo = who->behavior;
 
-    diff = entityCenter(world->player).x - entityCenter(who).x;
+    diff = spriteCenter(world->player).x - spriteCenter(who).x;
     if ((diff <= threshold) && (diff >= -threshold))
     {
         if (rand() < lo->frequency)
