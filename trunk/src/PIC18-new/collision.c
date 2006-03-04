@@ -1,34 +1,34 @@
 #include "collision.h"
 
-bool intersects(Entity* p, Entity* q)
+bool intersects(Sprite* p, Sprite* q)
 {
     int16 pl, pr, pt, pb;
     int16 ql, qr, qt, qb;
 
-    qt = entityTop(q);
-    pb = entityBottom(p);
+    qt = spriteTop(q);
+    pb = spriteBottom(p);
     if (qt > pb)
         return false;
 
-    qb = entityBottom(q);
-    pt = entityTop(p);
+    qb = spriteBottom(q);
+    pt = spriteTop(p);
     if (qb < pt)
         return false;
 
-    qr = entityRight(q);
-    pl = entityLeft(p);
+    qr = spriteRight(q);
+    pl = spriteLeft(p);
     if (qr < pl)
         return false;
 
-    ql = entityLeft(q);
-    pr = entityRight(p);
+    ql = spriteLeft(q);
+    pr = spriteRight(p);
     if (ql > pr)
         return false;
 
     return true;
 }
 
-Node* collides(Entity* who, List* items)
+Node* collides(Sprite* who, List* items)
 {
     Node* item;
 

@@ -2,7 +2,7 @@
 #define UPDATEABLE_H
 
 #include "common.h"
-#include "entity.h"
+#include "sprite.h"
 #include "destroyable.h"
 #include "world.h"
 
@@ -20,7 +20,7 @@ typedef struct Behavior
     BEHAVIOR_BASE;
 } Behavior;
 
-#define UPDATEABLE_BASE ENTITY_BASE; \
+#define UPDATEABLE_BASE SPRITE_BASE; \
                         Behavior* behavior
 
 typedef struct Updateable

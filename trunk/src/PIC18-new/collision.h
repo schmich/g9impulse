@@ -2,9 +2,9 @@
 #define COLLISION_H
 
 #include "common.h"
-#include "entity.h"
+#include "sprite.h"
 #include "list.h"
 
-Node* collides(Entity* who, List* items);
+Node* collides(Sprite* who, List* items);
 
 #endif // COLLISION_H

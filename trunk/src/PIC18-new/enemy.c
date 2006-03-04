@@ -33,7 +33,7 @@ void fire(Enemy* e, World* w)
     *p = *e->weapon;
 
     alignCenterBottom(p, e);
-    p->position.y += entityHeight(p);
+    p->position.y += spriteHeight(p);
 
     addEnemyProjectile(w, p);
 }
