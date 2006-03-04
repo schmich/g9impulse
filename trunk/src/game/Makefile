@@ -14,6 +14,8 @@ LINK=$(MCC_DIR)/bin/mplink.exe
 LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" sdk/18f4620.lkr
 LFLAGS=$(LIBS)
 
+TRY=tools/try
+
 DEPC=gcc
 DEPFLAGS=-MM -MG -I$(MCC_DIR)/h $(GCC_INC) -D__18F4620
 
@@ -45,23 +47,23 @@ release: all
 
 $(OUT): $(OBJS)
 	@echo -n "Linking $(shell basename $@)..."
-	@$(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
+	@$(TRY) $(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
 	@cp $@ ../../assets
 	@echo "done"
 
 %.anim.inl: animations/%.anim tools/anim.rb
 	@echo -n "Generating animation $@..."
-	@tools/anim.rb $< > $@
+	@$(TRY) tools/anim.rb $< > $@
 	@echo "done"
 
 %.lvl.inl: levels/%.lvl tools/level.rb
 	@echo -n "Generating level $@..."
-	@tools/level.rb $< > $@
+	@$(TRY) tools/level.rb $< > $@
 	@echo "done"
 
 %.o:
 	@echo -n "Compiling $(shell basename $(@:.o=.c))..."
-	@$(CC) $(CFLAGS) $(shell find . -iname $(shell basename $@ .o).c) -fo=$@
+	@$(TRY) $(CC) $(CFLAGS) $(shell find . -iname $(shell basename $@ .o).c) -fo=$@
 	@echo "done"
 
 ifeq '' '$(findstring clean,$(MAKECMDGOALS))'
@@ -71,7 +73,7 @@ endif
 $(DEPFILE):
 	@echo -n "Generating dependencies..."
 	@mkdir -p $(BUILD_DIR)
-	@$(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE).tmp
+	@$(TRY) $(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE).tmp
 	@cat $(DEPFILE).tmp | sed 's/^\(.*\.o\)/$(BUILD_DIR)\/\1/' > $(DEPFILE)
 	@rm -f $(DEPFILE).tmp
 	@echo "done"
