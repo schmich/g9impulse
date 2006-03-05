@@ -15,6 +15,7 @@ LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" sdk/18f4620.lkr
 LFLAGS=$(LIBS)
 
 TRY=tools/try
+FIXDEPS=tools/fixdeps.rb
 
 DEPC=gcc
 DEPFLAGS=-MM -MG -I$(MCC_DIR)/h $(GCC_INC) -D__18F4620
@@ -51,13 +52,13 @@ $(OUT): $(OBJS)
 	@cp $@ ../../assets
 	@echo "done"
 
-%.anim.inl: animations/%.anim tools/anim.rb
-	@echo -n "Generating animation $@..."
+$(BUILD_DIR)/%.anim.inl: animations/%.anim tools/anim.rb
+	@echo -n "Generating animation $(shell basename $@)..."
 	@$(TRY) tools/anim.rb $< > $@
 	@echo "done"
 
-%.lvl.inl: levels/%.lvl tools/level.rb
-	@echo -n "Generating level $@..."
+$(BUILD_DIR)/%.lvl.inl: levels/%.lvl tools/level.rb
+	@echo -n "Generating level $(shell basename $@)..."
 	@$(TRY) tools/level.rb $< > $@
 	@echo "done"
 
@@ -67,14 +68,16 @@ $(OUT): $(OBJS)
 	@echo "done"
 
 ifeq '' '$(findstring clean,$(MAKECMDGOALS))'
-    -include $(DEPFILE)
+    ifeq '' '$(findstring nuke,$(MAKECMDGOALS))'
+        -include $(DEPFILE)
+    endif
 endif
 
 $(DEPFILE):
 	@echo -n "Generating dependencies..."
 	@mkdir -p $(BUILD_DIR)
-	@$(TRY) $(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE).tmp
-	@cat $(DEPFILE).tmp | sed 's/^\(.*\.o\)/$(BUILD_DIR)\/\1/' > $(DEPFILE)
+	@$(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE).tmp
+	@cat $(DEPFILE).tmp | $(FIXDEPS) $(BUILD_DIR) > $(DEPFILE)
 	@rm -f $(DEPFILE).tmp
 	@echo "done"
 
@@ -85,6 +88,6 @@ clean:
 depclean:
 	rm -f $(DEPFILE)
 
-nuke: clean depclean
+nuke: depclean clean
 
 .PHONY: all release clean depclean nuke

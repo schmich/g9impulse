@@ -1,6 +1,6 @@
 OUT=paste
 
-GRAMMAR=paste.y
+GRAMMAR=$(shell /bin/ls -1 *.y | head -n 1)
 GRAMMAR_SRC=$(GRAMMAR:.y=.hs)
 SRCS=$(shell /bin/ls -1 *.hs)
 SRCS+=$(GRAMMAR_SRC)
