@@ -1,0 +1,4 @@
+augroup filetype
+    au! BufRead,BufNewFile *.lvl set filetype=paste
+    au  BufRead,BufNewFile *.lvl runtime indent/paste.vim
+augroup END
