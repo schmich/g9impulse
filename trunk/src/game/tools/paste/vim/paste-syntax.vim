@@ -23,8 +23,11 @@ syn match   pasteInherit /\(<\(\(<\|\s\)*\)\)\@<!</ contained
 
 syn match pasteEvent /\v^\d+/
 
-syn keyword pasteField animation impact
-syn keyword pasteField weapon death search
+syn match pasteField /animation:/
+syn match pasteField /impact:/
+syn match pasteField /weapon:/
+syn match pasteField /death:/
+syn match pasteField /search:/
 
 syn region pasteHealth matchgroup=pasteField start=/\v^\s*health:/ end=/$/ contains=pasteInteger,pasteBadHealthValue
 syn match  pasteBadHealthValue /\v[^ 0-9]/ contained
@@ -52,7 +55,7 @@ syn match pasteInteger "\(\(,\|\[\|\s\|(\|:\)\)\@<=[-+]\?\d\+\(,\|\s\|)\|:\|]\|\
 syn match pastePercent "\(\(,\|\s\|(\|:\)\)\@<=[-+]\?\d\+%\(,\|\s\|)\|:\|\n\)\@="
 
 syn match pasteColon ':'
-syn match pasteColon ':' contained containedin=pasteDamage,pasteHealth,pasteAnim,pasteMotion,pasteFiring
+syn match pasteColon ':' contained containedin=pasteDamage,pasteHealth,pasteAnim,pasteMotion,pasteFiring,pasteField
 
 if main_syntax == "paste"
   syn sync minlines=10
