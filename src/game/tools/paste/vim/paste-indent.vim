@@ -29,7 +29,7 @@ function GetPasteIndent()
         return 0
     endif
 
-    if indent(lnum - 1) > 0 && getline(lnum - 1) !~ '^\s*$'
+    if getline(lnum - 1) !~ '^\s*$'
         return &sw
     endif
 
