@@ -53,13 +53,14 @@ void load_l_size(uint8 size)
     PORTA = 0x00;
 }
 
-void load_alphaOp( bool alphaOp)
+void load_alphaOp(bool alphaOp)
 {
     PORTC = 0x08;
     if (alphaOp)
         PORTB = 0x01;
     else
         PORTB = 0x00;
+
     PORTA = 0x01;
     PORTA = 0x00;
 }

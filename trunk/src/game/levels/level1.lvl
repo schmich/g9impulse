@@ -2,7 +2,10 @@
 0x002C4340
 
 [200]
-spawnManyF18(w, 40, false);
+--spawnManyF18(w, 40, false);
+spawnF18Cut(w, makePoint(30, -23), true);
+spawnF18Cut(w, makePoint(15, -46), true);
+spawnF18Cut(w, makePoint(0, -69), true);
 addOverlay(w, createCloud(20, 10, makeWhole(1), CLOUD_MEDIUM));
 addOverlay(w, createCloud(100, 250, makeWhole(1), CLOUD_SMALL));
 

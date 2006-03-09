@@ -79,7 +79,7 @@ animations.each { |animation|
 }
 
 poolName = "the_" + filename.gsub(/[^\w]+/, '_') + "_pool"
-puts "const near rom uint8 #{poolName}[] = "
+puts "static const near rom uint8 #{poolName}[] = "
 puts "{"
 animations.each { |animation|
     name, images = animation

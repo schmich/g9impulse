@@ -4,7 +4,7 @@
 #include "common.h"
 #include "destroyable.h"
 
-#define for_each(elem, list) for ((elem) = (list)->head; (elem) != NULL; (elem) = (elem)->next)
+#define foreach(elem, list) for ((elem) = (list)->head; (elem) != NULL; (elem) = (elem)->next)
 
 typedef struct Node
 {

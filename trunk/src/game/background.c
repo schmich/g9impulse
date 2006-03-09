@@ -38,8 +38,5 @@ void drawBackground(Background* bg)
     rom Image* img = currentImage(bg);
     uint32 offset = (uint32)bg->progress * SCREEN_WIDTH;
 
-    draw(img->address - offset,
-         img->width, img->height,
-         0, 0,
-         false);
+    drawFullscreen(img->address - offset);
 }

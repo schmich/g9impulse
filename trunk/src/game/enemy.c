@@ -8,12 +8,15 @@ static void destroyEnemy(Enemy* e)
 static void fireEnemy(Entity* e, World* w)
 {
     Projectile* p;
-    e->spawnProjectile(&p);
+    e->spawnProjectile(e, w, &p);
 
-    alignCenterBottom(p, e);
-    p->position.y += spriteHeight(p);
+    if (p)
+    {
+        alignCenterBottom(p, e);
+        p->position.y += spriteHeight(p);
 
-    addEnemyProjectile(w, p);
+        addEnemyProjectile(w, p);
+    }
 }
 
 Enemy* createEnemy(Animation* anim,
