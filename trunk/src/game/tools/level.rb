@@ -38,7 +38,7 @@ static Level theLevel =
 """
 end
 
-def writeInit(name, background)
+def writeInit(name)
     upname = name.clone
     upname[/./] = upname[/./].upcase
     while upname.match(/\s+(.)/)
@@ -76,7 +76,6 @@ end
 
 levelName = nil
 background = nil
-captureBackground = false
 
 time = nil
 commands = nil
@@ -90,25 +89,15 @@ File.open(filename) { |file|
             when /^\-\-/,/^\s*$/
             when /\s*\[([A-Za-z][\w ]*)\]\s*/
                 levelName = $1
-                captureBackground = true 
             when /\s*\[(\d+)\]\s*/
-                captureBackground = false
                 events << [time, commands] if not time.nil?
                 time = $1
                 commands = []
             when /^\s*(0[xX][0-9A-Fa-f]+|\d+)\s*$/
-                if captureBackground
-                    background = $1
-                else
-                    commands << $1.strip
-                end
+                commands << $1.strip
             when /^\s*$/
             when /(.*)/
-                if captureBackground
-                    puts "Invalid syntax, line #{lineNum}"
-                    exit(-1)
-                end
-                commands << $1.strip
+                commands << $1.strip if not commands.nil?
         end
 
         lineNum = lineNum + 1
@@ -126,4 +115,4 @@ events.each { |event|
 }
 
 writeEvents(events)
-writeInit(levelName, background)
+writeInit(levelName)

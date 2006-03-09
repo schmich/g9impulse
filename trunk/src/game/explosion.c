@@ -11,7 +11,7 @@ Explosion* createExplosion(Point where, uint8 size, uint8 frames)
 {
     Explosion* e = new(Explosion);
     e->destroy = destroyExplosion;
-    e->behavior = createAnimator(frames);
+    e->behavior = createAnimator(frames, 1);
     e->position = where;
 
     switch (size)

@@ -14,19 +14,9 @@ static uint8 updateChase(Updateable* who, World* world)
         diff = spriteCenter(world->player).x - spriteCenter(who).x;
 
         if (diff > threshold)
-        {
             who->position.x += c->horizSpeed;
-            who->currentFrame = 2;
-        }
         else if (diff < -threshold)
-        {
             who->position.x -= c->horizSpeed;
-            who->currentFrame = 1;
-        }
-        else
-        {
-            who->currentFrame = 0;
-        }
     }
 
     if (c->vertSpeed > 0)

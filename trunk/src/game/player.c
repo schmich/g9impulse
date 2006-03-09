@@ -5,12 +5,12 @@
 #include "projectile.h"
 #include "boring.h"
 #include "chain.h"
-#include "input-shoot.h"
 #include "player.anim.inl"
 #include "bullet.anim.inl"
 
-#define PLAYER_MAX_MOMENTUM_Y 13
-#define PLAYER_MAX_MOMENTUM_X 10
+#define MAX_MOMENTUM_Y 13
+#define MAX_MOMENTUM_X 10
+#define MAX_COOLDOWN 7
 
 static void destroyPlayer(Player* p)
 {
@@ -20,7 +20,7 @@ static void destroyPlayer(Player* p)
 static void killPlayer(Player* who, World* world)
 {
     Explosion* e = createExplosion(makePoint(0, 0), EXPLOSION_LARGE, 7);
-    alignCenter(e, who);
+    setSpriteCenter(e, spriteCenter(who));
 
     addUpdateable(world, e);
 }
@@ -32,9 +32,7 @@ static void firePlayer(Entity* player, World* world)
 
     if (p)
     {
-        alignCenterTop(p, player);
-        p->position.y -= spriteHeight(p);
-
+        setSpriteCenterTop(p, spriteCenterTop(player));
         addPlayerProjectile(world, p);
     }
 }
@@ -60,14 +58,36 @@ static uint8 updatePlayer(Player* who, World* world)
     uint8 width;
     uint8 height;
 
+    if (getInputEvent()->buttonBPressed)
+    {
+        if (who->heat < 6)
+        {
+            fire(who, world);
+
+            ++who->heat;
+            who->cooldown = MAX_COOLDOWN;
+        }
+    }
+    else
+    {
+        if (who->heat > 0)
+        {
+            if (--who->cooldown == 0)
+            {
+                --who->heat;
+                who->cooldown = MAX_COOLDOWN;
+            }
+        }
+    }
+
     if (input->leftPressed)
     {
         who->position.x -= 1;
 
-        if (--who->momentum.x < -(PLAYER_MAX_MOMENTUM_X / 2))
+        if (--who->momentum.x < -(MAX_MOMENTUM_X / 2))
         {
-            if (who->momentum.x < -PLAYER_MAX_MOMENTUM_X)
-                who->momentum.x = -PLAYER_MAX_MOMENTUM_X;
+            if (who->momentum.x < -MAX_MOMENTUM_X)
+                who->momentum.x = -MAX_MOMENTUM_X;
 
             rollLeft(who);
         }
@@ -76,10 +96,10 @@ static uint8 updatePlayer(Player* who, World* world)
     {
         who->position.x += 1;
 
-        if (++who->momentum.x > (PLAYER_MAX_MOMENTUM_X / 2))
+        if (++who->momentum.x > (MAX_MOMENTUM_X / 2))
         {
-            if (who->momentum.x > PLAYER_MAX_MOMENTUM_X)
-                who->momentum.x = PLAYER_MAX_MOMENTUM_X;
+            if (who->momentum.x > MAX_MOMENTUM_X)
+                who->momentum.x = MAX_MOMENTUM_X;
 
             rollRight(who);
         }
@@ -91,20 +111,20 @@ static uint8 updatePlayer(Player* who, World* world)
         else if (who->momentum.x > 0)
             --who->momentum.x;
 
-        if ((who->momentum.x > -(PLAYER_MAX_MOMENTUM_X / 2)) &&
-            (who->momentum.x < (PLAYER_MAX_MOMENTUM_X / 2)))
+        if ((who->momentum.x > -(MAX_MOMENTUM_X / 2)) &&
+            (who->momentum.x < (MAX_MOMENTUM_X / 2)))
             noRoll(who);
     }
 
     if (input->upPressed)
     {
-        if (--who->momentum.y < -PLAYER_MAX_MOMENTUM_Y)
-            who->momentum.y = -PLAYER_MAX_MOMENTUM_Y;
+        if (--who->momentum.y < -MAX_MOMENTUM_Y)
+            who->momentum.y = -MAX_MOMENTUM_Y;
     }
     else if (input->downPressed)
     {
-        if (++who->momentum.y > PLAYER_MAX_MOMENTUM_Y)
-            who->momentum.y = PLAYER_MAX_MOMENTUM_Y;
+        if (++who->momentum.y > MAX_MOMENTUM_Y)
+            who->momentum.y = MAX_MOMENTUM_Y;
     }
     else
     {
@@ -129,9 +149,9 @@ static uint8 updatePlayer(Player* who, World* world)
             who->position.x = SCREEN_WIDTH - width;
     }
 
-    if (who->position.y < 25) // HACK no magic constant (height of border)
+    if (who->position.y < 0)
     {
-        who->position.y = 25;
+        who->position.y = 0;
     }
     else
     {
@@ -154,10 +174,7 @@ Player* createPlayer(Point where)
     player->kill = killPlayer;
     player->fire = firePlayer;
 
-    bs = newArray(Behavior*, 2);
-    bs[0] = createBehavior(updatePlayer);
-    bs[1] = createInputShoot();
-    player->behavior = createChainBehavior(bs, 2);
+    player->behavior = createBehavior(updatePlayer);
 
     player->animation = playerAnimation();
     animationBeginning(player);
@@ -166,6 +183,7 @@ Player* createPlayer(Point where)
     player->momentum.x = 0;
     player->momentum.y = 0;
     player->heat = 0;
+    player->cooldown = MAX_COOLDOWN;
 
     player->spawnProjectile = spawnProjectilePlayer;
 

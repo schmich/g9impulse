@@ -34,15 +34,25 @@ Point spriteRightLower(Sprite* what);
 Point spriteLeftUpper(Sprite* what);
 Point spriteRightUpper(Sprite* what);
 
-void alignCenter(Sprite* arrow, Sprite* target);
-void alignCenterTop(Sprite* arrow, Sprite* target);
-void alignCenterBottom(Sprite* arrow, Sprite* target);
-void alignLeftCenter(Sprite* arrow, Sprite* target);
-void alignRightCenter(Sprite* arrow, Sprite* target);
-void alignLeftLower(Sprite* arrow, Sprite* target);
-void alignRightLower(Sprite* arrow, Sprite* target);
-void alignLeftUpper(Sprite* arrow, Sprite* target);
-void alignRightUpper(Sprite* arrow, Sprite* target);
+Point screenCenter(void);
+Point screenCenterTop(void);
+Point screenCenterBottom(void);
+Point screenLeftCenter(void);
+Point screenRightCenter(void);
+Point screenLeftLower(void);
+Point screenRightLower(void);
+Point screenLeftUpper(void);
+Point screenRightUpper(void);
+
+void setSpriteCenter(Sprite* s, Point p);
+void setSpriteCenterTop(Sprite* s, Point p);
+void setSpriteCenterBottom(Sprite* s, Point p);
+void setSpriteLeftCenter(Sprite* s, Point p);
+void setSpriteRightCenter(Sprite* s, Point p);
+void setSpriteLeftLower(Sprite* s, Point p);
+void setSpriteRightLower(Sprite* s, Point p);
+void setSpriteLeftUpper(Sprite* s, Point p);
+void setSpriteRightUpper(Sprite* s, Point p);
 
 bool animationNext(Sprite* what);
 bool animationPrevious(Sprite* what);

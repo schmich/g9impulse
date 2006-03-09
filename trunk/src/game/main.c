@@ -6,18 +6,44 @@
 #include "world.h"
 #include "level1.h"
 #include "timer.h"
+#include "pause.anim.inl"
+#include "gpu.h"
 
 #define FRAME_TIME 900
+
+void handleInput(uint8* buffer)
+{
+    Animation* pause = pauseAnimation();
+
+    if (getInputStatus()->startPressed)
+    {
+        drawImage(&pause->images[0],
+                  makePoint(60, 85),
+                  true);
+
+        flipBuffer(buffer);
+
+        while (getInputStatus()->startPressed) ;
+        while (!getInputStatus()->startPressed) ;
+
+        getInputStatus()->startPressed = false;
+    }
+}
 
 void playGame(void)
 {
     uint8 buffer = 0;
-    World* world = createWorld(createPlayer(makePoint(80, 200)), createLevel1());
+    World* world = createWorld(createPlayer(makePoint(0, 0)), createLevel1());
 
     setDoubleBuffer(true);
     setFieldColor(0);
 
     initTimer();
+
+    //
+    // HACK prevent immediate pause (from title screen)
+    //
+    getInputStatus()->startPressed = false;
 
     while (active(world))
     {
@@ -26,6 +52,8 @@ void playGame(void)
         drawWorld(world);
         updateWorld(world);
         collideWorld(world);
+
+        handleInput(&buffer);
 
         //
         // HACK drawing bug, uncomment to exploit
@@ -37,7 +65,7 @@ void playGame(void)
         while (timeElapsed() < FRAME_TIME)
         {
             //
-            // hang out
+            // hang out until we've hit frame target time
             //
         }
     }

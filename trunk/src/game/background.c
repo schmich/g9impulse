@@ -1,12 +1,19 @@
 #include "background.h"
 #include "animation.h"
 #include "background.anim.inl"
+#include "gpu.h"
+
+#define LOOP_END    7229
+#define LOOP_START  6824
 
 static uint8 updateBackground(Background* bg, World* world)
 {
     if (++bg->step == 2)
     {
-        bg->progress++;
+        ++bg->progress;
+        if (++bg->offset == LOOP_END)
+            bg->offset = LOOP_START;
+
         bg->step = 0;
     }
 
@@ -24,7 +31,7 @@ Background* createBackground(void)
     bg->destroy = destroyBackground;
     bg->behavior = createBehavior(updateBackground);
     bg->position = makePoint(0, 0);
-    bg->progress = SCREEN_HEIGHT;
+    bg->progress = bg->offset = SCREEN_HEIGHT;
     bg->step = 0;
 
     bg->animation = backgroundAnimation();
@@ -36,7 +43,7 @@ Background* createBackground(void)
 void drawBackground(Background* bg)
 {
     rom Image* img = currentImage(bg);
-    uint32 offset = (uint32)bg->progress * SCREEN_WIDTH;
+    uint32 offset = (uint32)bg->offset * SCREEN_WIDTH;
 
     drawFullscreen(img->address - offset);
 }

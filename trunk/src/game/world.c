@@ -7,9 +7,8 @@
 #include "collision.h"
 #include "level.h"
 #include "artifact.h"
-#include "health.anim.inl"
-
-Sprite* theHealthSprite = NULL;
+#include "health-meter.h"
+#include "heat-meter.h"
 
 static void destroyWorld(World* w)
 {
@@ -44,6 +43,8 @@ static void destroyWorld(World* w)
     destroy(w->underlays);
     destroy(w->artifacts);
 
+    destroy(w->healthMeter);
+    destroy(w->heatMeter);
     destroy(w->player);
     destroyStatic(w->level);
 }
@@ -61,20 +62,17 @@ World* createWorld(Player* player, Level* level)
     w->underlays = createList();
     w->artifacts = createList();
 
-    w->player = player;
     w->level = level;
+    w->player = player;
+    setSpriteCenterTop(w->player, screenCenterBottom());
+
+    w->healthMeter = createHealthMeter(w->player, makePoint(130, 230));
+    w->heatMeter = createHeatMeter(w->player, makePoint(1, 230));
+
+    w->intro = true;
+    w->introStep = 0;
 
     w->active = true;
-
-    if (!theHealthSprite)
-    {
-        theHealthSprite = new(Sprite);
-        theHealthSprite->destroy = nullDestroy;
-        theHealthSprite->position = makePoint(130, 230);
-        theHealthSprite->animation = healthAnimation();
-
-        animationBeginning(theHealthSprite);
-    }
 
     return w;
 }
@@ -182,22 +180,44 @@ void drawWorld(World* world)
     foreach (curr, world->enemyProjectiles)
         drawSprite(curr->data);
 
+    foreach (curr, world->artifacts)
+        drawSprite(curr->data);
+
     foreach (curr, world->updateables)
         drawSprite(curr->data);
 
     foreach (curr, world->overlays)
         drawSprite(curr->data);
 
-    theHealthSprite->currentFrame = 6 - world->player->health;
-    drawSprite(theHealthSprite);
+    drawSprite(world->heatMeter);
+    drawSprite(world->healthMeter);
 }
 
 void updateWorld(World* world)
 {
     Node* curr;
+    int16 stop;
 
-    if (!dead(world->player))
-        update(world->player, world);
+    if (world->intro)
+    {
+        if (++world->introStep == 2)
+        {
+            stop = SCREEN_HEIGHT - (int16)spriteHeight(world->player) * 2;
+
+            if (--world->player->position.y == stop)
+                world->intro = false;
+
+            world->introStep = 0;
+        }
+    }
+    else
+    {
+        if (!dead(world->player))
+            update(world->player, world);
+    }
+
+    update(world->heatMeter, world);
+    update(world->healthMeter, world);
 
     update(world->level->background, world);
     updateLevel(world->level, world);
@@ -234,6 +254,15 @@ void updateWorld(World* world)
     {
         if (update(curr->data, world) == UPDATE_REMOVE)
             curr = removeEnemyProjectile(world, curr);
+        else
+            curr = curr->next;
+    }
+
+    curr = world->artifacts->head;
+    while (curr != NULL)
+    {
+        if (update(curr->data, world) == UPDATE_REMOVE)
+            curr = removeArtifact(world, curr);
         else
             curr = curr->next;
     }
