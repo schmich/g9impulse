@@ -1,18 +1,27 @@
 #include "level1.h"
 #include "cloud.h"
 #include "boring.h"
+#include "hover.h"
 #include "direct.h"
 #include "enemy.h"
 #include "chain.h"
 #include "chase.h"
+#include "animator.h"
+#include "roll.h"
 #include "random-shoot.h"
 #include "lock-on.h"
 #include "projectile.h"
 #include "explosion.h"
+#include "powerup.h"
 #include "f16.anim.inl"
 #include "f18.anim.inl"
+#include "mig.anim.inl"
+#include "chopper.anim.inl"
 #include "plasma.anim.inl"
 #include "fireball.anim.inl"
+#include "powerup.anim.inl"
+#include "player.h"
+#include "world.h"
 
 static int16 abs(int16 x)
 {
@@ -22,10 +31,27 @@ static int16 abs(int16 x)
         return x;
 }
 
+static void spawnPowerup(World* world, Point where)
+{
+    Artifact* a;
+    Behavior** bs;
+
+    bs = newArray(Behavior*, 3);
+    bs[0] = createBoring(makeWhole(1));
+    bs[1] = createAnimator(20, FOREVER);
+
+    a = createArtifact(powerupAnimation(), 0,
+                       createChainBehavior(bs, 2),
+                       where,
+                       addHealth);
+
+    addArtifact(world, a);
+}
+
 static void killEnemy(Enemy* who, World* world)
 {
     Explosion* e = createExplosion(makePoint(0, 0), EXPLOSION_SMALL, 4);
-    alignCenter(e, who);
+    setSpriteCenter(e, spriteCenter(who));
 
     addUpdateable(world, e);
 }
@@ -63,17 +89,37 @@ static void spawnFireball(Entity* who, World* world, Projectile** p)
                           impactProjectile);
 }
 
+static void spawnChopper(World* w, Point where)
+{
+    Behavior** bs;
+    Enemy* e;
+
+    bs = newArray(Behavior*, 3);
+    bs[0] = createHover(75, 250);
+    bs[1] = createAnimator(1, FOREVER);
+    bs[2] = createRandomShoot(300);
+
+    e = createEnemy(chopperAnimation(), 0, 
+                    createChainBehavior(bs, 3),
+                    2,
+                    where,
+                    spawnPlasma,
+                    killEnemy);
+    addEnemy(w, e);
+}
+
 static void spawnF16(World* w, Point where)
 {
     Behavior** bs;
     Enemy* e;
 
-    bs = newArray(Behavior*, 2);
+    bs = newArray(Behavior*, 3);
     bs[0] = createBoring(makeWhole(2));
     bs[1] = createRandomShoot(300);
+    bs[2] = createAnimator(3, FOREVER);
 
     e = createEnemy(f16Animation(), 0, 
-                    createChainBehavior(bs, 2),
+                    createChainBehavior(bs, 3),
                     2,
                     where,
                     spawnPlasma,
@@ -86,13 +132,32 @@ static void spawnF18(World* w, Point where)
     Behavior** bs;
     Enemy* e;
 
-    bs = newArray(Behavior*, 2);
+    bs = newArray(Behavior*, 3);
     bs[0] = createChase(2, 1);
-    bs[1] = createLockOn(800);
+    bs[1] = createRoll(where.x);
+    bs[2] = createLockOn(800);
 
     e = createEnemy(f18Animation(), 0, 
-                    createChainBehavior(bs, 2),
+                    createChainBehavior(bs, 3),
                     1, 
+                    where,
+                    spawnFireball,
+                    killEnemy);
+    addEnemy(w, e);
+}
+
+static void spawnMig(World* w, Point where)
+{
+    Behavior** bs;
+    Enemy* e;
+
+    bs = newArray(Behavior*, 2);
+    bs[0] = createBoring(makeWhole(3));
+    bs[1] = createRandomShoot(300);
+
+    e = createEnemy(migAnimation(), 0, 
+                    createChainBehavior(bs, 2),
+                    5, 
                     where,
                     spawnFireball,
                     killEnemy);
@@ -104,12 +169,15 @@ static void spawnF18Cut(World* w, Point where, bool right)
     Behavior** bs;
     Enemy* e;
 
-    bs = newArray(Behavior*, 2);
-    bs[0] = createDirect(where, makePoint(right ? SCREEN_WIDTH : 0, 150), 2);
-    bs[1] = createRandomShoot(500);
+    Point target = makePoint(right ? SCREEN_WIDTH : 0, 150);
+
+    bs = newArray(Behavior*, 3);
+    bs[0] = createDirect(where, target, 2);
+    bs[1] = createRoll(where.x);
+    bs[2] = createRandomShoot(500);
 
     e = createEnemy(f18Animation(), 0, 
-                    createChainBehavior(bs, 2),
+                    createChainBehavior(bs, 3),
                     1, 
                     where,
                     spawnFireball,

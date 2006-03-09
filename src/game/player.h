@@ -11,6 +11,7 @@ typedef struct Player
 
     Point       momentum;
     uint8       heat;
+    uint8       cooldown;
 } Player;
 
 Player* createPlayer(Point where);

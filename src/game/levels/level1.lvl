@@ -1,39 +1,55 @@
 [level1]
-0x002C4340
+-- don't spawn enemies before 350 (allow player to get control)
 
-[200]
---spawnManyF18(w, 40, false);
-spawnF18Cut(w, makePoint(30, -23), true);
-spawnF18Cut(w, makePoint(15, -46), true);
-spawnF18Cut(w, makePoint(0, -69), true);
+[250]
 addOverlay(w, createCloud(20, 10, makeWhole(1), CLOUD_MEDIUM));
 addOverlay(w, createCloud(100, 250, makeWhole(1), CLOUD_SMALL));
 
-[300]
-spawnManyF18(w, 100, true);
+[350]
+spawnMig(w, makePoint(80, -75));
+--spawnManyF18(w, 100, true);
 
-[500]
+[400]
+spawnF16(w, makePoint(80, -75));
+
+[450]
+spawnF18Cut(w, makePoint(45, -23), true);
+spawnF18Cut(w, makePoint(30, -46), true);
+spawnF18Cut(w, makePoint(15, -69), true);
+spawnF18Cut(w, makePoint(0, -92), true);
+
+[475]
+spawnF18Cut(w, makePoint(115, -23), false);
+spawnF18Cut(w, makePoint(130, -46), false);
+spawnF18Cut(w, makePoint(145, -69), false);
+spawnF18Cut(w, makePoint(160, -92), false);
+
+[525]
+spawnChopper(w, makePoint(20, -100));
+spawnChopper(w, makePoint(80, -47));
+
+[600]
 spawnManyF16(w, 50, false);
 addOverlay(w, createCloud(20, 0, makeWhole(1), CLOUD_TINY));
 addOverlay(w, createCloud(80, 30, makeWhole(1), CLOUD_MEDIUM));
 
-[520]
+[620]
 spawnManyF16(w, 90, true);
 
-[650]
+[750]
 addUnderlay(w, createCloud(-30, 0, makeWhole(1), CLOUD_LARGE));
-spawnManyF18(w, 40, false);
+//spawnManyF18(w, 40, false);
 
-[680]
-spawnManyF18(w, 60, false);
+[780]
+//spawnManyF18(w, 60, false);
 
-[710]
-spawnManyF18(w, 120, true);
+[810]
+//spawnManyF18(w, 120, true);
 
-[740]
-spawnManyF18(w, 100, true);
+[840]
+//spawnManyF18(w, 100, true);
 
-[800]
-spawnLineF16(w, 10, 7);
+[900]
+//spawnLineF16(w, 10, 7);
 addUnderlay(w, createCloud(90, 0, makeWhole(1), CLOUD_SMALL));
 addOverlay(w, createCloud(10, 20, makeWhole(1), CLOUD_MEDIUM));

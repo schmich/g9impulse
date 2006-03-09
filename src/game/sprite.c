@@ -148,65 +148,101 @@ void animationEnding(Sprite* what)
     what->currentFrame = what->animation->numImages - 1;
 }
 
-void alignCenter(Sprite* arrow, Sprite* target)
+void setSpriteCenter(Sprite* s, Point p)
 {
-    Point center = spriteCenter(target);
-    arrow->position.x = center.x - spriteWidth(arrow) / 2;
-    arrow->position.y = center.y - spriteHeight(arrow) / 2;
+    s->position.x = p.x - spriteWidth(s) / 2; 
+    s->position.y = p.y - spriteHeight(s) / 2; 
 }
 
-void alignCenterTop(Sprite* arrow, Sprite* target)
+void setSpriteCenterTop(Sprite* s, Point p)
 {
-    Point centerTop = spriteCenterTop(target);
-    arrow->position.x = centerTop.x - spriteWidth(arrow) / 2;
-    arrow->position.y = centerTop.y;
+    s->position.x = p.x - spriteWidth(s) / 2; 
+    s->position.y = p.y;
 }
 
-void alignCenterBottom(Sprite* arrow, Sprite* target)
+void setSpriteCenterBottom(Sprite* s, Point p)
 {
-    Point centerBottom = spriteCenterBottom(target);
-    arrow->position.x = centerBottom.x - spriteWidth(arrow) / 2;
-    arrow->position.y = centerBottom.y - spriteHeight(arrow);
+    s->position.x = p.x - spriteWidth(s) / 2; 
+    s->position.y = p.y - spriteHeight(s);
 }
 
-void alignLeftCenter(Sprite* arrow, Sprite* target)
+void setSpriteLeftCenter(Sprite* s, Point p)
 {
-    Point leftCenter = spriteLeftCenter(target);
-    arrow->position.x = leftCenter.x;
-    arrow->position.y = leftCenter.y - spriteHeight(arrow) / 2;
+    s->position.x = p.x;
+    s->position.y = p.y - spriteHeight(s) / 2;
 }
 
-void alignRightCenter(Sprite* arrow, Sprite* target)
+void setSpriteRightCenter(Sprite* s, Point p)
 {
-    Point rightCenter = spriteRightCenter(target);
-    arrow->position.x = rightCenter.x - spriteWidth(arrow);
-    arrow->position.y = rightCenter.y - spriteHeight(arrow) / 2;
+    s->position.x = p.x - spriteWidth(s);
+    s->position.y = p.y - spriteHeight(s) / 2;
 }
 
-void alignLeftLower(Sprite* arrow, Sprite* target)
+void setSpriteLeftLower(Sprite* s, Point p)
 {
-    Point leftLower = spriteLeftLower(target);
-    arrow->position.x = leftLower.x;
-    arrow->position.y = leftLower.y - spriteHeight(arrow);
+    s->position.x = p.x;
+    s->position.y = p.y - spriteHeight(s);
 }
 
-void alignRightLower(Sprite* arrow, Sprite* target)
+void setSpriteRightLower(Sprite* s, Point p)
 {
-    Point rightLower = spriteRightLower(target);
-    arrow->position.x = rightLower.x - spriteWidth(arrow);
-    arrow->position.y = rightLower.y - spriteHeight(arrow);
+    s->position.x = p.x - spriteWidth(s);
+    s->position.y = p.y - spriteHeight(s);
 }
 
-void alignLeftUpper(Sprite* arrow, Sprite* target)
+void setSpriteLeftUpper(Sprite* s, Point p)
 {
-    Point leftUpper = spriteLeftUpper(target);
-    arrow->position.x = leftUpper.x;
-    arrow->position.y = leftUpper.y;
+    s->position.x = p.x;
+    s->position.y = p.y;
 }
 
-void alignRightUpper(Sprite* arrow, Sprite* target)
+void setSpriteRightUpper(Sprite* s, Point p)
 {
-    Point rightUpper = spriteRightUpper(target);
-    arrow->position.x = rightUpper.x - spriteWidth(arrow);
-    arrow->position.y = rightUpper.y;
+    s->position.x = p.x - spriteWidth(s);
+    s->position.y = p.y;
+}
+
+Point screenCenter(void)
+{
+    return makePoint(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+}
+
+Point screenCenterTop(void)
+{
+    return makePoint(SCREEN_WIDTH / 2, 0);
+}
+
+Point screenCenterBottom(void)
+{
+    return makePoint(SCREEN_WIDTH / 2, SCREEN_HEIGHT);
+}
+
+Point screenLeftCenter(void)
+{
+    return makePoint(0, SCREEN_HEIGHT / 2);
+}
+
+Point screenRightCenter(void)
+{
+    return makePoint(SCREEN_WIDTH, SCREEN_HEIGHT / 2);
+}
+
+Point screenLeftLower(void)
+{
+    return makePoint(0, SCREEN_HEIGHT);
+}
+
+Point screenRightLower(void)
+{
+    return makePoint(SCREEN_WIDTH, SCREEN_HEIGHT);
+}
+
+Point screenLeftUpper(void)
+{
+    return makePoint(0, 0);
+}
+
+Point screenRightUpper(void)
+{
+    return makePoint(SCREEN_WIDTH, 0);
 }

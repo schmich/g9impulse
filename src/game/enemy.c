@@ -12,7 +12,7 @@ static void fireEnemy(Entity* e, World* w)
 
     if (p)
     {
-        alignCenterBottom(p, e);
+        setSpriteCenterBottom(p, spriteCenterBottom(e));
         p->position.y += spriteHeight(p);
 
         addEnemyProjectile(w, p);

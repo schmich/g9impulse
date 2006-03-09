@@ -12,6 +12,8 @@ typedef struct Projectile Projectile;
 typedef struct Artifact Artifact;
 typedef struct Enemy Enemy;
 typedef struct Level Level;
+typedef struct HealthMeter HealthMeter;
+typedef struct HeatMeter HeatMeter;
 
 typedef struct World
 {
@@ -29,6 +31,12 @@ typedef struct World
 
     Player* player;
     Level*  level;
+
+    HealthMeter* healthMeter;
+    HeatMeter*   heatMeter;
+
+    bool    intro;
+    uint8   introStep;
 } World;
 
 World* createWorld(Player* player, Level* level);

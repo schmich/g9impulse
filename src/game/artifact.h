@@ -16,6 +16,12 @@ typedef struct Artifact
     ARTIFACT_BASE;
 } Artifact;
 
+Artifact* createArtifact(Animation* anim,
+                         uint8 initFrame,
+                         Behavior* behavior,
+                         Point where,
+                         AffectFn onAffect);
+
 void affect(Artifact* a, Player* who, World* world);
 
 #endif // ARTIFACT_H
