@@ -5,6 +5,9 @@
 #include "player.h"
 #include "world.h"
 #include "level1.h"
+#include "timer.h"
+
+#define FRAME_TIME 900
 
 void playGame(void)
 {
@@ -14,8 +17,12 @@ void playGame(void)
     setDoubleBuffer(true);
     setFieldColor(0);
 
+    initTimer();
+
     while (active(world))
     {
+        resetTimer();
+
         drawWorld(world);
         updateWorld(world);
         collideWorld(world);
@@ -24,9 +31,15 @@ void playGame(void)
         // HACK drawing bug, uncomment to exploit
         //
         //draw(0x000D97B2, 2, 6, 87, 1, true);
-
+        
         flipBuffer(&buffer);
-        delay_ms(10);
+
+        while (timeElapsed() < FRAME_TIME)
+        {
+            //
+            // hang out
+            //
+        }
     }
 
     destroy(world);

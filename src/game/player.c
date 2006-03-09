@@ -28,12 +28,15 @@ static void killPlayer(Player* who, World* world)
 static void firePlayer(Entity* player, World* world)
 {
     Projectile* p;
-    player->spawnProjectile(&p);
+    player->spawnProjectile(player, world, &p);
 
-    alignCenterTop(p, player);
-    p->position.y -= spriteHeight(p);
+    if (p)
+    {
+        alignCenterTop(p, player);
+        p->position.y -= spriteHeight(p);
 
-    addPlayerProjectile(world, p);
+        addPlayerProjectile(world, p);
+    }
 }
 
 static void impactProjectile(Projectile* p, Sprite* s, World* world)
@@ -41,7 +44,7 @@ static void impactProjectile(Projectile* p, Sprite* s, World* world)
     addUpdateable(world, createExplosion(p->position, EXPLOSION_TINY, 10));
 }
 
-static void spawnProjectilePlayer(Projectile** p)
+static void spawnProjectilePlayer(Entity* player, World* world, Projectile** p)
 {
     *p = createProjectile(bulletAnimation(), 0,
                           createBoring(makeWhole(-7)),

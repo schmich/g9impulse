@@ -8,7 +8,7 @@
 struct Entity;
 typedef near rom void (*KillFn)(struct Entity*, World*);
 typedef near rom void (*FireFn)(struct Entity*, World*);
-typedef near rom void (*SpawnFn)(Projectile** p);
+typedef near rom void (*SpawnFn)(struct Entity*, World*, Projectile** p);
 
 #define ENTITY_BASE UPDATEABLE_BASE; \
                     uint8   health; \

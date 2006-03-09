@@ -15,25 +15,25 @@ static void destroyWorld(World* w)
 {
     Node* curr;
 
-    for_each (curr, w->updateables)
+    foreach (curr, w->updateables)
         destroy(curr->data);
 
-    for_each (curr, w->enemies)
+    foreach (curr, w->enemies)
         destroy(curr->data);
 
-    for_each (curr, w->playerProjectiles)
+    foreach (curr, w->playerProjectiles)
         destroy(curr->data);
 
-    for_each (curr, w->enemyProjectiles)
+    foreach (curr, w->enemyProjectiles)
         destroy(curr->data);
 
-    for_each (curr, w->overlays)
+    foreach (curr, w->overlays)
         destroy(curr->data);
 
-    for_each (curr, w->underlays)
+    foreach (curr, w->underlays)
         destroy(curr->data);
 
-    for_each (curr, w->artifacts)
+    foreach (curr, w->artifacts)
         destroy(curr->data);
 
     destroy(w->updateables);
@@ -167,29 +167,29 @@ void drawWorld(World* world)
 
     drawBackground(world->level->background);
 
-    for_each (curr, world->underlays)
+    foreach (curr, world->underlays)
         drawSprite(curr->data);
 
-    for_each (curr, world->enemies)
+    foreach (curr, world->enemies)
         drawSprite(curr->data);
 
     if (!dead(world->player))
         drawSprite(world->player);
 
+    foreach (curr, world->playerProjectiles)
+        drawSprite(curr->data);
+
+    foreach (curr, world->enemyProjectiles)
+        drawSprite(curr->data);
+
+    foreach (curr, world->updateables)
+        drawSprite(curr->data);
+
+    foreach (curr, world->overlays)
+        drawSprite(curr->data);
+
     theHealthSprite->currentFrame = 6 - world->player->health;
     drawSprite(theHealthSprite);
-
-    for_each (curr, world->playerProjectiles)
-        drawSprite(curr->data);
-
-    for_each (curr, world->enemyProjectiles)
-        drawSprite(curr->data);
-
-    for_each (curr, world->updateables)
-        drawSprite(curr->data);
-
-    for_each (curr, world->overlays)
-        drawSprite(curr->data);
 }
 
 void updateWorld(World* world)
