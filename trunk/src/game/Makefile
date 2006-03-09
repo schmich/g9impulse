@@ -54,12 +54,12 @@ $(OUT): $(OBJS)
 
 $(BUILD_DIR)/%.anim.inl: animations/%.anim tools/anim.rb
 	@echo -n "Generating animation $(shell basename $@)..."
-	@$(TRY) tools/anim.rb $< > $@
+	@tools/anim.rb $< > $@
 	@echo "done"
 
 $(BUILD_DIR)/%.lvl.inl: levels/%.lvl tools/level.rb
 	@echo -n "Generating level $(shell basename $@)..."
-	@$(TRY) tools/level.rb $< > $@
+	@tools/level.rb $< > $@
 	@echo "done"
 
 %.o:
