@@ -31,6 +31,6 @@ spawnManyF18(w, 120, true);
 spawnManyF18(w, 100, true);
 
 [800]
-spawnLineF16(w, 10, 7)
+spawnLineF16(w, 10, 7);
 addUnderlay(w, createCloud(90, 0, makeWhole(1), CLOUD_SMALL));
 addOverlay(w, createCloud(10, 20, makeWhole(1), CLOUD_MEDIUM));
