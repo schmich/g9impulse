@@ -1,0 +1,20 @@
+- high score list
+- level completion (w/ boss)
+- score text improvement
+- engine flame improvement (longer flames when going forward)
+- weapon powerup similar to health powerup
+- nuke powerup
+- powerup pickup animation
+- non-flashing plasma
+- player ship rolling (can't be hit, can't shoot)
+- charged-up shooting?
+- shields (regeneration of shields)?
+- ground turrets (like tanks)
+- boats (like tanks)
+- point deduction for using nuke
+- level editing program
+- implement other 2 enemies
+- random-offset spawning
+- enemy groups/group actions
+- sound effects
+- functioning music

@@ -401,6 +401,28 @@ static void spawnF18Cut(World* w, int16 x, int16 dy, int16 yTarget, bool right)
     addEnemy(w, e);
 }
 
+static void spawnF18Kamikaze(World* w, int16 x, int16 dy, uint8 speed)
+{
+    Behavior** bs;
+    Enemy* e;
+
+    bs = newArray(Behavior*, 2);
+    bs[0] = createChase(speed, 1);
+    bs[1] = createRoll(x);
+
+    e = createEnemy(f18Animation(), 0, 
+                    createChainBehavior(bs, 2),
+                    1, 
+                    makePoint(x, 0),
+                    nullProjectileSpawn,
+                    killEnemy);
+
+    e->fire = nullFire;
+    e->position.y = -(int16)spriteHeight(e) - dy;
+
+    addEnemy(w, e);
+}
+
 static void spawnManyF18Cut(World* w, int16 x, int16 yTarget, bool right)
 {
     int16 mult;

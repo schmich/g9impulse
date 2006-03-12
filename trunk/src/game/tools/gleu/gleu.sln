@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gleu", "gleu.csproj", "{BEBB6691-E6B9-4D59-AB6A-32C0C6190747}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{BEBB6691-E6B9-4D59-AB6A-32C0C6190747}.Debug.ActiveCfg = Debug|.NET
+		{BEBB6691-E6B9-4D59-AB6A-32C0C6190747}.Debug.Build.0 = Debug|.NET
+		{BEBB6691-E6B9-4D59-AB6A-32C0C6190747}.Release.ActiveCfg = Release|.NET
+		{BEBB6691-E6B9-4D59-AB6A-32C0C6190747}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

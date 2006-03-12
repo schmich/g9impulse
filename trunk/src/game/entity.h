@@ -26,4 +26,7 @@ bool damage(Entity* who, uint8 damage);
 bool dead(Entity* who);
 void fire(Entity* e, World* w);
 
+void nullFire(Entity* e, World* w);
+void nullProjectileSpawn(Entity* e, World* w, Projectile** p);
+
 #endif // ENTITY_H

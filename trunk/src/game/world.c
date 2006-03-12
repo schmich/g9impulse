@@ -206,11 +206,8 @@ void drawWorld(World* world)
     foreach (curr, world->underlays)
         drawSprite(curr->data);
 
-    foreach (curr, world->enemies)
+    foreach (curr, world->artifacts)
         drawSprite(curr->data);
-
-    if (!dead(world->player))
-        drawPlayer(world->player);
 
     foreach (curr, world->playerProjectiles)
         drawSprite(curr->data);
@@ -218,8 +215,11 @@ void drawWorld(World* world)
     foreach (curr, world->enemyProjectiles)
         drawSprite(curr->data);
 
-    foreach (curr, world->artifacts)
+    foreach (curr, world->enemies)
         drawSprite(curr->data);
+
+    if (!dead(world->player))
+        drawPlayer(world->player);
 
     foreach (curr, world->updateables)
         drawSprite(curr->data);
