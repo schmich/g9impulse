@@ -2,6 +2,7 @@
 #include "updateable.h"
 #include "projectile.h"
 #include "player.h"
+#include "input.h"
 #include "enemy.h"
 #include "background.h"
 #include "collision.h"
@@ -9,6 +10,30 @@
 #include "artifact.h"
 #include "health-meter.h"
 #include "heat-meter.h"
+#include "nuke-meter.h"
+#include "text.h"
+
+#define MAX_RESET_TIME 25
+
+static bool softReset(void)
+{
+    static uint8 resetCounter = MAX_RESET_TIME;
+    Input* input = getInputStatus();
+
+    if (input->buttonBPressed &&
+        input->buttonAPressed &&
+        input->selectPressed)
+    {
+        if (--resetCounter == 0)
+            return true;
+    }
+    else
+    {
+        resetCounter = MAX_RESET_TIME;
+    }
+
+    return false;
+}
 
 static void destroyWorld(World* w)
 {
@@ -45,12 +70,16 @@ static void destroyWorld(World* w)
 
     destroy(w->healthMeter);
     destroy(w->heatMeter);
+    destroy(w->nukeMeter);
+
     destroy(w->player);
     destroyStatic(w->level);
 }
 
 World* createWorld(Player* player, Level* level)
 {
+    Point start;
+
     World* w = new(World);
     w->destroy = destroyWorld;
 
@@ -64,12 +93,21 @@ World* createWorld(Player* player, Level* level)
 
     w->level = level;
     w->player = player;
-    setSpriteCenterTop(w->player, screenCenterBottom());
+
+    start = screenCenterBottom();
+    start.y += spriteHeight(w->player) / 2;
+    setSpriteCenterTop(w->player,  start);
 
     w->healthMeter = createHealthMeter(w->player, makePoint(130, 230));
     w->heatMeter = createHeatMeter(w->player, makePoint(1, 230));
+    w->nukeMeter = createNukeMeter(w->player, makePoint(155, 3));
 
+#ifdef _DEBUG
+    w->intro = false;
+#else
     w->intro = true;
+#endif
+
     w->introStep = 0;
 
     w->active = true;
@@ -172,7 +210,7 @@ void drawWorld(World* world)
         drawSprite(curr->data);
 
     if (!dead(world->player))
-        drawSprite(world->player);
+        drawPlayer(world->player);
 
     foreach (curr, world->playerProjectiles)
         drawSprite(curr->data);
@@ -191,6 +229,14 @@ void drawWorld(World* world)
 
     drawSprite(world->heatMeter);
     drawSprite(world->healthMeter);
+    drawNukeMeter(world->nukeMeter);
+
+    drawNumber(world->player->score, makePoint(2, 3));
+
+#ifdef _DEBUG
+    drawNumber(world->level->background->progress, makePoint(2, 17));
+    drawNumber(memoryFree(), makePoint(2, 31));
+#endif
 }
 
 void updateWorld(World* world)
@@ -198,8 +244,13 @@ void updateWorld(World* world)
     Node* curr;
     int16 stop;
 
+    if (softReset())
+        world->active = false;
+
     if (world->intro)
     {
+        update(world->player->engine, world); // HACK this sucks
+
         if (++world->introStep == 2)
         {
             stop = SCREEN_HEIGHT - (int16)spriteHeight(world->player) * 2;
@@ -296,6 +347,9 @@ void collideWorld(World* world)
     Node* artifact;
     bool killed;
     
+    //
+    // collide enemies with player's projectiles
+    //
     enemy = world->enemies->head;
     while (enemy != NULL)
     {
@@ -311,28 +365,41 @@ void collideWorld(World* world)
                 kill(enemy->data, world);
             }
 
-            removePlayerProjectile(world, proj);
+            if (!((Projectile*)proj->data)->invincible)
+                removePlayerProjectile(world, proj);
         }
 
         if (killed)
+        {
+            onEnemyKilled(world->player, enemy->data);
             enemy = removeEnemy(world, enemy);
+        }
         else
             enemy = enemy->next;
     }
 
     if (!dead(world->player))
     {
+        //
+        // collide player with enemies' projectiles
+        //
         proj = collides(world->player, world->enemyProjectiles);
         if (proj != NULL)
         {
             impact(proj->data, world->player, world);
 
+#ifndef _DEBUG
             if (damage(world->player, ((Projectile*)proj->data)->damage))
                 kill(world->player, world);
+#endif
 
-            removeEnemyProjectile(world, proj);
+            if (!((Projectile*)proj->data)->invincible)
+                removeEnemyProjectile(world, proj);
         }
 
+        //
+        // collide player with artifacts
+        //
         artifact = collides(world->player, world->artifacts);
         if (artifact != NULL)
         {
@@ -340,14 +407,23 @@ void collideWorld(World* world)
             removeArtifact(world, artifact);
         }
 
+        //
+        // collide player with enemies themselves
+        //
         enemy = collides(world->player, world->enemies);
         if (enemy != NULL)
         {
-            if (damage(world->player, 2))
-                kill(world->player, world);
+            if (!((Enemy*)enemy->data)->ground)
+            {
+#ifndef _DEBUG
+                if (damage(world->player, 2))
+                    kill(world->player, world);
+#endif
+                onEnemyKilled(world->player, enemy->data);
 
-            kill(enemy->data, world);
-            removeEnemy(world, enemy);
+                kill(enemy->data, world);
+                removeEnemy(world, enemy);
+            }
         }
     }
 }

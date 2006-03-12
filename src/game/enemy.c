@@ -13,8 +13,6 @@ static void fireEnemy(Entity* e, World* w)
     if (p)
     {
         setSpriteCenterBottom(p, spriteCenterBottom(e));
-        p->position.y += spriteHeight(p);
-
         addEnemyProjectile(w, p);
     }
 }
@@ -31,12 +29,13 @@ Enemy* createEnemy(Animation* anim,
     e->destroy = destroyEnemy;
     e->behavior = behavior;
     e->position = where;
-    e->health = health;
+    e->health = e->maxHealth = health;
     e->kill = onKill;
     e->fire = fireEnemy;
     e->animation = anim;
     e->currentFrame = initFrame;
     e->spawnProjectile = onProjectileSpawn;
+    e->ground = false;
 
     return e;
 }

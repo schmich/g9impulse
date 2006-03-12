@@ -16,6 +16,7 @@ typedef struct Sprite
 } Sprite;
 
 void drawSprite(Sprite* what);
+Sprite* createSprite(Animation* anim, uint8 initFrame, Point where);
 
 uint16 spriteWidth(Sprite* what);
 uint16 spriteHeight(Sprite* what);

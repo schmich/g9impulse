@@ -11,6 +11,17 @@ void drawSprite(Sprite* what)
     drawImage(curr, what->position, curr->transparent);
 }
 
+Sprite* createSprite(Animation* anim, uint8 initFrame, Point where)
+{
+    Sprite* s = new(Sprite);
+    s->destroy = nullDestroy;
+    s->animation = anim;
+    s->currentFrame = initFrame;
+    s->position = where;
+    
+    return s;
+}
+
 uint16 spriteWidth(Sprite* what)
 {
     return currentImage(what)->width;

@@ -14,6 +14,7 @@ typedef struct Enemy Enemy;
 typedef struct Level Level;
 typedef struct HealthMeter HealthMeter;
 typedef struct HeatMeter HeatMeter;
+typedef struct NukeMeter NukeMeter;
 
 typedef struct World
 {
@@ -34,6 +35,7 @@ typedef struct World
 
     HealthMeter* healthMeter;
     HeatMeter*   heatMeter;
+    NukeMeter*   nukeMeter;
 
     bool    intro;
     uint8   introStep;

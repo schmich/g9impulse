@@ -2,3 +2,15 @@
 0x000D7A20      16      28      -- center
 0x000D8BA0      16      28      -- left
 0x000D9D20      16      28      -- right
+
+[bullet]
+168,5527        4       6
+
+[double bullet]
+172,5527        4       6
+
+[laser]
+176,5521        4       6
+
+[wave]
+168,5521        8       6

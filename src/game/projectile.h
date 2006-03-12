@@ -9,7 +9,8 @@ typedef near rom void (*ImpactFn)(struct Projectile*, Sprite*, World*);
 
 #define PROJECTILE_BASE UPDATEABLE_BASE; \
                         uint8 damage; \
-                        ImpactFn impact
+                        ImpactFn impact; \
+                        bool invincible
 
 typedef struct Projectile
 {
@@ -21,8 +22,10 @@ Projectile* createProjectile(Animation* anim,
                              Behavior* behavior,
                              uint8 damage,
                              Point where,
-                             ImpactFn onImpact);
+                             ImpactFn onImpact,
+                             bool invincible);
 
 void impact(Projectile* proj, Sprite* who, World* world);
+void nullImpact(Projectile*, Sprite*, World*);
 
 #endif // PROJECTILE_H

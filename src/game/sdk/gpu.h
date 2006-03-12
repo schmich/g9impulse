@@ -24,5 +24,6 @@ void load_s_addr(unsigned long address);
 void setFieldColor(uint8 color);
 void setDoubleBuffer(bool doubleBuffer);
 void flipBuffer(uint8* buf);
+void clearBuffers(void);
 
 #endif // GPU_H

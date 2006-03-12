@@ -11,5 +11,6 @@
 #include "common.h"
 
 void playMusic(uint8 track);
+void stopMusic(void);
 
 #endif
