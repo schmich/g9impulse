@@ -1,8 +1,12 @@
 #include "spawner.h"
+#include "world.h"
 #include "spawner.anim.inl"
 
 static void destroySpawner(Spawner* s)
 {
+    if (!s->spawned)
+        destroy(s->spawnee);
+
     destroy(s->behavior);
 }
 
@@ -33,6 +37,8 @@ static uint8 updateSpawner(Spawner* s, World* w)
                 break;
         }
 
+        s->spawned = true;
+
         return UPDATE_REMOVE;
     }
     else
@@ -52,6 +58,7 @@ Spawner* createSpawner(Updateable* who, uint8 delay, uint8 type)
     s->spawnee = who;
     s->delay = delay;
     s->type = type;
+    s->spawned = false;
 
     return s;
 }

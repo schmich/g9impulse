@@ -28,3 +28,13 @@ void fire(Entity* e, World* w)
 {
     e->fire(e, w);
 }
+
+void nullFire(Entity* e, World* w)
+{
+    // do nothing!
+}
+
+void nullProjectileSpawn(Entity* e, World* w, Projectile** p)
+{
+    *p = NULL;
+}

@@ -14,6 +14,7 @@
 #define MAX_MOMENTUM_X 10
 #define MAX_WEAPONS 4
 #define MAX_MAX_COOLDOWN 8
+#define MAX_NUKE_COOLDOWN 50
 
 static void destroyPlayer(Player* p)
 {
@@ -100,7 +101,6 @@ static void spawnNuke(Entity* player, World* world, Projectile** p)
                           makePoint(0, 0),
                           nullImpact,
                           true);
-
 }
 
 static uint8 updatePlayer(Player* who, World* world)
@@ -138,7 +138,7 @@ static uint8 updatePlayer(Player* who, World* world)
 
     if (event->buttonAPressed)
     {
-        if (who->nukes > 0)
+        if (who->nukes > 0 && who->nukeCooldown == 0)
         {
             currSpawn = who->spawnProjectile;
             who->spawnProjectile = spawnNuke;
@@ -147,7 +147,14 @@ static uint8 updatePlayer(Player* who, World* world)
 
             who->spawnProjectile = currSpawn;
             --who->nukes;
+
+            who->nukeCooldown = MAX_NUKE_COOLDOWN;
         }
+    }
+    else
+    {
+        if (who->nukeCooldown > 0)
+            --who->nukeCooldown;
     }
 
     if (input->leftPressed)
@@ -254,12 +261,14 @@ Player* createPlayer(Point where)
     player->engine = createEngine(player);
 
     player->health = 6;
-    player->momentum.x = 0;
-    player->momentum.y = 0;
+    player->momentum = makePoint(0, 0);
     player->heat = 0;
     player->maxCooldown = MAX_MAX_COOLDOWN;
     player->cooldown = player->maxCooldown;
+
+    player->nukeCooldown = MAX_NUKE_COOLDOWN;
     player->nukes = 5;
+
     player->kills = 0;
     player->score = 0;
 

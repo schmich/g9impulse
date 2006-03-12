@@ -99,7 +99,7 @@ spawnF16(w, 90, 0, 2);
 spawnF16(w, 65, 0, 3);
 
 [1875]
-spawnManyF18Cut(w, 20, 50, true);
+spawnManyF18Cut(w, 20, 75, true);
 
 [1900]
 spawnF18Boring(w, 20, 10, 2);

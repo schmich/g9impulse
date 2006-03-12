@@ -44,28 +44,53 @@ static void addNuke(World* world, Point where, uint8 delay)
 
 static uint8 updateNuke(Updateable* who, World* w)
 {
+    Point center;
     Point where;
     Nuke* nuke = who->behavior;
 
     if (who->position.y < nuke->yDetonate)
     {
-        where = spriteCenter(who);
-        where.x -= 20;
-        where.y -= 40;
+        center = spriteCenter(who);
+        center.x -= 20;
+        center.y -= 40;
 
+        where = center;
         addNuke(w, where, 0);
 
+        where = center;
         where.x -= SPACE_X;
         addNuke(w, where, 20);
 
-        where.x += 2 * SPACE_X;
+        where = center;
+        where.x += SPACE_X;
         addNuke(w, where, 20);
 
-        where.x -= SPACE_X;
+        where = center;
         where.y -= SPACE_Y;
         addNuke(w, where, 20);
 
-        where.y += 2 * SPACE_Y;
+        where = center;
+        where.y += SPACE_Y;
+        addNuke(w, where, 20);
+
+        where = center;
+        where.y += (SPACE_Y * 7) / 10;
+        where.x += (SPACE_X * 7) / 10;
+        addNuke(w, where, 20);
+
+        where = center;
+        where.y -= (SPACE_Y * 7) / 10;
+        where.x -= (SPACE_X * 7) / 10;
+        addNuke(w, where, 20);
+
+        where = center;
+        where.y += (SPACE_Y * 7) / 10;
+        where.x -= (SPACE_X * 7) / 10;
+        addNuke(w, where, 20);
+
+        where = center;
+        where.y -= (SPACE_Y * 7) / 10;
+        where.x += (SPACE_X * 7) / 10;
         addNuke(w, where, 20);
 
         return UPDATE_REMOVE;
@@ -83,22 +108,3 @@ Nuke* createNuke(int16 yDetonate)
 
     return n;
 }
-
-/*static void dropBombs(Player* who, World* world)
-{
-    uint16 i;
-    Projectile* explosion;
-    Point where;
-
-    for (i = 0; i < 8; ++i)
-    {
-        where.x = random(who->position.x - 10, who->position.x + 10);
-        where.y = who->position.y - 60 * (i + 1);
-
-        explosion = createBombExplosion(where, 3);
-        addUpdateable(world,
-                      createSpawner(explosion,
-                                    random(0, 25),
-                                    SPAWNER_PLAYER_PROJECTILE));
-    }
-}*/

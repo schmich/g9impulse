@@ -227,7 +227,7 @@ void clearBuffers(void)
 {
     uint8 i;
     int16 y;
-    int buffer = 0;
+    uint8 buffer = 0;
 
     for (i = 0; i < 2; ++i)
     {

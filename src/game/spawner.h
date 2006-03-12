@@ -16,6 +16,7 @@ typedef struct Spawner
     uint8       delay;
     uint8       type;
     Updateable* spawnee;
+    bool        spawned;
 } Spawner;
 
 Spawner* createSpawner(Updateable* who, uint8 delay, uint8 type);
