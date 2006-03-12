@@ -10,4 +10,6 @@ void* alloc(uint8 size);
 void free(void* ptr);
 void memoryInit(void);
 
+uint16 memoryFree(void);
+
 #endif // MEMORY_H

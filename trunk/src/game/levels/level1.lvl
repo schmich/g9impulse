@@ -2,54 +2,124 @@
 -- don't spawn enemies before 350 (allow player to get control)
 
 [250]
-addOverlay(w, createCloud(20, 10, makeWhole(1), CLOUD_MEDIUM));
-addOverlay(w, createCloud(100, 250, makeWhole(1), CLOUD_SMALL));
-
-[350]
-spawnMig(w, makePoint(80, -75));
---spawnManyF18(w, 100, true);
+spawnCloudUnder(w, 100, 10, 1, CLOUD_LARGE);
 
 [400]
-spawnF16(w, makePoint(80, -75));
+spawnF18Boring(w, 20, 10, 2);
+spawnF18Boring(w, 45, 30, 2);
 
-[450]
-spawnF18Cut(w, makePoint(45, -23), true);
-spawnF18Cut(w, makePoint(30, -46), true);
-spawnF18Cut(w, makePoint(15, -69), true);
-spawnF18Cut(w, makePoint(0, -92), true);
+[500]
+spawnF18Boring(w, 110, 10, 2);
+spawnF18Boring(w, 135, 30, 2);
 
-[475]
-spawnF18Cut(w, makePoint(115, -23), false);
-spawnF18Cut(w, makePoint(130, -46), false);
-spawnF18Cut(w, makePoint(145, -69), false);
-spawnF18Cut(w, makePoint(160, -92), false);
-
-[525]
-spawnChopper(w, makePoint(20, -100));
-spawnChopper(w, makePoint(80, -47));
+[550]
+spawnCloudUnder(w, 10, 10, 1, CLOUD_MEDIUM);
 
 [600]
-spawnManyF16(w, 50, false);
-addOverlay(w, createCloud(20, 0, makeWhole(1), CLOUD_TINY));
-addOverlay(w, createCloud(80, 30, makeWhole(1), CLOUD_MEDIUM));
+spawnF18Boring(w, 60, 30, 3);
+spawnF18Boring(w, 75, 10, 3);
+spawnF18Boring(w, 90, 30, 3);
 
-[620]
-spawnManyF16(w, 90, true);
+[650]
+spawnF16Special(w, 80, 0, 2);
 
-[750]
-addUnderlay(w, createCloud(-30, 0, makeWhole(1), CLOUD_LARGE));
-//spawnManyF18(w, 40, false);
+[700]
+spawnManyF18Cut(w, 140, 120, false);
 
-[780]
-//spawnManyF18(w, 60, false);
-
-[810]
-//spawnManyF18(w, 120, true);
-
-[840]
-//spawnManyF18(w, 100, true);
+[800]
+spawnManyF18Cut(w, 20, 180, true);
 
 [900]
-//spawnLineF16(w, 10, 7);
-addUnderlay(w, createCloud(90, 0, makeWhole(1), CLOUD_SMALL));
-addOverlay(w, createCloud(10, 20, makeWhole(1), CLOUD_MEDIUM));
+spawnManyF18Cut(w, 20, 240, true);
+spawnCloudUnder(w, -5, 10, 1, CLOUD_SMALL);
+spawnCloudOver(w, 110, 40, 1, CLOUD_MEDIUM);
+
+[950]
+spawnF18Boring(w, 20, 10, 2);
+spawnF18Boring(w, 35, 30, 2);
+
+[1017]
+spawnTank(w, 22, 0);
+
+[1020]
+spawnManyF18Cut(w, 140, 120, false);
+spawnCloudOver(w, 130, 50, 1, CLOUD_TINY);
+
+[1150]
+spawnF18Chase(w, 10, 10, 2);
+spawnF18Chase(w, 130, 20, 3);
+
+[1200]
+spawnF18Chase(w, 10, 20, 2);
+spawnF18Chase(w, 80, 10, 2);
+spawnF18Chase(w, 130, 20, 2);
+
+[1300]
+spawnCloudUnder(w, 120, 10, 1, CLOUD_LARGE);
+spawnManyF18Cut(w, 0, 240, true);
+spawnF18Chase(w, 160, 30, 2);
+spawnF18Chase(w, 140, 50, 3);
+
+[1430]
+spawnTank(w, 40, 0);
+spawnF18Boring(w, 80, 30, 2);
+spawnF18Boring(w, 105, 10, 2);
+spawnF18Boring(w, 130, 30, 2);
+
+[1483]
+spawnTank(w, 118, 0);
+
+[1600]
+spawnF18Chase(w, 10, 0, 3);
+spawnF18Chase(w, 25, 0, 3);
+spawnF18Chase(w, 40, 0, 3);
+
+[1643]
+spawnF16(w, 50, 30, 2);
+spawnF16(w, 70, 10, 2);
+spawnF16(w, 90, 30, 2);
+
+[1700]
+spawnChopper(w, 10, 30, 75);
+spawnChopper(w, 130, 10, 75);
+spawnF16(w, 40, 0, 2);
+spawnF16(w, 90, 40, 3);
+
+[1750]
+spawnCloudUnder(w, 0, 0, 1, CLOUD_COVER);
+spawnF16(w, 80, 0, 2);
+spawnF16(w, 100, 20, 2);
+
+[1800]
+spawnF16(w, 40, 0, 2);
+spawnF16(w, 120, 0, 3);
+
+[1850]
+spawnF16(w, 90, 0, 2);
+spawnF16(w, 65, 0, 3);
+
+[1875]
+spawnManyF18Cut(w, 20, 50, true);
+
+[1900]
+spawnF18Boring(w, 20, 10, 2);
+spawnF18Boring(w, 40, 30, 2);
+
+[1925]
+spawnF18Boring(w, 80, 10, 3);
+spawnF18Boring(w, 100, 30, 3);
+
+[1950]
+spawnF16(w, 60, 0, 3);
+spawnF18Chase(w, 140, 20, 2);
+spawnF18Chase(w, 120, 10, 3);
+spawnF18Chase(w, 100, 20, 2);
+
+[2000]
+spawnF18Boring(w, 60, 30, 2);
+spawnF18Boring(w, 75, 10, 2);
+spawnF18Boring(w, 90, 30, 2);
+spawnF16Special(w, 73, 50, 2);
+
+[2273]
+spawnCloudUnder(w, 0, 0, 1, CLOUD_COVER);

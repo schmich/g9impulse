@@ -28,8 +28,13 @@ typedef struct Updateable
     UPDATEABLE_BASE;
 } Updateable;
 
-uint8 update(Updateable* who, World* world);
 Behavior* createBehavior(UpdateFn update);
+Updateable* createUpdateable(Animation* anim,
+                             uint8 initFrame,
+                             Behavior* behavior,
+                             Point where);
+
+uint8 update(Updateable* who, World* world);
 
 uint8 nullUpdate(Updateable* who, World* world);
 

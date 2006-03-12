@@ -30,7 +30,6 @@ void cls(uint8 color)
         drawFigure(&me);
         me.position.y += 24;
     }
-    return;
 }
 
 void fadeInOut(void)
@@ -49,7 +48,6 @@ void fadeInOut(void)
         cls (3-i);
         delay_ms(50);
     }
-    return;
 }
 
 bool showScene1(void)
@@ -126,7 +124,7 @@ bool showScene1(void)
     //fade in introduction text
     cls(0);
     if (delayS(1)) return true;
-    playMusic (1);
+    playMusic(1);
     if (delayMs(500)) return true;
     drawFigure(&near_future);
     if (delayMs(250)) return true;
@@ -1120,17 +1118,17 @@ bool showTitle(void)
         event = getInputEvent();
         if (event->startPressed)
         {
-            //seed random generator based on time player takes to hit start
+            //
+            // seed random generator based on time player 
+            // takes to hit start
+            //
             srand(i);
-            playMusic(255);
             delay_ms(200);
-            playMusic(2);
+
             return false;
         }
         delay_ms(100);
     }
-
-    playMusic(255);
 
     return true;
 }
@@ -1141,6 +1139,7 @@ void showIntro(void)
     setDoubleBuffer(false);
 
     delay_s(2);
+    stopMusic();
 
     if (showScene1() || showScene2() || showScene3() ||
         showScene4() || showScene5() || showScene6())

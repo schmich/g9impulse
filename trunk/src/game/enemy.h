@@ -9,6 +9,8 @@
 typedef struct Enemy
 {
     ENEMY_BASE;
+    uint8 maxHealth;
+    bool  ground;
 } Enemy;
 
 Enemy* createEnemy(Animation* anim,

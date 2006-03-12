@@ -8,6 +8,7 @@
 #include "timer.h"
 #include "pause.anim.inl"
 #include "gpu.h"
+#include "spu.h"
 
 #define FRAME_TIME 900
 
@@ -17,9 +18,15 @@ void handleInput(uint8* buffer)
 
     if (getInputStatus()->startPressed)
     {
+#ifndef _DEBUG
         drawImage(&pause->images[0],
                   makePoint(60, 85),
                   true);
+
+        drawImage(&pause->images[1],
+                  makePoint(6, 10),
+                  true);
+#endif
 
         flipBuffer(buffer);
 
@@ -36,9 +43,12 @@ void playGame(void)
     World* world = createWorld(createPlayer(makePoint(0, 0)), createLevel1());
 
     setDoubleBuffer(true);
+    clearBuffers();
     setFieldColor(0);
 
     initTimer();
+
+    playMusic(2);
 
     //
     // HACK prevent immediate pause (from title screen)

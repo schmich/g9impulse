@@ -222,3 +222,18 @@ void gpuInit()
     //Initialize port D
     PORTD = 0x00;
 }
+
+void clearBuffers(void)
+{
+    uint8 i;
+    int16 y;
+    int buffer = 0;
+
+    for (i = 0; i < 2; ++i)
+    {
+        for (y = 0; y < 240; y += 24)
+            draw(0x000B6F80, 160, 24, 0, y, false);
+
+        flipBuffer(&buffer);
+    }
+}

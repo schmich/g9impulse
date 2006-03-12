@@ -1,11 +1,14 @@
-[tiny]
+[tiny cloud]
 0x00199FBE      37      125
 
-[small]
+[small cloud]
 0x00199BA8      77      92
 
-[medium]
+[medium cloud]
 0x0019FCDF      65      217
 
-[large]
+[large cloud]
 0x0019DDEE      76      306
+
+[cloud cover]
+0,9423          320     1046

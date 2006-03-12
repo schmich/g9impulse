@@ -3,15 +3,15 @@
 
 #include "common.h"
 #include "updateable.h"
-#include "fraction.h"
 
 typedef struct Boring
 {
     BEHAVIOR_BASE;
-    Fraction vertSpeed;
-    int8 counter;
+    int8  speed;
+    uint8 frameDelay;
+    uint8 elapsed;
 } Boring;
 
-Boring* createBoring(Fraction vertSpeed);
+Boring* createBoring(int8 speed, uint8 frameDelay);
 
 #endif // BORING_H

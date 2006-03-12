@@ -6,6 +6,7 @@
 #include "types.h"
 #include "memory.h"
 #include "screen.h"
+#include "mathext.h"
 
 #define NULL 0
 

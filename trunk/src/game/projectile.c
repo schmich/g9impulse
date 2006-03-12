@@ -10,7 +10,8 @@ Projectile* createProjectile(Animation* anim,
                              Behavior* behavior,
                              uint8 damage,
                              Point where,
-                             ImpactFn onImpact)
+                             ImpactFn onImpact,
+                             bool invincible)
 {
     Projectile* p = new(Projectile);
     p->destroy = destroyProjectile;
@@ -20,6 +21,7 @@ Projectile* createProjectile(Animation* anim,
     p->impact = onImpact;
     p->animation = anim;
     p->currentFrame = initFrame;
+    p->invincible = invincible;
 
     return p;
 }
@@ -27,4 +29,9 @@ Projectile* createProjectile(Animation* anim,
 void impact(Projectile* proj, Sprite* who, World* world)
 {
     proj->impact(proj, who, world); 
+}
+
+void nullImpact(Projectile* proj, Sprite* who, World* world)
+{
+    // do nothing!
 }

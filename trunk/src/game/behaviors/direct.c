@@ -1,14 +1,6 @@
 #include "direct.h"
 #include "sprite.h"
 
-static int16 abs(int16 x)
-{
-    if (x < 0)
-        return -x;
-    else
-        return x;
-}
-
 static uint8 updateDirectFlat(Updateable* who, World* world)
 {
     Direct* d = who->behavior;
@@ -27,14 +19,14 @@ static uint8 updateDirectFlat(Updateable* who, World* world)
     while (stepsLeft > 0)
     {
         --stepsLeft;
-        who->position.x += (int16)direction;
+        who->position.x += direction;
 
-        d->error += dy;
-        if (2 * d->error > dx)
+        d->error += abs(dy);
+        if (2 * d->error > abs(dx))
         {
             --stepsLeft;
             ++who->position.y;
-            d->error -= dx;
+            d->error -= abs(dx);
         }
 
         if (dy > 0)
@@ -89,12 +81,12 @@ static uint8 updateDirectSteep(Updateable* who, World* world)
         --stepsLeft;
         ++who->position.y;
 
-        d->error += (int16)direction * dx;
-        if (2 * d->error > dy)
+        d->error += abs(dx);
+        if (2 * d->error > abs(dy))
         {
             --stepsLeft;
-            who->position.x += (int16)direction;
-            d->error -= dy;
+            who->position.x += direction;
+            d->error -= abs(dy);
         }
 
         if (dy > 0)

@@ -14,6 +14,6 @@ typedef struct Explosion
     UPDATEABLE_BASE;
 } Explosion;
 
-Explosion* createExplosion(Point where, uint8 size, uint8 frames);
+Explosion* createExplosion(Point where, uint8 size, uint8 frameDelay);
 
 #endif // EXPLOSION_H

@@ -7,29 +7,29 @@ static void destroyExplosion(Explosion* e)
     destroy(e->behavior);
 }
 
-Explosion* createExplosion(Point where, uint8 size, uint8 frames)
+Explosion* createExplosion(Point where, uint8 size, uint8 frameDelay)
 {
     Explosion* e = new(Explosion);
     e->destroy = destroyExplosion;
-    e->behavior = createAnimator(frames, 1);
+    e->behavior = createAnimator(frameDelay, 1);
     e->position = where;
 
     switch (size)
     {
         case EXPLOSION_TINY:
-            e->animation = tinyAnimation();
+            e->animation = tinyExplosionAnimation();
             break;
 
         case EXPLOSION_SMALL:
-            e->animation = smallAnimation();
+            e->animation = smallExplosionAnimation();
             break;
 
         case EXPLOSION_MEDIUM:
-            e->animation = mediumAnimation();
+            e->animation = mediumExplosionAnimation();
             break;
 
         case EXPLOSION_LARGE:
-            e->animation = largeAnimation();
+            e->animation = largeExplosionAnimation();
             break;
     }
 

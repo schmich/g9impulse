@@ -7,30 +7,34 @@ static void destroyCloud(Cloud* c)
     destroy(c->behavior);
 }
 
-Cloud* createCloud(int16 x, int16 recess, Fraction speed, uint8 size)
+Cloud* createCloud(int16 x, int16 recess, int8 speed, uint8 size)
 {
     int16 height;
 
     Cloud* c = new(Cloud);
     c->destroy = destroyCloud;
-    c->behavior = createBoring(speed);
+    c->behavior = createBoring(speed, 1);
 
     switch (size)
     {
         case CLOUD_TINY:
-            c->animation = tinyAnimation();
+            c->animation = tinyCloudAnimation();
             break;
 
         case CLOUD_SMALL:
-            c->animation = smallAnimation();
+            c->animation = smallCloudAnimation();
             break;
 
         case CLOUD_MEDIUM:
-            c->animation = mediumAnimation();
+            c->animation = mediumCloudAnimation();
             break;
 
         case CLOUD_LARGE:
-            c->animation = largeAnimation();
+            c->animation = largeCloudAnimation();
+            break;
+            
+        case CLOUD_COVER:
+            c->animation = cloudCoverAnimation();
             break;
     }
 

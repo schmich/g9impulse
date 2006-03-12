@@ -1,0 +1,4 @@
+[missle]
+0x000D9F5B      2       20      -- straight ahead
+0x000D9FFE      5       18      -- slant left (forward slash)
+0x000DA004      5       18      -- slant right (backslash)

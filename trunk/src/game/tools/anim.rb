@@ -55,7 +55,23 @@ File.open(filename) { |file|
                 animations << [name, images] if not name.nil?
                 name = $1
                 images = []
-            when /\s*(0[xX][0-9A-Fa-f]+|\d+)\s+(0[xX][0-9A-Fa-f]+|\d+)\s+(0[xX][0-9A-Fa-f]+|\d+)(\-\-.*)?/
+            when /\s*(\d+),\s*(\d+)\s+(\d+)\s+(\d+)\s*(\-\-.*)?/
+                x = $1.to_i
+                y = $2.to_i
+                if x % 2 != 0
+                    puts "X must be a multiple of 2, line #{lineNum}"
+                    exit(-1)
+                end
+                w = $3.to_i
+                if w % 2 != 0
+                    puts "Width must be a multiple of 2, line #{lineNum}"
+                    exit(-1)
+                end
+                addr = "0x%X" % ((x / 2).floor + 160 * y)
+                width = ((w / 2).floor).to_s
+                height = $4
+                images << [addr, width, height]
+            when /\s*(0[xX][0-9A-Fa-f]+|\d+)\s+(0[xX][0-9A-Fa-f]+|\d+)\s+(0[xX][0-9A-Fa-f]+|\d+)\s*(\-\-.*)?/
                 addr = $1
                 width = $2
                 height = $3
@@ -77,6 +93,8 @@ animations.each { |animation|
         exit(-1)
     end
 }
+
+puts '#include "animation.h"'
 
 poolName = "the_" + filename.gsub(/[^\w]+/, '_') + "_pool"
 puts "static const near rom uint8 #{poolName}[] = "

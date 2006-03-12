@@ -4,6 +4,7 @@
 #include "common.h"
 #include "artifact.h"
 
-void addHealth(Artifact* a, Player* p, World* w);
+void powerupHealth(Artifact* a, Player* p, World* w);
+void powerupWeapon(Artifact* a, Player* p, World* w);
 
 #endif // POWERUP_H
