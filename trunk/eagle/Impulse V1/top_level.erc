@@ -1,0 +1,95 @@
+EAGLE Version 4.16 Copyright (c) 1988-2005 CadSoft
+
+Electrical Rule Check for C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/top_level.sch at  3/19/2006 11:02:27p
+
+WARNING: Sheet 1/1: POWER Pin U3 VDD connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U3 VSSQ connected to GND
+WARNING: Sheet 1/1: POWER Pin U3 VSSQ connected to GND
+WARNING: Sheet 1/1: POWER Pin U3 VDDQ connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U3 VDDQ connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U3 VDD connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U3 VDD connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U3 VSS connected to GND
+WARNING: Sheet 1/1: POWER Pin U3 VSS connected to GND
+WARNING: Sheet 1/1: POWER Pin U3 VDDQ connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U3 VSSQ connected to GND
+WARNING: Sheet 1/1: POWER Pin U3 VDDQ connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U3 VSSQ connected to GND
+WARNING: Sheet 1/1: POWER Pin U3 VSS connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 VCC01_1 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U1 VCC02_16 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U1 VCC03_35 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U1 VCC04_36 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U1 VCC05_53 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U1 VCC06_70 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U1 VCC07_71 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U1 VCC08_90 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U1 VCC09_107 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U1 VCC09_108 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U1 VCC10_127 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U1 VCC011_144 connected to +3V3
+ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT1_9
+ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT2_14
+ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT3_24
+ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT4_55
+ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT5_82
+ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT6_92
+ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT7_97
+ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT8_125
+WARNING: Sheet 1/1: POWER Pin U1 GND1_8 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND2_17 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND3_25 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND4_33 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND5_45 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND6_52 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND7_61 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND8_73 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND9_81 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND10_89 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND11_98 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND12_110 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND13_119 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND14_128 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND15_135 connected to GND
+WARNING: Sheet 1/1: POWER Pin U1 GND16_143 connected to GND
+WARNING: Sheet 1/1: POWER Pin U2 VCCINT1_3 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U2 VCCINT2_37 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U2 VCCIO1_26 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U2 VCCIO2_55 connected to +3V3
+WARNING: Sheet 1/1: POWER Pin U2 GND1_14 connected to GND
+WARNING: Sheet 1/1: POWER Pin U2 GND2_21 connected to GND
+WARNING: Sheet 1/1: POWER Pin U2 GND3_41 connected to GND
+WARNING: Sheet 1/1: POWER Pin U2 GND4_54 connected to GND
+WARNING: Sheet 1/1: POWER Pin IC1P VCC connected to +5V
+WARNING: Only 1 Pin on net PPTBUS1
+WARNING: Only 1 Pin on net XCBUS12
+WARNING: Only 1 Pin on net XCBUS13
+WARNING: Only 1 Pin on net XCBUS15
+WARNING: Only 1 Pin on net XCBUS18
+WARNING: Only 1 Pin on net XCBUS19
+WARNING: Only 1 Pin on net XCBUS20
+WARNING: Only 1 Pin on net XCBUS21
+WARNING: Only 1 Pin on net XCBUS22
+WARNING: Only 1 Pin on net XCBUS23
+WARNING: Only 1 Pin on net XCBUS26
+WARNING: Only 1 Pin on net XCBUS32
+WARNING: Only 1 Pin on net XCBUS34
+WARNING: Only 1 Pin on net XCBUS77
+WARNING: Only 1 Pin on net XCBUS79
+WARNING: Only 1 Pin on net XCBUS80
+WARNING: Only 1 Pin on net XCBUS83
+WARNING: Only 1 Pin on net XCBUS84
+WARNING: Only 1 Pin on net XCBUS85
+WARNING: Only 1 Pin on net XCBUS86
+WARNING: Only 1 Pin on net XCBUS87
+WARNING: Only 1 Pin on net XCBUS91
+WARNING: Only 1 Pin on net XCBUS93
+WARNING: Only 1 Pin on net XCBUS94
+WARNING: Only 1 Pin on net XCBUS106
+WARNING: Only 1 Pin on net XCBUS111
+WARNING: Only 1 Pin on net XCBUS142
+
+No board loaded - consistency has not been checked
+
+    8 errors
+   78 warnings
