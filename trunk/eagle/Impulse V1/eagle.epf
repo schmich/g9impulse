@@ -7,12 +7,6 @@ Desktop="Desktop"
 
 [Globals]
 AutoSaveProject=1
-UsedLibrary="C:/Program Files/EAGLE-4.16/lbr/ase.lbr"
-UsedLibrary="C:/Program Files/EAGLE-4.16/lbr/axis.lbr"
-UsedLibrary="C:/Program Files/EAGLE-4.16/lbr/marks.lbr"
-UsedLibrary="C:/Program Files/EAGLE-4.16/lbr/nec-lqfp100-pack.lbr"
-UsedLibrary="C:/Program Files/EAGLE-4.16/lbr/plcc-socket.lbr"
-UsedLibrary="C:/Program Files/EAGLE-4.16/lbr/ref-packages.lbr"
 UsedLibrary="xilinx.lbr"
 UsedLibrary="memory-samsung.lbr"
 UsedLibrary="supply1.lbr"
@@ -22,10 +16,21 @@ UsedLibrary="con-subd.lbr"
 UsedLibrary="74xx-us.lbr"
 UsedLibrary="pinhead.lbr"
 UsedLibrary="dallas.lbr"
+UsedLibrary="texas.lbr"
+UsedLibrary="v-reg.lbr"
+UsedLibrary="con-jack.lbr"
+UsedLibrary="diode.lbr"
+UsedLibrary="memory.lbr"
+UsedLibrary="micro-pic18xxx.lbr"
+UsedLibrary="microchip-2.lbr"
+UsedLibrary="switch.lbr"
+UsedLibrary="ece3724.lbr"
+UsedLibrary="con-yamaichi.lbr"
+UsedLibrary="switch-dil.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="550 304 1652 946"
+Loc="548 250 1650 892"
 State=2
 Number=0
 

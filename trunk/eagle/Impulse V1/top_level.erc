@@ -1,7 +1,12 @@
 EAGLE Version 4.16 Copyright (c) 1988-2005 CadSoft
 
-Electrical Rule Check for C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/top_level.sch at  3/19/2006 11:02:27p
+Electrical Rule Check for C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/top_level.sch at  3/22/2006 01:19:43a
 
+WARNING: Sheet 1/1: unconnected Pin: X2-4 F
+WARNING: Sheet 1/1: unconnected Pin: X2-9 F
+WARNING: Sheet 1/1: unconnected Pin: X2-11 F
+WARNING: Sheet 1/1: unconnected Pin: X2-12 F
+WARNING: Sheet 1/1: unconnected Pin: X2-15 F
 WARNING: Sheet 1/1: POWER Pin U3 VDD connected to +3V3
 WARNING: Sheet 1/1: POWER Pin U3 VSSQ connected to GND
 WARNING: Sheet 1/1: POWER Pin U3 VSSQ connected to GND
@@ -28,14 +33,14 @@ WARNING: Sheet 1/1: POWER Pin U1 VCC09_107 connected to +3V3
 WARNING: Sheet 1/1: POWER Pin U1 VCC09_108 connected to +3V3
 WARNING: Sheet 1/1: POWER Pin U1 VCC10_127 connected to +3V3
 WARNING: Sheet 1/1: POWER Pin U1 VCC011_144 connected to +3V3
-ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT1_9
-ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT2_14
-ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT3_24
-ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT4_55
-ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT5_82
-ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT6_92
-ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT7_97
-ERROR: Sheet 1/1: no SUPPLY for POWER Pin U1 VCCINT8_125
+WARNING: Sheet 1/1: POWER Pin U1 VCCINT1_9 connected to +2V5
+WARNING: Sheet 1/1: POWER Pin U1 VCCINT2_14 connected to +2V5
+WARNING: Sheet 1/1: POWER Pin U1 VCCINT3_24 connected to +2V5
+WARNING: Sheet 1/1: POWER Pin U1 VCCINT4_55 connected to +2V5
+WARNING: Sheet 1/1: POWER Pin U1 VCCINT5_82 connected to +2V5
+WARNING: Sheet 1/1: POWER Pin U1 VCCINT6_92 connected to +2V5
+WARNING: Sheet 1/1: POWER Pin U1 VCCINT7_97 connected to +2V5
+WARNING: Sheet 1/1: POWER Pin U1 VCCINT8_125 connected to +2V5
 WARNING: Sheet 1/1: POWER Pin U1 GND1_8 connected to GND
 WARNING: Sheet 1/1: POWER Pin U1 GND2_17 connected to GND
 WARNING: Sheet 1/1: POWER Pin U1 GND3_25 connected to GND
@@ -61,35 +66,29 @@ WARNING: Sheet 1/1: POWER Pin U2 GND2_21 connected to GND
 WARNING: Sheet 1/1: POWER Pin U2 GND3_41 connected to GND
 WARNING: Sheet 1/1: POWER Pin U2 GND4_54 connected to GND
 WARNING: Sheet 1/1: POWER Pin IC1P VCC connected to +5V
-WARNING: Only 1 Pin on net PPTBUS1
-WARNING: Only 1 Pin on net XCBUS12
-WARNING: Only 1 Pin on net XCBUS13
+ERROR: Sheet 1/1: unconnected INPUT Pin: U6 XTAL_7
+WARNING: Sheet 1/1: POWER Pin U6 VCC connected to +5V
+WARNING: Sheet 1/1: POWER Pin U4 VCC connected to +5V
+WARNING: Sheet 1/1: POWER Pin U5 AVDD connected to +5V
+WARNING: Sheet 1/1: POWER Pin U5 AVSS connected to GND
+WARNING: Sheet 1/1: POWER Pin U5 VSS connected to GND
+WARNING: Sheet 1/1: POWER Pin U5 VDD connected to +5V
+WARNING: Sheet 1/1: POWER Pin U5 VSS connected to GND
+WARNING: Sheet 1/1: POWER Pin U5 VDD connected to +5V
+WARNING: Sheet 1/1: POWER Pin U5 VSS connected to GND
+WARNING: Sheet 1/1: POWER Pin U5 VDD connected to +5V
+WARNING: Sheet 1/1: POWER Pin U5 VSS connected to GND
+WARNING: Sheet 1/1: POWER Pin U5 VDD connected to +5V
+ERROR: Sheet 1/1: unconnected INPUT Pin: U9 OSC1
+WARNING: Sheet 1/1: POWER Pin U9 VSS connected to GND
+WARNING: Sheet 1/1: POWER Pin U9 VDD connected to +5V
+WARNING: Sheet 1/1: POWER Pin IC2P VCC connected to +5V
+WARNING: Sheet 1/1: POWER Pin QG1 VCC connected to +5V
 WARNING: Only 1 Pin on net XCBUS15
 WARNING: Only 1 Pin on net XCBUS18
-WARNING: Only 1 Pin on net XCBUS19
-WARNING: Only 1 Pin on net XCBUS20
-WARNING: Only 1 Pin on net XCBUS21
-WARNING: Only 1 Pin on net XCBUS22
-WARNING: Only 1 Pin on net XCBUS23
-WARNING: Only 1 Pin on net XCBUS26
-WARNING: Only 1 Pin on net XCBUS32
-WARNING: Only 1 Pin on net XCBUS34
-WARNING: Only 1 Pin on net XCBUS77
-WARNING: Only 1 Pin on net XCBUS79
-WARNING: Only 1 Pin on net XCBUS80
-WARNING: Only 1 Pin on net XCBUS83
-WARNING: Only 1 Pin on net XCBUS84
-WARNING: Only 1 Pin on net XCBUS85
-WARNING: Only 1 Pin on net XCBUS86
-WARNING: Only 1 Pin on net XCBUS87
 WARNING: Only 1 Pin on net XCBUS91
-WARNING: Only 1 Pin on net XCBUS93
-WARNING: Only 1 Pin on net XCBUS94
-WARNING: Only 1 Pin on net XCBUS106
-WARNING: Only 1 Pin on net XCBUS111
-WARNING: Only 1 Pin on net XCBUS142
 
 No board loaded - consistency has not been checked
 
-    8 errors
-   78 warnings
+    2 errors
+   83 warnings
