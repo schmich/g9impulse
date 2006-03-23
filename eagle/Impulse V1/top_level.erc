@@ -1,12 +1,19 @@
 EAGLE Version 4.16 Copyright (c) 1988-2005 CadSoft
 
-Electrical Rule Check for C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/top_level.sch at  3/22/2006 01:19:43a
+Electrical Rule Check for C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/top_level.sch at  3/22/2006 06:47:51p
 
 WARNING: Sheet 1/1: unconnected Pin: X2-4 F
 WARNING: Sheet 1/1: unconnected Pin: X2-9 F
 WARNING: Sheet 1/1: unconnected Pin: X2-11 F
 WARNING: Sheet 1/1: unconnected Pin: X2-12 F
 WARNING: Sheet 1/1: unconnected Pin: X2-15 F
+WARNING: Sheet 1/1: unconnected Pin: X5-2 F
+WARNING: Sheet 1/1: unconnected Pin: X5-6 F
+WARNING: Sheet 1/1: unconnected Pin: X5-7 F
+WARNING: Sheet 1/1: unconnected Pin: X5-8 F
+WARNING: Sheet 1/1: unconnected Pin: X5-9 F
+WARNING: Sheet 1/1: unconnected Pin: X5-G G2
+WARNING: Sheet 1/1: unconnected Pin: X5-1 F
 WARNING: Sheet 1/1: POWER Pin U3 VDD connected to +3V3
 WARNING: Sheet 1/1: POWER Pin U3 VSSQ connected to GND
 WARNING: Sheet 1/1: POWER Pin U3 VSSQ connected to GND
@@ -84,11 +91,15 @@ WARNING: Sheet 1/1: POWER Pin U9 VSS connected to GND
 WARNING: Sheet 1/1: POWER Pin U9 VDD connected to +5V
 WARNING: Sheet 1/1: POWER Pin IC2P VCC connected to +5V
 WARNING: Sheet 1/1: POWER Pin QG1 VCC connected to +5V
+ERROR: Sheet 1/1: unconnected INPUT Pin: U10 T2IN
+ERROR: Sheet 1/1: unconnected INPUT Pin: U10 R2IN
+WARNING: Sheet 1/1: POWER Pin U10P VCC connected to +5V
 WARNING: Only 1 Pin on net XCBUS15
 WARNING: Only 1 Pin on net XCBUS18
 WARNING: Only 1 Pin on net XCBUS91
+WARNING: Sheet 1/1, Net GND: wire overlaps pin at (-7.2 -7.7)
 
 No board loaded - consistency has not been checked
 
-    2 errors
-   83 warnings
+    4 errors
+   92 warnings
