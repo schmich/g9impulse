@@ -27,6 +27,9 @@ UsedLibrary="switch.lbr"
 UsedLibrary="ece3724.lbr"
 UsedLibrary="con-yamaichi.lbr"
 UsedLibrary="switch-dil.lbr"
+UsedLibrary="crystal.lbr"
+UsedLibrary="led.lbr"
+UsedLibrary="maxim.lbr"
 
 [Win_1]
 Type="Control Panel"
