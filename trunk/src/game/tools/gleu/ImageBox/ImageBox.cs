@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Data;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -56,7 +57,52 @@ namespace GLEU
 			set
 			{
 				_view = value;
-				_setView(_view);
+				_setView(_origImageHandle, _view);
+				_imageUpdated();
+			}
+		}
+
+		bool _transparent = false;
+		public bool IsTransparent
+		{
+			get
+			{
+				return _transparent;
+			}
+
+			set
+			{
+				_transparent = value;
+			}
+		}
+
+		float _brightness = 100;
+		public float Brightness
+		{
+			get
+			{
+				return _brightness;
+			}
+
+			set
+			{
+				_brightness = value;
+				_setBrightness(_brightness);
+			}
+		}
+
+		float _contrast = 100;
+		public float Contrast
+		{
+			get
+			{
+				return _contrast;
+			}
+
+			set
+			{
+				_contrast = value;
+				_setContrast(_contrast);
 			}
 		}
 		
@@ -75,8 +121,10 @@ namespace GLEU
 				if (_origImageHandle != 0)
 				{
 					_origImage = _bitmapFromImageHandle(_origImageHandle);
-					_setView(_view);
+					_setView(_origImageHandle, _view);
 				}
+
+				_imageUpdated();
 			}
 			
 			get
@@ -85,24 +133,62 @@ namespace GLEU
 			}
 		}
 
-		private void _setView(Rectangle view)
+		private void _setBrightness(float amount)
 		{
-			if (_origImageHandle != 0)
+			if (this.ImageLoaded)
+			{
+				uint clone = FreeImage.Clone(_origImageHandle);
+				FreeImage.AdjustBrightness(clone, amount);
+				_setView(clone, View);
+				_imageUpdated();
+			}
+		}
+		
+		private void _setContrast(float amount)
+		{
+			if (this.ImageLoaded)
+			{
+				uint clone = FreeImage.Clone(_origImageHandle);
+				FreeImage.AdjustContrast(clone, amount);
+				_setView(clone, View);
+				_imageUpdated();
+			}
+		}
+
+		private void _setView(uint image, Rectangle view)
+		{
+			if (image != 0)
 			{
 				if (view.Bottom != 0)
 				{
-					_viewImageHandle = _cropImage(_origImageHandle, view);
-					_viewImage = _bitmapFromImageHandle(_viewImageHandle);			
+					_viewImageHandle = _cropImage(image, view);
 				}
 				else
 				{
-					_viewImageHandle = _origImageHandle;
+					_viewImageHandle = image;
 					_viewImage = _origImage;
 				}
 
 				this.Width = _viewImage.Width;
 				this.Height = _viewImage.Height;
+
+				_imageUpdated();
 			}
+		}
+
+		private void _imageUpdated()
+		{
+			if (this.ImageLoaded)
+			{
+				_viewImage = _bitmapFromImageHandle(_viewImageHandle);
+				_redraw();
+			}
+		}
+
+		private void _redraw()
+		{
+			this.Invalidate();
+			this.Refresh();
 		}
 		
 		private Bitmap _bitmapFromImageHandle(uint handle)
@@ -114,15 +200,32 @@ namespace GLEU
 			
 			Bitmap bmp = new Bitmap(Convert.ToInt32(width), Convert.ToInt32(height));
 			Graphics gfx = Graphics.FromImage(bmp);
+			gfx.FillRectangle(System.Drawing.Brushes.Magenta, 0, 0, width, height);
+
 			IntPtr hdc = gfx.GetHdc();
+
+			uint clone = FreeImage.Clone(handle);
+
+			FreeImage.SetTransparent(clone, false);
+			clone = FreeImage.Threshold(clone, 1);
+			clone = FreeImage.ConvertTo32Bits(clone);
+			MessageBox.Show(FreeImage.GetTransparencyTable(clone).ToString());
+
+			/*RGBQUAD q = new RGBQUAD();
+			q.rgbBlue = 255;
+			q.rgbGreen = 255;
+			q.rgbRed = 255;
+			FreeImage.SetBackgroundColor(clone, q);*/
+			//clone = FreeImage.Threshold(clone, 1);
+			//clone = FreeImage.ConvertTo32Bits(clone);
 
 			SetStretchBltMode(hdc, 3 /* COLORONCOLOR */);
 			StretchDIBits(hdc,
 				0, 0, width, height,
 				0, 0, width, height,
-				FreeImage.GetBits(handle),
-				FreeImage.GetInfo(handle),
-				0 /* DIB_RGB_COLORS */, 0x00CC0020 /* SRCCOPY */);
+				FreeImage.GetBits(clone),
+				FreeImage.GetInfo(clone),
+				0 /* DIB_RGB_COLORS */, 0x00EE0086);//13369376  /* SRCCOPY */);
 
 			gfx.ReleaseHdc(hdc);
 			
@@ -144,8 +247,21 @@ namespace GLEU
 
 		private void onPaint(object sender, System.Windows.Forms.PaintEventArgs e)
 		{
-			if (_viewImage != null)
-				e.Graphics.DrawImage(_viewImage, 0, 0, _viewImage.Width, _viewImage.Height);
+			if (this.ImageLoaded)
+			{
+				if (_transparent)
+				{
+					ImageAttributes attrs = new ImageAttributes();
+					attrs.SetColorKey(System.Drawing.Color.Magenta, System.Drawing.Color.Magenta);
+
+					Rectangle dest = new Rectangle(0, 0, _viewImage.Width, _viewImage.Height);
+					e.Graphics.DrawImage(_viewImage, dest, 0, 0, _viewImage.Width, _viewImage.Height, GraphicsUnit.Pixel, attrs);
+				}
+				else
+				{
+					e.Graphics.DrawImage(_viewImage, 0, 0, _viewImage.Width, _viewImage.Height);
+				}
+			}
 		}
 
 		#region Component Designer generated code

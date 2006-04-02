@@ -22,11 +22,9 @@ namespace GLEU
 		private System.Windows.Forms.MenuItem mnuExit;
 		private System.Windows.Forms.MainMenu mnuMain;
         private System.Windows.Forms.MenuItem mnuSave;
-		private ImageBox imgLevel;
 		private System.Windows.Forms.MenuItem mnuSeparator0;
 		private System.Windows.Forms.StatusBar sbStatus;
 		private WeifenLuo.WinFormsUI.DockPanel dockMain;
-		private System.Windows.Forms.Panel pnlLevel;
 		private System.Windows.Forms.StatusBarPanel sbpnlLocation;
 
 		public MainForm()
@@ -69,7 +67,6 @@ namespace GLEU
 			this.sbStatus = new System.Windows.Forms.StatusBar();
 			this.sbpnlLocation = new System.Windows.Forms.StatusBarPanel();
 			this.dockMain = new WeifenLuo.WinFormsUI.DockPanel();
-			this.pnlLevel = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize)(this.sbpnlLocation)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -133,26 +130,10 @@ namespace GLEU
 			this.dockMain.Size = new System.Drawing.Size(600, 435);
 			this.dockMain.TabIndex = 4;
 			// 
-			// pnlLevel
-			// 
-			this.pnlLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
-			this.pnlLevel.AutoScroll = true;
-			this.pnlLevel.BackColor = System.Drawing.Color.Black;
-			this.pnlLevel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.pnlLevel.Location = new System.Drawing.Point(-176, 0);
-			this.pnlLevel.Name = "pnlLevel";
-			this.pnlLevel.Size = new System.Drawing.Size(240, 435);
-			this.pnlLevel.TabIndex = 6;
-			this.pnlLevel.TabStop = true;
-			this.pnlLevel.Visible = false;
-			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(600, 457);
-			this.Controls.Add(this.pnlLevel);
 			this.Controls.Add(this.dockMain);
 			this.Controls.Add(this.sbStatus);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -194,9 +175,12 @@ namespace GLEU
 
         private void _load(LevelMeta meta)
 		{
-			imgLevel.ImagePath = meta.BackgroundFilename;
-			imgLevel.View = new Rectangle(0, meta.Bounds.Low, 
-										  imgLevel.Width, meta.Bounds.High - meta.Bounds.Low);
+			_designerForm.LevelImage.ImagePath = meta.BackgroundFilename;
+			_designerForm.LevelImage.View = 
+				new Rectangle(0,
+							  meta.Bounds.Low, 
+							  _designerForm.LevelImage.Width, 
+							  meta.Bounds.High - meta.Bounds.Low);
 		}
 
 		private void mnuOpen_Click(object sender, System.EventArgs e)
@@ -231,7 +215,7 @@ namespace GLEU
 
 		private void onMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
-			if (imgLevel.ImageLoaded)
+			if (_designerForm.LevelImage.ImageLoaded)
 				sbpnlLocation.Text = "(" + e.X.ToString() + ", " + e.Y.ToString() + ")";
 		}
 	}
