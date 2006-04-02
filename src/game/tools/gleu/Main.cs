@@ -4,31 +4,40 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data;
+using WeifenLuo.WinFormsUI;
 
 namespace GLEU
 {
-	public class LevelDesigner : System.Windows.Forms.Form
+	public class MainForm : System.Windows.Forms.Form
 	{
         private Level _level = null;
+
+		private Palette _paletteForm = new Palette();
+		private Properties _propertiesForm = new Properties();
+		private LevelDesigner _designerForm = new LevelDesigner();
 
 		private System.ComponentModel.Container components = null;
 		private System.Windows.Forms.MenuItem mnuFile;
 		private System.Windows.Forms.MenuItem mnuOpen;
-		private System.Windows.Forms.MenuItem mnuWindow;
-		private System.Windows.Forms.MenuItem mnuSnap;
 		private System.Windows.Forms.MenuItem mnuExit;
 		private System.Windows.Forms.MainMenu mnuMain;
         private System.Windows.Forms.MenuItem mnuSave;
-		private GLEU.ImageBox imgLevel;
-		private System.Windows.Forms.Panel pnlLevel;
+		private ImageBox imgLevel;
 		private System.Windows.Forms.MenuItem mnuSeparator0;
 		private System.Windows.Forms.StatusBar sbStatus;
+		private WeifenLuo.WinFormsUI.DockPanel dockMain;
+		private System.Windows.Forms.Panel pnlLevel;
 		private System.Windows.Forms.StatusBarPanel sbpnlLocation;
-		private Palette _palette = null;
 
-		public LevelDesigner()
+		public MainForm()
 		{
 			InitializeComponent();
+
+			_paletteForm.Show(dockMain);
+			_propertiesForm.Show(dockMain);
+			
+			_designerForm.Show(dockMain);
+			_designerForm.TabText = "Level Design";
 		}
 
 		protected override void Dispose( bool disposing )
@@ -50,28 +59,24 @@ namespace GLEU
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(LevelDesigner));
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MainForm));
 			this.mnuMain = new System.Windows.Forms.MainMenu();
 			this.mnuFile = new System.Windows.Forms.MenuItem();
 			this.mnuOpen = new System.Windows.Forms.MenuItem();
 			this.mnuSave = new System.Windows.Forms.MenuItem();
 			this.mnuSeparator0 = new System.Windows.Forms.MenuItem();
 			this.mnuExit = new System.Windows.Forms.MenuItem();
-			this.mnuWindow = new System.Windows.Forms.MenuItem();
-			this.mnuSnap = new System.Windows.Forms.MenuItem();
-			this.imgLevel = new GLEU.ImageBox();
 			this.sbStatus = new System.Windows.Forms.StatusBar();
 			this.sbpnlLocation = new System.Windows.Forms.StatusBarPanel();
+			this.dockMain = new WeifenLuo.WinFormsUI.DockPanel();
 			this.pnlLevel = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize)(this.sbpnlLocation)).BeginInit();
-			this.pnlLevel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// mnuMain
 			// 
 			this.mnuMain.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					this.mnuFile,
-																					this.mnuWindow});
+																					this.mnuFile});
 			// 
 			// mnuFile
 			// 
@@ -108,74 +113,55 @@ namespace GLEU
 			this.mnuExit.Text = "E&xit";
 			this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
 			// 
-			// mnuWindow
-			// 
-			this.mnuWindow.Index = 1;
-			this.mnuWindow.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					  this.mnuSnap});
-			this.mnuWindow.Text = "&Window";
-			// 
-			// mnuSnap
-			// 
-			this.mnuSnap.Enabled = false;
-			this.mnuSnap.Index = 0;
-			this.mnuSnap.Shortcut = System.Windows.Forms.Shortcut.CtrlZ;
-			this.mnuSnap.Text = "&Snap";
-			this.mnuSnap.Click += new System.EventHandler(this.mnuSnap_Click);
-			// 
-			// imgLevel
-			// 
-			this.imgLevel.CausesValidation = false;
-			this.imgLevel.Cursor = System.Windows.Forms.Cursors.Cross;
-			this.imgLevel.ImagePath = "";
-			this.imgLevel.Location = new System.Drawing.Point(0, 0);
-			this.imgLevel.Name = "imgLevel";
-			this.imgLevel.Size = new System.Drawing.Size(0, 0);
-			this.imgLevel.TabIndex = 2;
-			this.imgLevel.TabStop = false;
-			this.imgLevel.View = new System.Drawing.Rectangle(0, 0, 0, 0);
-			this.imgLevel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.onMouseMove);
-			// 
 			// sbStatus
 			// 
-			this.sbStatus.Location = new System.Drawing.Point(0, 315);
+			this.sbStatus.Location = new System.Drawing.Point(0, 435);
 			this.sbStatus.Name = "sbStatus";
 			this.sbStatus.Panels.AddRange(new System.Windows.Forms.StatusBarPanel[] {
 																						this.sbpnlLocation});
 			this.sbStatus.ShowPanels = true;
-			this.sbStatus.Size = new System.Drawing.Size(488, 22);
+			this.sbStatus.Size = new System.Drawing.Size(600, 22);
 			this.sbStatus.TabIndex = 3;
+			// 
+			// dockMain
+			// 
+			this.dockMain.ActiveAutoHideContent = null;
+			this.dockMain.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dockMain.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+			this.dockMain.Location = new System.Drawing.Point(0, 0);
+			this.dockMain.Name = "dockMain";
+			this.dockMain.Size = new System.Drawing.Size(600, 435);
+			this.dockMain.TabIndex = 4;
 			// 
 			// pnlLevel
 			// 
+			this.pnlLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+				| System.Windows.Forms.AnchorStyles.Left) 
+				| System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlLevel.AutoScroll = true;
+			this.pnlLevel.BackColor = System.Drawing.Color.Black;
 			this.pnlLevel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.pnlLevel.Controls.Add(this.imgLevel);
-			this.pnlLevel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnlLevel.Location = new System.Drawing.Point(0, 0);
+			this.pnlLevel.Location = new System.Drawing.Point(-176, 0);
 			this.pnlLevel.Name = "pnlLevel";
-			this.pnlLevel.Size = new System.Drawing.Size(488, 315);
-			this.pnlLevel.TabIndex = 0;
+			this.pnlLevel.Size = new System.Drawing.Size(240, 435);
+			this.pnlLevel.TabIndex = 6;
 			this.pnlLevel.TabStop = true;
+			this.pnlLevel.Visible = false;
 			// 
-			// LevelDesigner
+			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(488, 337);
+			this.ClientSize = new System.Drawing.Size(600, 457);
 			this.Controls.Add(this.pnlLevel);
+			this.Controls.Add(this.dockMain);
 			this.Controls.Add(this.sbStatus);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.MaximizeBox = false;
+			this.IsMdiContainer = true;
 			this.Menu = this.mnuMain;
-			this.Name = "LevelDesigner";
+			this.Name = "MainForm";
 			this.Text = "GLEU - Graphical Level Editing Utility";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.onKeyDown);
-			this.Load += new System.EventHandler(this.onLoad);
-			this.Move += new System.EventHandler(this.onMove);
-			this.Activated += new System.EventHandler(this.onActivated);
 			((System.ComponentModel.ISupportInitialize)(this.sbpnlLocation)).EndInit();
-			this.pnlLevel.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -184,62 +170,12 @@ namespace GLEU
 		[STAThread]
 		static void Main() 
 		{
-			Application.Run(new LevelDesigner());
-		}
-
-		private void onLoad(object sender, System.EventArgs e)
-		{
-			/*_palette = new Palette();
-			_palette.Show();
-			_palette.Location = new Point(this.Width + this.Location.X,
-										  this.Location.Y);*/
-		}
-
-		private void onMove(object sender, System.EventArgs e)
-		{
-			if (_palette != null)
-				_palette.Location = new Point(this.Width + this.Location.X,
-											  this.Location.Y);
+			Application.Run(new MainForm());
 		}
 
 		private void mnuExit_Click(object sender, System.EventArgs e)
 		{
 			Application.Exit();
-		}
-
-		private void mnuSnap_Click(object sender, System.EventArgs e)
-		{
-			_snapWindow();
-		}
-		
-		void _snapWindow()
-		{
-			this.Location = new Point(this.Location.X, 0);
-			
-			this.Width = imgLevel.Width
-					   + SystemInformation.VerticalScrollBarWidth 
-					   + 2 * SystemInformation.FrameBorderSize.Width
-					   + 2 * SystemInformation.Border3DSize.Width;
-
-			this.Height = SystemInformation.PrimaryMonitorMaximizedWindowSize.Height
-						- 2 * SystemInformation.FrameBorderSize.Height;
-
-			if (this.Location.X < 0)
-				this.Location = new Point(0, this.Location.Y);
-
-			int extentX = this.Location.X + this.Width;
-			if (_palette != null)
-				extentX += _palette.Width;
-
-			int screenWidth = SystemInformation.PrimaryMonitorSize.Width;
-			if (extentX > screenWidth)
-				this.Location = new Point(screenWidth - (extentX - this.Location.X),
-					this.Location.Y);
-
-			this.MinimumSize = new Size(this.Width, 0);
-			this.MaximumSize = new Size(this.Width, this.Height);
-
-			pnlLevel.Focus();
 		}
 
 		private void onKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -256,37 +192,19 @@ namespace GLEU
 			}
 		}
 
-		private bool _alreadyActivated = false;
-		private void onActivated(object sender, System.EventArgs e)
-		{
-			if (_alreadyActivated)
-			{
-				_alreadyActivated = false;
-			}
-			else if (_palette != null)
-			{
-				_alreadyActivated = true;
-
-				_palette.BringToFront();
-				this.Focus();
-				this.BringToFront();
-			}
-		}
-
         private void _load(LevelMeta meta)
 		{
 			imgLevel.ImagePath = meta.BackgroundFilename;
 			imgLevel.View = new Rectangle(0, meta.Bounds.Low, 
 										  imgLevel.Width, meta.Bounds.High - meta.Bounds.Low);
-			
-			mnuSnap.Enabled = true;
-			_snapWindow();
 		}
 
 		private void mnuOpen_Click(object sender, System.EventArgs e)
 		{
 			FolderBrowserDialog folderDlg = new FolderBrowserDialog();
 			folderDlg.Description = "Choose the project directory";
+			folderDlg.ShowNewFolderButton = true;
+			folderDlg.SelectedPath = Application.StartupPath;
 			
 			if (folderDlg.ShowDialog() == DialogResult.OK)
 			{
