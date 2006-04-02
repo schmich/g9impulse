@@ -94,6 +94,11 @@
                     Project = "{D0F22A77-2C2B-4FA6-9D0C-BD79ADDCD898}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
+                <Reference
+                    Name = "WeifenLuo.WinFormsUI.Docking"
+                    AssemblyName = "WeifenLuo.WinFormsUI.Docking"
+                    HintPath = "lib\WeifenLuo.WinFormsUI.Docking.dll"
+                />
             </References>
         </Build>
         <Files>
@@ -111,6 +116,16 @@
                     RelPath = "Level.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "LevelDesigner.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "LevelDesigner.resx"
+                    DependentUpon = "LevelDesigner.cs"
+                    BuildAction = "EmbeddedResource"
                 />
                 <File
                     RelPath = "LevelMeta.cs"
@@ -135,6 +150,16 @@
                 <File
                     RelPath = "Palette.resx"
                     DependentUpon = "Palette.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Properties.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Properties.resx"
+                    DependentUpon = "Properties.cs"
                     BuildAction = "EmbeddedResource"
                 />
             </Include>

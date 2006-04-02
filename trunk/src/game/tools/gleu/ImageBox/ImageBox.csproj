@@ -92,7 +92,7 @@
                 <Reference
                     Name = "FreeImageNET"
                     AssemblyName = "FreeImageNET"
-                    HintPath = "FreeImageNET.dll"
+                    HintPath = "lib\FreeImageNET.dll"
                 />
             </References>
         </Build>
