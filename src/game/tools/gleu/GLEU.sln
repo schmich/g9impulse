@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageBox", "ImageBox\ImageB
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureBoxEx", "PictureBoxEx\PictureBoxEx.csproj", "{620D21F2-AC73-48E9-B3E7-80E7F6577BBD}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -21,6 +25,10 @@ Global
 		{D0F22A77-2C2B-4FA6-9D0C-BD79ADDCD898}.Debug.Build.0 = Debug|.NET
 		{D0F22A77-2C2B-4FA6-9D0C-BD79ADDCD898}.Release.ActiveCfg = Release|.NET
 		{D0F22A77-2C2B-4FA6-9D0C-BD79ADDCD898}.Release.Build.0 = Release|.NET
+		{620D21F2-AC73-48E9-B3E7-80E7F6577BBD}.Debug.ActiveCfg = Debug|.NET
+		{620D21F2-AC73-48E9-B3E7-80E7F6577BBD}.Debug.Build.0 = Debug|.NET
+		{620D21F2-AC73-48E9-B3E7-80E7F6577BBD}.Release.ActiveCfg = Release|.NET
+		{620D21F2-AC73-48E9-B3E7-80E7F6577BBD}.Release.Build.0 = Release|.NET
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
