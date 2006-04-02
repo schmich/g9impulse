@@ -1,7 +1,7 @@
 [Eagle]
 Version="04 16 00"
 Platform="Windows"
-Serial="62191E841E-LSR-WLM-1EL"
+Serial="66200D2094-LSR-DOWLM-NCP"
 Globals="Globals"
 Desktop="Desktop"
 
@@ -33,7 +33,7 @@ UsedLibrary="maxim.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="548 250 1650 892"
+Loc="752 156 1682 1026"
 State=2
 Number=0
 
