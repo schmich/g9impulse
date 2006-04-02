@@ -94,11 +94,6 @@
                     Project = "{D0F22A77-2C2B-4FA6-9D0C-BD79ADDCD898}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
-                <Reference
-                    Name = "FreeImageNET"
-                    AssemblyName = "FreeImageNET"
-                    HintPath = "FreeImageNET.dll"
-                />
             </References>
         </Build>
         <Files>
