@@ -1,6 +1,0 @@
-augroup filetype
-    au! BufRead,BufNewFile *.lvl set filetype=paste
-augroup END
-
-autocmd FileType paste runtime indent/paste.vim
-autocmd FileType paste set sw=4 expandtab smarttab
