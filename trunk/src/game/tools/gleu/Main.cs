@@ -25,6 +25,12 @@ namespace GLEU
 		private System.Windows.Forms.MenuItem mnuSeparator0;
 		private System.Windows.Forms.StatusBar sbStatus;
 		private WeifenLuo.WinFormsUI.DockPanel dockMain;
+		private System.Windows.Forms.MenuItem mnuView;
+		private System.Windows.Forms.MenuItem mnuPalette;
+		private System.Windows.Forms.MenuItem mnuProperties;
+		private System.Windows.Forms.MenuItem mnuLevelDesign;
+		private System.Windows.Forms.MenuItem menuItem1;
+		private System.Windows.Forms.MenuItem mnuAll;
 		private System.Windows.Forms.StatusBarPanel sbpnlLocation;
 
 		public MainForm()
@@ -34,8 +40,8 @@ namespace GLEU
 			_paletteForm.Show(dockMain);
 			_propertiesForm.Show(dockMain);
 			
-			_designerForm.Show(dockMain);
 			_designerForm.TabText = "Level Design";
+			_designerForm.Show(dockMain);
 		}
 
 		protected override void Dispose( bool disposing )
@@ -64,16 +70,23 @@ namespace GLEU
 			this.mnuSave = new System.Windows.Forms.MenuItem();
 			this.mnuSeparator0 = new System.Windows.Forms.MenuItem();
 			this.mnuExit = new System.Windows.Forms.MenuItem();
+			this.mnuView = new System.Windows.Forms.MenuItem();
+			this.mnuLevelDesign = new System.Windows.Forms.MenuItem();
+			this.mnuPalette = new System.Windows.Forms.MenuItem();
+			this.mnuProperties = new System.Windows.Forms.MenuItem();
 			this.sbStatus = new System.Windows.Forms.StatusBar();
 			this.sbpnlLocation = new System.Windows.Forms.StatusBarPanel();
 			this.dockMain = new WeifenLuo.WinFormsUI.DockPanel();
+			this.menuItem1 = new System.Windows.Forms.MenuItem();
+			this.mnuAll = new System.Windows.Forms.MenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.sbpnlLocation)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// mnuMain
 			// 
 			this.mnuMain.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					this.mnuFile});
+																					this.mnuFile,
+																					this.mnuView});
 			// 
 			// mnuFile
 			// 
@@ -110,6 +123,35 @@ namespace GLEU
 			this.mnuExit.Text = "E&xit";
 			this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
 			// 
+			// mnuView
+			// 
+			this.mnuView.Index = 1;
+			this.mnuView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																					this.mnuLevelDesign,
+																					this.mnuPalette,
+																					this.mnuProperties,
+																					this.menuItem1,
+																					this.mnuAll});
+			this.mnuView.Text = "&View";
+			// 
+			// mnuLevelDesign
+			// 
+			this.mnuLevelDesign.Index = 0;
+			this.mnuLevelDesign.Text = "&Level Design";
+			this.mnuLevelDesign.Click += new System.EventHandler(this.mnuLevelDesign_Click);
+			// 
+			// mnuPalette
+			// 
+			this.mnuPalette.Index = 1;
+			this.mnuPalette.Text = "&Palette";
+			this.mnuPalette.Click += new System.EventHandler(this.mnuPalette_Click);
+			// 
+			// mnuProperties
+			// 
+			this.mnuProperties.Index = 2;
+			this.mnuProperties.Text = "P&roperties";
+			this.mnuProperties.Click += new System.EventHandler(this.mnuProperties_Click);
+			// 
 			// sbStatus
 			// 
 			this.sbStatus.Location = new System.Drawing.Point(0, 435);
@@ -129,6 +171,17 @@ namespace GLEU
 			this.dockMain.Name = "dockMain";
 			this.dockMain.Size = new System.Drawing.Size(600, 435);
 			this.dockMain.TabIndex = 4;
+			// 
+			// menuItem1
+			// 
+			this.menuItem1.Index = 3;
+			this.menuItem1.Text = "-";
+			// 
+			// mnuAll
+			// 
+			this.mnuAll.Index = 4;
+			this.mnuAll.Text = "&All";
+			this.mnuAll.Click += new System.EventHandler(this.mnuAll_Click);
 			// 
 			// MainForm
 			// 
@@ -217,6 +270,28 @@ namespace GLEU
 		{
 			if (_designerForm.LevelImage.ImageLoaded)
 				sbpnlLocation.Text = "(" + e.X.ToString() + ", " + e.Y.ToString() + ")";
+		}
+
+		private void mnuLevelDesign_Click(object sender, System.EventArgs e)
+		{
+			_designerForm.Show(dockMain);
+		}
+
+		private void mnuPalette_Click(object sender, System.EventArgs e)
+		{
+			_paletteForm.Show(dockMain);
+		}
+
+		private void mnuProperties_Click(object sender, System.EventArgs e)
+		{
+			_propertiesForm.Show(dockMain);
+		}
+
+		private void mnuAll_Click(object sender, System.EventArgs e)
+		{
+			_designerForm.Show(dockMain);
+			_paletteForm.Show(dockMain);
+			_propertiesForm.Show(dockMain);
 		}
 	}
 }

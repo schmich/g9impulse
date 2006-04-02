@@ -9,11 +9,9 @@ namespace GLEU
 {
 	public class Palette : DockContent
 	{
-		private GLEU.ImageBox imgF16;
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+		private GLEU.PictureBoxEx picF16;
+		private GLEU.PictureBoxEx picApache;
+		private System.ComponentModel.IContainer components;
 
 		public Palette()
 		{
@@ -25,8 +23,9 @@ namespace GLEU
 			//
 			// TODO: Add any constructor code after InitializeComponent call
 			//
-			imgF16.ImagePath = @"\\ece-serv-05\schmich\Desktop\f16.png";
-			imgF16.IsTransparent = true;
+
+			picF16.Grayscale = true;
+			picApache.Grayscale = true;
 		}
 
 		/// <summary>
@@ -51,30 +50,47 @@ namespace GLEU
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.imgF16 = new GLEU.ImageBox();
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(Palette));
+			this.picF16 = new GLEU.PictureBoxEx();
+			this.picApache = new GLEU.PictureBoxEx();
 			this.SuspendLayout();
 			// 
-			// imgF16
+			// picF16
 			// 
-			this.imgF16.BackColor = System.Drawing.Color.Lime;
-			this.imgF16.Brightness = 100F;
-			this.imgF16.Contrast = 100F;
-			this.imgF16.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.imgF16.ImagePath = "";
-			this.imgF16.Location = new System.Drawing.Point(32, 72);
-			this.imgF16.Name = "imgF16";
-			this.imgF16.Size = new System.Drawing.Size(48, 40);
-			this.imgF16.TabIndex = 0;
-			this.imgF16.View = new System.Drawing.Rectangle(0, 0, 0, 0);
-			this.imgF16.MouseEnter += new System.EventHandler(this.onImageEnter);
-			this.imgF16.MouseLeave += new System.EventHandler(this.onImageLeave);
+			this.picF16.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.picF16.Grayscale = false;
+			this.picF16.Image = ((System.Drawing.Image)(resources.GetObject("picF16.Image")));
+			this.picF16.Location = new System.Drawing.Point(8, 8);
+			this.picF16.Name = "picF16";
+			this.picF16.Size = new System.Drawing.Size(30, 47);
+			this.picF16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.picF16.TabIndex = 0;
+			this.picF16.TabStop = false;
+			this.picF16.Click += new System.EventHandler(this.onClick);
+			this.picF16.MouseEnter += new System.EventHandler(this.onMouseEnter);
+			this.picF16.MouseLeave += new System.EventHandler(this.onMouseLeave);
+			// 
+			// picApache
+			// 
+			this.picApache.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.picApache.Grayscale = false;
+			this.picApache.Image = ((System.Drawing.Image)(resources.GetObject("picApache.Image")));
+			this.picApache.Location = new System.Drawing.Point(48, 8);
+			this.picApache.Name = "picApache";
+			this.picApache.Size = new System.Drawing.Size(38, 47);
+			this.picApache.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.picApache.TabIndex = 1;
+			this.picApache.TabStop = false;
+			this.picApache.Click += new System.EventHandler(this.onClick);
+			this.picApache.MouseEnter += new System.EventHandler(this.onMouseEnter);
+			this.picApache.MouseLeave += new System.EventHandler(this.onMouseLeave);
 			// 
 			// Palette
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.BackColor = System.Drawing.Color.Red;
 			this.ClientSize = new System.Drawing.Size(208, 289);
-			this.Controls.Add(this.imgF16);
+			this.Controls.Add(this.picApache);
+			this.Controls.Add(this.picF16);
 			this.DockableAreas = ((WeifenLuo.WinFormsUI.DockAreas)(((((WeifenLuo.WinFormsUI.DockAreas.Float | WeifenLuo.WinFormsUI.DockAreas.DockLeft) 
 				| WeifenLuo.WinFormsUI.DockAreas.DockRight) 
 				| WeifenLuo.WinFormsUI.DockAreas.DockTop) 
@@ -91,16 +107,20 @@ namespace GLEU
 		}
 		#endregion
 
-		private void onImageEnter(object sender, System.EventArgs e)
+
+		private void onMouseEnter(object sender, System.EventArgs e)
 		{
-			//imgF16.Brightness = 100;
-			imgF16.Brightness = -50;
+			((PictureBoxEx)sender).Grayscale = false;
 		}
 
-		private void onImageLeave(object sender, System.EventArgs e)
+		private void onMouseLeave(object sender, System.EventArgs e)
 		{
-			//imgF16.Brightness = 0;
-			imgF16.Brightness = 0;
+			((PictureBoxEx)sender).Grayscale = true;
+		}
+
+		private void onClick(object sender, System.EventArgs e)
+		{
+			//((PictureBoxEx)sender).BackColor = System.Drawing.Color.Black;
 		}
 	}
 }

@@ -95,6 +95,7 @@ namespace GLEU
 				| WeifenLuo.WinFormsUI.DockAreas.Document)));
 			this.DockPadding.Bottom = 3;
 			this.DockPadding.Top = 3;
+			this.HideOnClose = true;
 			this.Name = "LevelDesigner";
 			this.pnlLevel.ResumeLayout(false);
 			this.ResumeLayout(false);
