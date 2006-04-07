@@ -15,15 +15,10 @@ void gpuInit(void);
 void draw(uint32 address, uint16 width, uint16 height, int16 x, int16 y, bool isTransparent);
 void drawFullscreen(uint32 address);
 
-void load_alphaOp(bool alphaOp);
-void load_l_size(uint8 size);
-void load_s_lines(uint8 lines);
-void load_t_addr(unsigned long address);
-void load_s_addr(unsigned long address);
-
 void setFieldColor(uint8 color);
 void setDoubleBuffer(bool doubleBuffer);
 void flipBuffer(uint8* buf);
 void clearBuffers(void);
+void drawPixel(int x, int y, uint8 color);
 
 #endif // GPU_H

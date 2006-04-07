@@ -1,7 +1,14 @@
 #!/bin/sh
 
-$* >&/dev/null
-if [ $? -ne 0 ]; then
-    echo "failed!"
-    $*
+TRY_FILE=.__try_result
+
+$* >&$TRY_FILE
+RET=$?
+if [ $RET -ne 0 ]; then
+    echo "FAILED!"
+    echo "$*"
+    cat $TRY_FILE
 fi
+
+rm -f $TRY_FILE
+exit $RET

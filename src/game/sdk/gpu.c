@@ -106,7 +106,7 @@ void flipBuffer(uint8* buf)
 void drawData(void)
 {
     PORTA = 0b00000010;           //initialize draw
-    PORTA = 0b00000000;           //draw command recieved, so turn off draw bit
+    PORTA = 0b00000000;           //draw command received, so turn off draw bit
     while (!(PORTD & 0b10000000)) //hang here till we recieve idle from GPU
     {
     }
@@ -236,4 +236,44 @@ void clearBuffers(void)
 
         flipBuffer(&buffer);
     }
+}
+
+void loadDrawColor(uint8 color)
+{
+    PORTC = 0x0E;
+    PORTB = color;
+    PORTA = 0x01;
+    PORTA = 0x00;
+}
+
+void setSoftwareDraw(void)
+{
+    PORTC = 0x0C;
+    PORTB = 0x01;
+    PORTA = 0x01;
+    PORTA = 0x00;
+}
+
+void setHardwareDraw(void)
+{
+    PORTC = 0x0C;
+    PORTB = 0x00;
+    PORTA = 0x01;
+    PORTA = 0x00;
+}
+
+void drawPixel(int x, int y, uint8 color)
+{
+    uint32 destAddress = y * SCREEN_WIDTH + x;
+
+    setSoftwareDraw();
+
+    loadDrawColor(color); 
+    load_alphaOp(true);
+    load_t_addr(destAddress);
+    load_s_lines(2);
+    load_l_size(4);
+    drawData();
+
+    setHardwareDraw();
 }

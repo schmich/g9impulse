@@ -56,5 +56,9 @@ void memoryInit(void)
 
 uint16 memoryFree(void)
 {
+#ifdef _DEBUG
     return theBytesFree;
+#else
+    return 0;
+#endif
 }

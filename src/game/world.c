@@ -199,6 +199,8 @@ Node* removeArtifact(World* world, Node* a)
 
 void drawWorld(World* world)
 {
+    uint8 i;
+    Image* img;
     Node* curr;
 
     drawBackground(world->level->background);

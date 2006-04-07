@@ -48,8 +48,8 @@ endif
 DEPFILE=$(BUILD_DIR)/deps
 OUT=$(BUILD_DIR)/$(BINARY)
 
-SRCS=$(shell find . -iname '*.c')
-FLAT_SRCS=$(shell find . -iname '*.c' | ruby -p -e '$$_ = $$_[/[^\/]+\.c$$/] + "\n"')
+SRCS=$(shell find . -maxdepth 2 -iname '*.c')
+FLAT_SRCS=$(shell find . -maxdepth 2 -iname '*.c' | ruby -p -e '$$_ = $$_[/[^\/]+\.c$$/] + "\n"')
 OBJS=$(patsubst %,$(BUILD_DIR)/%,$(FLAT_SRCS:.c=.o))
 
 all: $(DEPFILE) $(OUT)
@@ -60,22 +60,22 @@ $(OUT): $(OBJS)
 	@echo -n "Linking $(shell basename $@)..."
 	@$(TRY) $(LINK) $(LFLAGS) $^ /w /m"$(@:.hex=.map)" /o"$(@:.hex=.cof)"
 	@cp $@ ../../assets
-	@echo "done"
+	@echo "OK"
 
 $(BUILD_DIR)/%.anim.inl: animations/%.anim tools/anim.rb
 	@echo -n "Generating animation $(shell basename $@ .inl)..."
 	@tools/anim.rb $< > $@
-	@echo "done"
+	@echo "OK"
 
 $(BUILD_DIR)/%.lvl.inl: levels/%.lvl tools/level.rb
 	@echo -n "Generating level $(shell basename $@ .inl)..."
 	@tools/level.rb $< > $@
-	@echo "done"
+	@echo "OK"
 
 %.o:
 	@echo -n "Compiling $(shell basename $(@:.o=.c))..."
 	@$(TRY) $(CC) $(CFLAGS) $(shell find . -iname $(shell basename $@ .o).c) -fo=$@
-	@echo "done"
+	@echo "OK"
 
 ifeq '' '$(findstring clean,$(MAKECMDGOALS))'
     ifeq '' '$(findstring nuke,$(MAKECMDGOALS))'
@@ -89,7 +89,7 @@ $(DEPFILE):
 	@$(DEPC) $(DEPFLAGS) $(SRCS) > $(DEPFILE).tmp
 	@cat $(DEPFILE).tmp | $(FIXDEPS) $(BUILD_DIR) > $(DEPFILE)
 	@rm -f $(DEPFILE).tmp
-	@echo "done"
+	@echo "OK"
 
 clean:
 	rm -f *.obj *.hex *.lst *.cof *.stat *.tree *.asm *.casm *.o *.map *.err *.anim.inl *.lvl.inl
