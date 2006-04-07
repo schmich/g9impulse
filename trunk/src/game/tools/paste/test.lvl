@@ -12,6 +12,7 @@ sprite tiny-cloud
     animation: cloud.anim/tiny cloud
     animate: never
     layer: overlay
+    motion: boring
 
 projectile plasma
     animation: plasma.anim/plasma
