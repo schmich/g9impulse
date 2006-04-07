@@ -118,8 +118,8 @@ architecture arch of gpuChip is
 	signal db_enable_x, db_enable_r				: std_logic;
 	signal not_fb										: std_logic;
 	signal field_color_x, field_color_r			: std_logic_vector (7 downto 0);				  -- software controllable interlace field color
-	signal replace_color_a_x, replace_color_a_r	: std_logic_vector (7 downto 0);				  -- color replacement feature
-	signal replace_color_b_x, replace_color_b_r	: std_logic_vector (7 downto 0);				  -- color replacement feature
+	signal operation_mode_x, operation_mode_r	: std_logic;										  -- sets operation mode to hardware blit(0) or software frame buffer(1)
+	signal input_color_x, input_color_r			: std_logic_vector (7 downto 0);				  -- when in software mode, current draw color
 	signal drawpending_x, drawpending_r			: std_logic;
 
 	--internal signals
@@ -136,6 +136,8 @@ architecture arch of gpuChip is
 	signal blit_done									 	: std_logic;	
 	signal alphaOp											: std_logic;
 	signal front_buffer									: std_logic;
+	signal input_color									: std_logic_vector (7 downto 0);
+	signal operation_mode								: std_logic;
 
 	signal port_in											: std_logic_vector (7 downto 0);
 	signal port_addr										: std_logic_vector (3 downto 0);
@@ -334,34 +336,34 @@ begin
  
 	u4: Blitter
 	generic map(
-    FREQ         	=> FREQ, 
-    PIPE_EN       => PIPE_EN,
-  	 DATA_WIDTH    => DATA_WIDTH,
-    ADDR_WIDTH    => ADDR_WIDTH
+    FREQ              => FREQ, 
+    PIPE_EN           => PIPE_EN,
+  	 DATA_WIDTH        => DATA_WIDTH,
+    ADDR_WIDTH        => ADDR_WIDTH
     )
-  port map (
-    clk				 =>sdram_clk1x,             
-	 rst				 =>blit_reset,		 
- 	 rd             =>rd1,      
-    wr             =>wr1,       
-    opBegun        =>opBegun1,       
-    earlyopBegun   =>earlyOpBegun1,       
-    done           =>done1,
-	 rddone		 	 =>rddone1,      
-    rdPending		 =>rdPending1,
-	 Addr           =>hAddr1,    
-    DIn            =>hDIn1,     
-    DOut           =>hDOut1,     
-	 blit_begin		 =>blit_begin,
-	 source_address =>source_address, 
-	 source_lines	 =>source_lines,
-	 target_address =>target_address,
-	 line_size		 =>line_size,
-	 alphaOp			 =>alphaOp,
-	 blit_done		 =>blit_done,
-	 front_buffer	 =>not_fb,
-	 replace_color_a => replace_color_a_r,
-	 replace_color_b => replace_color_b_r
+  port map (	
+    clk					 => sdram_clk1x,             
+	 rst					 => blit_reset,		 
+ 	 rd           	 	 => rd1,      
+    wr                => wr1,       
+    opBegun        	 => opBegun1,       
+    earlyopBegun   	 => earlyOpBegun1,       
+    done           	 => done1,
+	 rddone		 	    => rddone1,      
+    rdPending		    => rdPending1,
+	 Addr              => hAddr1,    
+    DIn               => hDIn1,     
+    DOut              => hDOut1,     
+	 blit_begin		    => blit_begin,
+	 source_address    => source_address, 
+	 source_lines	    => source_lines,
+	 target_address    => target_address,
+	 line_size		    => line_size,
+	 alphaOp			    => alphaOp,
+	 blit_done		    => blit_done,
+	 front_buffer	    => not_fb,
+	 input_color	    => input_color,
+	 operation_mode	 => operation_mode
 	 );
 
 --------------------------------------------------------------------------------------------------------------
@@ -392,6 +394,8 @@ begin
 	target_address	<= target_address_r;
 	source_lines	<= source_lines_r;
 	alphaOp			<= alphaOp_r;
+	input_color		<= input_color_r;
+	operation_mode	<= operation_mode_r;
 	
 	front_buffer	<= front_buffer_r when db_enable_r = '1' else YES;	
 	not_fb			<= (not front_buffer_r) when db_enable_r = '1' else YES;
@@ -411,8 +415,8 @@ begin
 		front_buffer_x 	<= front_buffer_r;
 		field_color_x		<= field_color_r;
 		idle_x			 	<= idle_r;
-		replace_color_a_x <= replace_color_a_r;
-		replace_color_b_x <= replace_color_b_r;
+		input_color_x 		<= input_color_r;
+		operation_mode_x	<= operation_mode_r;
 		drawpending_x		<= drawpending_r;
 			
 		case state_r is
@@ -436,8 +440,8 @@ begin
 						when "1001" => db_enable_x 						 <= port_in(0);
 						when "1010" => front_buffer_x						 <= port_in(0);
 						when "1011"	=> field_color_x						 <= port_in;
-						when "1100" => replace_color_a_x					 <= port_in;
-						when "1101" => replace_color_b_x					 <= port_in;
+						when "1100" => operation_mode_x					 <= port_in(0);
+						when "1110" => input_color_x						 <= port_in;
 						when others =>
 					end case;				
 				end if;
@@ -490,10 +494,10 @@ begin
 		
 			--reset stuff
 			if (sysReset = YES) then
-				field_color_r <= x"00";
-				replace_color_a_r <= x"00";
-				replace_color_b_r <= x"00"; 
-				state_r <= INIT;
+				field_color_r 		<= x"00";
+				operation_mode_r 	<= '0';
+				input_color_r	 	<= x"FF"; 
+				state_r 				<= INIT;
 			end if;
 			
 			state_r 				<= state_x;
@@ -506,8 +510,8 @@ begin
 			db_enable_r			<= db_enable_x;
 			field_color_r 		<= field_color_x;
 			idle_r		 		<= idle_x;
-			replace_color_a_r <= replace_color_a_x;
-			replace_color_b_r <= replace_color_b_x;			
+			input_color_r 		<= input_color_x;
+			operation_mode_r	<= operation_mode_x;		
 			drawpending_r		<= drawpending_x;
 		end if;
 	end process;
