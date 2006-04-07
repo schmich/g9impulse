@@ -1,0 +1,50 @@
+config
+    search: ../animations, .
+
+sprite small-explosion
+    animation: explosion.anim/small
+    animate: once
+    
+sprite medium-explosion < small-explosion
+    animation: explosion.anim/medium
+
+sprite tiny-cloud
+    animation: cloud.anim/tiny cloud
+    animate: never
+    layer: overlay
+
+projectile plasma
+    animation: plasma.anim/plasma
+    motion: directed
+    damage: 2
+    impact: spawn small-explosion
+
+projectile fireball
+    animation: fireball.anim/fireball
+    motion: boring
+    damage: 1
+    impact: spawn small-explosion
+
+projectile bullet
+    animation: bullet.anim/bullet
+    animate: never
+    damage: 1
+    impact: spawn small-explosion
+
+enemy f16
+    animation: enemies.anim/f16
+    animate: never
+    motion: boring
+    health: 2
+    firing: random 30%
+    weapon: plasma
+    death: spawn medium-explosion
+
+enemy f18
+    animation: enemies.anim/f18
+    animate: never
+    motion: chase
+    health: 1
+    firing: lock-on 
+    weapon: fireball
+    death: spawn medium-explosion
