@@ -65,8 +65,8 @@ package Blitter_pckg is
 	  front_buffer				: in std_logic;  -- if false, then we are writing to back buffer
 	  blit_done					: out std_logic; --line has been completely copied
 
-	  replace_color_a			: in std_logic_vector(7 downto 0);
-	  replace_color_b			: in std_logic_vector(7 downto 0)
+	  input_color				: in std_logic_vector(7 downto 0);
+	  operation_mode			: in std_logic
 	  );
 	end component Blitter;
 end package Blitter_pckg;
@@ -111,7 +111,7 @@ entity Blitter is
 
 	  blit_begin  		      : in std_logic;
 	  source_address		   : in std_logic_vector(ADDR_WIDTH-1 downto 0);
-	  source_lines				: in std_logic_vector(7 downto 0);
+	  source_lines	    		: in std_logic_vector(7 downto 0);
 	
 	  target_address		   : in std_logic_vector(ADDR_WIDTH-1 downto 0);
 	  line_size					: in std_logic_vector(7 downto 0);
@@ -119,8 +119,8 @@ entity Blitter is
 	  front_buffer				: in std_logic;  -- if false, then we are writing to back buffer
 	  blit_done					: out std_logic; --line has been completely copied
 	  
-	  replace_color_a			: in std_logic_vector(7 downto 0);
-	  replace_color_b			: in std_logic_vector(7 downto 0)
+	  input_color				: in std_logic_vector(7 downto 0);
+	  operation_mode			: in std_logic
 	  );
 end Blitter;
 
@@ -169,7 +169,7 @@ architecture Behavioral of Blitter is
 
   signal q_write : std_logic; 
   signal b_write : std_logic;
-  signal pixel_from_replacer_s : std_logic_vector(15 downto 0);
+  signal pixel_from_blitter : std_logic_vector(15 downto 0);
 
 begin
 
@@ -208,15 +208,9 @@ begin
   wr_b <= rdDone and b_write;
   
   --if not doing an AlphaOp, we can directly copy pixel, wire vram input to blend result register
-  
-  pixel_from_replacer_s (15 downto 8) <= replace_color_b when out_q(15 downto 8) = replace_color_a else out_q(15 downto 8);
-  pixel_from_replacer_s (7 downto 0) <= replace_color_b when out_q(7 downto 0) = replace_color_a else out_q(7 downto 0);
-  
-  dIn <=  blend_data_r when alphaOp = YES else pixel_from_replacer_s;	
-  
-  
-  
-   -- memory test controller state machine operations
+  dIn <=  blend_data_r when alphaOp = YES else out_q;
+    
+  -- memory test controller state machine operations
   combinatorial : process(state_r, addr_r, current_line_r,
   								  s_addr_r, t_addr_r,
 								  earlyOpbegun, rdPending,
@@ -245,7 +239,7 @@ begin
 	 addr_x  <= addr_r;
     state_x <= state_r;
 	 blend_data_x <= blend_data_r;   
-	 
+ 
     -- **** compute the next state and operations ****
     case state_r is
 
