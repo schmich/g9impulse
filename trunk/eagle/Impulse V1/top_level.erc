@@ -1,6 +1,6 @@
 EAGLE Version 4.16 Copyright (c) 1988-2005 CadSoft
 
-Electrical Rule Check for C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/top_level.sch at  4/07/2006 11:18:59a
+Electrical Rule Check for C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/top_level.sch at  3/22/2006 06:47:51p
 
 WARNING: Sheet 1/1: unconnected Pin: X2-4 F
 WARNING: Sheet 1/1: unconnected Pin: X2-9 F
@@ -99,7 +99,7 @@ WARNING: Only 1 Pin on net XCBUS18
 WARNING: Only 1 Pin on net XCBUS91
 WARNING: Sheet 1/1, Net GND: wire overlaps pin at (-7.2 -7.7)
 
-Board and schematic are consistent
+No board loaded - consistency has not been checked
 
     4 errors
    92 warnings
