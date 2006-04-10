@@ -24,7 +24,7 @@ void handleInput(uint8* buffer)
                   true);
 
         drawImage(&pause->images[1],
-                  makePoint(6, 10),
+                  makePoint(40, 30),
                   true);
 #endif
 

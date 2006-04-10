@@ -14,6 +14,8 @@
 /* Notice that the non-terminals are also typed if they are   */
 /* involved with the calculations.                            */
 
+%token PROJECTILE ENEMY
+%token IDENT
 %token <ival> NUM
 %token <op> ADDOP MULTOP EOL OPEN CLOSE
 %type <ival> E T F
@@ -73,5 +75,7 @@ int main()
     return yyparse();
 }
 
+extern "C"
+{
 #include "paste.yy.c"
-
+}
