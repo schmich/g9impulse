@@ -1,5 +1,5 @@
 paste: paste.tab.c
-	gcc -o $@ $^
+	g++ -o $@ $^
 
 %.tab.c: %.y %.yy.c
 	bison $<

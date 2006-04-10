@@ -21,19 +21,19 @@ static uint8 updateSpawner(Spawner* s, World* w)
                 break;
 
             case SPAWNER_ENEMY:
-                addEnemy(w, s->spawnee);
+                addEnemy(w, (Enemy*)s->spawnee);
                 break;
 
             case SPAWNER_ENEMY_PROJECTILE:
-                addEnemyProjectile(w, s->spawnee);
+                addEnemyProjectile(w, (Projectile*)s->spawnee);
                 break;
 
             case SPAWNER_PLAYER_PROJECTILE:
-                addPlayerProjectile(w, s->spawnee);
+                addPlayerProjectile(w, (Projectile*)s->spawnee);
                 break;
 
             case SPAWNER_ARTIFACT:
-                addArtifact(w, s->spawnee);
+                addArtifact(w, (Artifact*)s->spawnee);
                 break;
         }
 
