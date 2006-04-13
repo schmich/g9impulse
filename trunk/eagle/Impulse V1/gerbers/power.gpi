@@ -1,0 +1,47 @@
+Photoplotter Info File: /home/james/design/clients/zuofo-cheng/impulsev1/brd/gerbers/power.gpi
+
+ Date              :  4/12/2006 15:38:52 
+ Plotfile          : /home/james/design/clients/zuofo-cheng/impulsev1/brd/gerbers/power.grb
+ Apertures         : generated: 
+ Device            : Gerber photoplotter with RS-274-X aperture generation
+
+Parameter settings:
+
+ Emulate Apertures : no
+ Emulate Thermal   : no
+ Emulate Annulus   : no
+ Tolerance Draw  + :  0.00 %
+ Tolerance Draw  - :  0.00 %
+ Tolerance Flash + :  0.00 %
+ Tolerance Flash - :  0.00 %
+ Rotate            : no
+ Mirror            : no
+ Optimize          : yes
+ Auto fit          : yes
+ OffsetX           : 0inch
+ OffsetY           : 0inch
+
+Plotfile Info:
+
+ Coordinate Format : 2.4
+ Coordinate Units  : Inch
+ Data Mode         : Absolute
+ Zero Suppression  : None
+ End Of Block      : *
+
+Apertures used:
+
+ Code     Shape     Size                  used
+
+ D10      round     0.0600inch              83
+ D11      round     0.1700inch               4
+ D12      round     0.0594inch               3
+ D13      round     0.0520inch              30
+ D14      round     0.0436inch               2
+ D15      round     0.0550inch               6
+ D16      round     0.1660inch               2
+ D17      round     0.0660inch               3
+ D18      round     0.0554inch              15
+ D19      round     0.0310inch             644
+ D20      draw      0.0100inch           20265
+
