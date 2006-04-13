@@ -1,0 +1,5 @@
+rm -f *.grb
+rm -f *.gpi
+rm -f drills.*
+rm -f *~
+
