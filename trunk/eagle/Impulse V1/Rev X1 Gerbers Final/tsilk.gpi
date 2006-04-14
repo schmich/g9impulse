@@ -1,0 +1,63 @@
+Photoplotter Info File: C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/gerbers_x1 final/tsilk.gpi
+
+ Date              :  4/13/2006 07:20:41p
+ Plotfile          : C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/gerbers_x1 final/tsilk.grb
+ Apertures         : generated: 
+ Device            : Gerber photoplotter with RS-274-X aperture generation
+
+Parameter settings:
+
+ Emulate Apertures : no
+ Emulate Thermal   : no
+ Emulate Annulus   : no
+ Tolerance Draw  + :  0.00 %
+ Tolerance Draw  - :  0.00 %
+ Tolerance Flash + :  0.00 %
+ Tolerance Flash - :  0.00 %
+ Rotate            : no
+ Mirror            : no
+ Optimize          : yes
+ Auto fit          : yes
+ OffsetX           : 0inch
+ OffsetY           : 0inch
+
+Plotfile Info:
+
+ Coordinate Format : 2.4
+ Coordinate Units  : Inch
+ Data Mode         : Absolute
+ Zero Suppression  : None
+ End Of Block      : *
+
+Apertures used:
+
+ Code     Shape     Size                  used
+
+ D10      draw      0.0050inch             910
+ D11      draw      0.0080inch             100
+ D12      draw      0.0060inch             612
+ D13      round     0.0357inch               1
+ D14      draw      0.0040inch            1805
+ D15      rectangle 1.6000inch x 0.0300inch     1
+ D16      rectangle 2.0900inch x 0.0200inch     1
+ D17      rectangle 0.0320inch x 0.2850inch    18
+ D18      rectangle 0.0320inch x 0.1850inch    16
+ D19      draw      0.0020inch              12
+ D20      rectangle 0.0350inch x 0.0500inch     3
+ D21      rectangle 0.0800inch x 0.0200inch     4
+ D22      rectangle 0.0200inch x 0.0750inch     2
+ D23      draw      0.0010inch               8
+ D24      rectangle 0.0340inch x 0.0300inch     2
+ D25      draw      0.0100inch              12
+ D26      draw      0.0030inch              42
+ D27      draw      0.0197inch              12
+ D28      draw      0.0120inch               8
+ D29      rectangle 0.0128inch x 0.0167inch     4
+ D30      square    0.0138inch               2
+ D31      rectangle 0.0050inch x 0.0200inch    16
+ D32      rectangle 0.7300inch x 0.0300inch     1
+ D33      rectangle 1.2200inch x 0.0200inch     1
+ D34      rectangle 0.2402inch x 0.0157inch     5
+ D35      rectangle 0.1417inch x 0.0157inch     5
+ D36      rectangle 0.1220inch x 0.0157inch     5
+
