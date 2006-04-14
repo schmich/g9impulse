@@ -1,0 +1,106 @@
+Photoplotter Info File: C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/gerbers_x1 final/tassembly.gpi
+
+ Date              :  4/13/2006 07:20:38p
+ Plotfile          : C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/gerbers_x1 final/tassembly.grb
+ Apertures         : generated: 
+ Device            : Gerber photoplotter with RS-274-X aperture generation
+
+Parameter settings:
+
+ Emulate Apertures : no
+ Emulate Thermal   : no
+ Emulate Annulus   : no
+ Tolerance Draw  + :  0.00 %
+ Tolerance Draw  - :  0.00 %
+ Tolerance Flash + :  0.00 %
+ Tolerance Flash - :  0.00 %
+ Rotate            : no
+ Mirror            : no
+ Optimize          : yes
+ Auto fit          : yes
+ OffsetX           : 0inch
+ OffsetY           : 0inch
+
+Plotfile Info:
+
+ Coordinate Format : 2.4
+ Coordinate Units  : Inch
+ Data Mode         : Absolute
+ Zero Suppression  : None
+ End Of Block      : *
+
+Apertures used:
+
+ Code     Shape     Size                  used
+
+ D10      draw      0.0000inch               9
+ D11      draw      0.0050inch             975
+ D12      draw      0.0080inch             143
+ D13      draw      0.0060inch             693
+ D14      round     0.0357inch               1
+ D15      draw      0.0040inch            1891
+ D16      octagon   0.0600inch              54
+ D17      draw      0.0320inch              33
+ D18      rectangle 1.6000inch x 0.0300inch     1
+ D19      rectangle 2.0900inch x 0.0200inch     1
+ D20      round     0.2000inch               4
+ D21      rectangle 0.0320inch x 0.2850inch    18
+ D22      rectangle 0.0320inch x 0.1850inch    16
+ D23      rectangle 0.0450inch x 0.0200inch    28
+ D24      draw      0.0020inch              12
+ D25      oval      0.0600inch x 0.1200inch     7
+ D26      square    0.0200inch              46
+ D27      rectangle 0.0193inch x 0.0433inch     8
+ D28      oval      0.1200inch x 0.0600inch    22
+ D29      rectangle 0.0350inch x 0.0500inch     3
+ D30      rectangle 0.0650inch x 0.0500inch     3
+ D31      oval      0.0787inch x 0.1575inch     2
+ D32      oval      0.1575inch x 0.0787inch     1
+ D33      oval      0.0520inch x 0.1040inch     2
+ D34      rectangle 0.0800inch x 0.0200inch     4
+ D35      draw      0.0200inch               2
+ D36      rectangle 0.0200inch x 0.0750inch     2
+ D37      round     0.0750inch               3
+ D38      octagon   0.0750inch               3
+ D39      draw      0.0010inch              14
+ D40      rectangle 0.0340inch x 0.1140inch     4
+ D41      rectangle 0.0340inch x 0.0300inch     2
+ D42      draw      0.0079inch              24
+ D43      rectangle 0.0120inch x 0.0420inch    32
+ D44      draw      0.0100inch              12
+ D45      rectangle 0.0433inch x 0.0118inch    40
+ D46      rectangle 0.0118inch x 0.0433inch    40
+ D47      rectangle 0.0295inch x 0.0571inch    54
+ D48      rectangle 0.0256inch x 0.0551inch    40
+ D49      rectangle 0.0551inch x 0.0256inch    34
+ D50      square    0.0436inch               2
+ D51      rectangle 0.0571inch x 0.0295inch    26
+ D52      oval      0.1040inch x 0.0520inch    18
+ D53      round     0.0550inch               6
+ D54      square    0.1660inch               2
+ D55      draw      0.0030inch              42
+ D56      draw      0.0197inch              12
+ D57      oval      0.1320inch x 0.0660inch     3
+ D58      round     0.0520inch               4
+ D59      draw      0.0120inch               9
+ D60      draw      0.0001inch               2
+ D61      rectangle 0.0197inch x 0.0049inch     2
+ D62      rectangle 0.0089inch x 0.0128inch     2
+ D63      rectangle 0.0049inch x 0.0089inch     2
+ D64      rectangle 0.0167inch x 0.0049inch     2
+ D65      rectangle 0.0197inch x 0.0138inch     2
+ D66      rectangle 0.0236inch x 0.0049inch     2
+ D67      rectangle 0.0669inch x 0.0118inch     2
+ D68      rectangle 0.0669inch x 0.0276inch     2
+ D69      rectangle 0.0128inch x 0.0167inch     4
+ D70      square    0.0138inch               2
+ D71      rectangle 0.0050inch x 0.0200inch    16
+ D72      rectangle 0.0580inch x 0.0200inch    16
+ D73      rectangle 0.7300inch x 0.0300inch     1
+ D74      rectangle 1.2200inch x 0.0200inch     1
+ D75      round     0.0554inch              14
+ D76      octagon   0.0554inch               1
+ D77      rectangle 0.2402inch x 0.0157inch     5
+ D78      rectangle 0.1417inch x 0.0157inch     5
+ D79      rectangle 0.1220inch x 0.0157inch     5
+

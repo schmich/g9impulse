@@ -1,0 +1,75 @@
+Photoplotter Info File: C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/gerbers_x1 final/tmask.gpi
+
+ Date              :  4/13/2006 07:20:42p
+ Plotfile          : C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/gerbers_x1 final/tmask.grb
+ Apertures         : generated: 
+ Device            : Gerber photoplotter with RS-274-X aperture generation
+
+Parameter settings:
+
+ Emulate Apertures : no
+ Emulate Thermal   : no
+ Emulate Annulus   : no
+ Tolerance Draw  + :  0.00 %
+ Tolerance Draw  - :  0.00 %
+ Tolerance Flash + :  0.00 %
+ Tolerance Flash - :  0.00 %
+ Rotate            : no
+ Mirror            : no
+ Optimize          : yes
+ Auto fit          : yes
+ OffsetX           : 0inch
+ OffsetY           : 0inch
+
+Plotfile Info:
+
+ Coordinate Format : 2.4
+ Coordinate Units  : Inch
+ Data Mode         : Absolute
+ Zero Suppression  : None
+ End Of Block      : *
+
+Apertures used:
+
+ Code     Shape     Size                  used
+
+ D10      rectangle 0.2559inch x 0.3937inch     1
+ D11      rectangle 0.0237inch x 0.0710inch    54
+ D12      rectangle 0.0592inch x 0.0198inch   104
+ D13      rectangle 0.0198inch x 0.0592inch   104
+ D14      octagon   0.0680inch              54
+ D15      round     0.2080inch               4
+ D16      rectangle 0.0880inch x 0.0340inch    44
+ D17      oval      0.0680inch x 0.1280inch     7
+ D18      rectangle 0.0316inch x 0.0946inch     8
+ D19      oval      0.1280inch x 0.0680inch    22
+ D20      round     0.1380inch               1
+ D21      oval      0.0867inch x 0.1655inch     2
+ D22      oval      0.1655inch x 0.0867inch     1
+ D23      oval      0.0600inch x 0.1120inch     2
+ D24      round     0.0830inch               3
+ D25      octagon   0.0830inch               3
+ D26      rectangle 0.2363inch x 0.2521inch     2
+ D27      rectangle 0.0710inch x 0.1261inch     4
+ D28      rectangle 0.0198inch x 0.0552inch    32
+ D29      rectangle 0.0592inch x 0.0186inch    40
+ D30      rectangle 0.0186inch x 0.0592inch    40
+ D31      rectangle 0.0592inch x 0.0671inch    94
+ D32      rectangle 0.0671inch x 0.0592inch    60
+ D33      square    0.0516inch               2
+ D34      oval      0.1120inch x 0.0600inch    18
+ D35      round     0.0630inch               6
+ D36      square    0.1740inch               2
+ D37      rectangle 0.1064inch x 0.0395inch     9
+ D38      rectangle 0.1655inch x 0.1123inch     2
+ D39      rectangle 0.1064inch x 0.0356inch     2
+ D40      rectangle 0.1064inch x 0.0513inch     1
+ D41      round     0.0671inch               2
+ D42      oval      0.1400inch x 0.0740inch     3
+ D43      round     0.0600inch               4
+ D44      square    0.0671inch               4
+ D45      round     0.1261inch               2
+ D46      round     0.0634inch              14
+ D47      octagon   0.0634inch               1
+ D48      round     0.0390inch             644
+
