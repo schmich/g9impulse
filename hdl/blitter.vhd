@@ -63,11 +63,8 @@ package Blitter_pckg is
 	  line_size					: in std_logic_vector(7 downto 0);
 	  alphaOp					: in std_logic;  -- if true then current operation is a blend alphaOp
 	  front_buffer				: in std_logic;  -- if false, then we are writing to back buffer
-	  blit_done					: out std_logic; --line has been completely copied
-
-	  input_color				: in std_logic_vector(7 downto 0);
-	  operation_mode			: in std_logic
-	  );
+	  blit_done					: out std_logic --line has been completely copied
+	);
 	end component Blitter;
 end package Blitter_pckg;
 
@@ -117,10 +114,7 @@ entity Blitter is
 	  line_size					: in std_logic_vector(7 downto 0);
 	  alphaOp					: in std_logic;  -- if true then current operation is a blend alphaOp
 	  front_buffer				: in std_logic;  -- if false, then we are writing to back buffer
-	  blit_done					: out std_logic; --line has been completely copied
-	  
-	  input_color				: in std_logic_vector(7 downto 0);
-	  operation_mode			: in std_logic
+	  blit_done					: out std_logic --line has been completely copied
 	  );
 end Blitter;
 
