@@ -1,0 +1,8 @@
+enemy aaa
+    animation: ok.anim/asdf
+    animate: forever
+    motion: boring
+    health: 10
+
+enemy f18
+    animation: oij/oij
