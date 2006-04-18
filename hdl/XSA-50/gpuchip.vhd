@@ -334,6 +334,27 @@ begin
   	 DATA_WIDTH        => DATA_WIDTH,
     ADDR_WIDTH        => ADDR_WIDTH
     )
+  port map (
+    clk				 =>sdram_clk1x,             
+	 rst				 =>blit_reset,		 
+ 	 rd             =>rd1,      
+    wr             =>wr1,       
+    opBegun        =>opBegun1,       
+    earlyopBegun   =>earlyOpBegun1,       
+    done           =>done1,
+	 rddone		 	 =>rddone1,      
+    rdPending		 =>rdPending1,
+	 Addr           =>hAddr1,    
+    DIn            =>hDIn1,     
+    DOut           =>hDOut1,     
+	 blit_begin		 =>blit_begin,
+	 source_address =>source_address, 
+	 source_lines	 =>source_lines,
+	 target_address =>target_address,
+	 line_size		 =>line_size,
+	 alphaOp			 =>alphaOp,
+	 blit_done		 =>blit_done,
+	 front_buffer	 =>not_fb
   port map (	
     clk					 => sdram_clk1x,             
 	 rst					 => blit_reset,		 
@@ -479,6 +500,8 @@ begin
 		
 			--reset stuff
 			if (sysReset = YES) then
+				field_color_r <= x"00";
+				state_r <= INIT;
 				field_color_r 		<= x"00";
 				state_r 				<= INIT;
 			end if;
@@ -492,6 +515,7 @@ begin
 			front_buffer_r		<= front_buffer_x;
 			db_enable_r			<= db_enable_x;
 			field_color_r 		<= field_color_x;
+			idle_r		 		<= idle_x;
 			idle_r		 		<= idle_x;		
 			drawpending_r		<= drawpending_x;
 		end if;
