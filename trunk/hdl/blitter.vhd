@@ -64,6 +64,8 @@ package Blitter_pckg is
 	  alphaOp					: in std_logic;  -- if true then current operation is a blend alphaOp
 	  front_buffer				: in std_logic;  -- if false, then we are writing to back buffer
 	  blit_done					: out std_logic --line has been completely copied
+	  );
+	  blit_done					: out std_logic --line has been completely copied
 	);
 	end component Blitter;
 end package Blitter_pckg;
@@ -202,8 +204,11 @@ begin
   wr_b <= rdDone and b_write;
   
   --if not doing an AlphaOp, we can directly copy pixel, wire vram input to blend result register
+  dIn <=  blend_data_r when alphaOp = YES else out_q;	
   dIn <=  blend_data_r when alphaOp = YES else out_q;
+  
     
+   -- memory test controller state machine operations
   -- memory test controller state machine operations
   combinatorial : process(state_r, addr_r, current_line_r,
   								  s_addr_r, t_addr_r,
