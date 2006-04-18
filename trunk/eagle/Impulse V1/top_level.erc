@@ -1,18 +1,18 @@
-EAGLE Version 4.15 Copyright (c) 1988-2005 CadSoft
+EAGLE Version 4.16 Copyright (c) 1988-2005 CadSoft
 
-Electrical Rule Check for /home/james/design/clients/zuofo-cheng/impulsev1/brd/top_level.sch at  4/10/2006 16:11:09 
+Electrical Rule Check for C:/cygwin/home/Zuofu Cheng/dev/starcell/eagle/Impulse V1/top_level.sch at  4/14/2006 02:18:51a
 
-WARNING: Sheet 1/1: unconnected Pin: X2-4 F
-WARNING: Sheet 1/1: unconnected Pin: X2-9 F
-WARNING: Sheet 1/1: unconnected Pin: X2-11 F
-WARNING: Sheet 1/1: unconnected Pin: X2-12 F
-WARNING: Sheet 1/1: unconnected Pin: X2-15 F
 WARNING: Sheet 1/1: unconnected Pin: X5-2 F
 WARNING: Sheet 1/1: unconnected Pin: X5-6 F
 WARNING: Sheet 1/1: unconnected Pin: X5-7 F
 WARNING: Sheet 1/1: unconnected Pin: X5-8 F
 WARNING: Sheet 1/1: unconnected Pin: X5-9 F
 WARNING: Sheet 1/1: unconnected Pin: X5-1 F
+WARNING: Sheet 1/1: unconnected Pin: X6-4 F
+WARNING: Sheet 1/1: unconnected Pin: X6-9 F
+WARNING: Sheet 1/1: unconnected Pin: X6-11 F
+WARNING: Sheet 1/1: unconnected Pin: X6-12 F
+WARNING: Sheet 1/1: unconnected Pin: X6-15 F
 WARNING: Sheet 1/1: POWER Pin U3 VDD connected to +3V3
 WARNING: Sheet 1/1: POWER Pin U3 VSSQ connected to GND
 WARNING: Sheet 1/1: POWER Pin U3 VSSQ connected to GND
@@ -97,7 +97,7 @@ WARNING: Only 1 Pin on net XCBUS15
 WARNING: Only 1 Pin on net XCBUS18
 WARNING: Only 1 Pin on net XCBUS91
 
-No board loaded - consistency has not been checked
+Board and schematic are consistent
 
     4 errors
    90 warnings
