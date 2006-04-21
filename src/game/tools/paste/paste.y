@@ -4,12 +4,13 @@
 #include <string>
 #include <vector>
 #include "enemy.h"
+#include "generator.h"
+#include "properties.h"
 
 using namespace std;
 
 int yylex(void);
 int yyerror(const char* error);
-void processDefinitions(vector<Enemy*> defs);
 
 extern int LineNumber;
 
@@ -21,11 +22,14 @@ extern int LineNumber;
 /* data in the same variable name.                            */
 
 %union {
+    int     intVal;
+    string* strVal;
+    pair<int, int>* fracVal;
+
     Enemy* enemy;
-    Properties* properties;
-    std::string* identifier;
-    std::pair<std::string, Property*>* property;
-    std::vector<Enemy*>* definitions;
+    Property* property;
+    vector<Property*>* properties;
+    vector<Enemy*>* definitions;
 }
 
 /* We list the tokens used in bison, but we also indicate     */
@@ -35,19 +39,23 @@ extern int LineNumber;
 
 %token ENEMY
 %token PROJ SPRITE
-%token ANIMATION ANIMATION_DEF
+%token ANIMATION
+%token<strVal> ANIMATION_FILE ANIMATION_IDENT
 %token ANIMATE ANIMATE_DEF
-%token MOTION MOTION_DEF
-%token HEALTH HEALTH_DEF
+%token MOTION MOTION_ROLL MOTION_CHASE MOTION_BORING MOTION_TARGET
+%token HEALTH
 %token FIRING FIRING_DEF
-%token WEAPON WEAPON_DEF
+%token WEAPON
+%token<strVal> WEAPON_NAME
 %token DEATH DEATH_DEF
-%token<identifier> IDENT
+%token<strVal> IDENT
 %token NL
+%token<intVal> INT
 %type<properties> ENEMY_PROPS
 %type<property>   ENEMY_PROP
 %type<enemy> DEF
 %type<definitions> DEFS
+%type<fracVal> SPEED
 %start TOP
 
 //%token <ival> NUM
@@ -59,7 +67,7 @@ extern int LineNumber;
 
 TOP
     : DEFS
-        { processDefinitions(*$1); }
+        { generateCode(*$1); }
     ;
 
 DEFS
@@ -77,7 +85,11 @@ DEF
         {
             $$ = new Enemy;
             $$->name = *$2;
-            $$->properties = *$4;
+
+            for (int i = 0; i < $4->size(); ++i)
+            {
+                (*$4)[i]->attach($$);
+            }
         }
     | PROJ IDENT NL PROJ_PROPS { $$ = new Enemy; }
     | SPRITE IDENT NL SPRITE_PROPS { $$ = new Enemy; }
@@ -86,28 +98,39 @@ DEF
 ENEMY_PROPS
     : ENEMY_PROP NL ENEMY_PROPS
         {
-            (*$3)[$1->first] = $1->second;
+            $3->push_back($1);
             $$ = $3;
         }
     | /* empty */
-        { $$ = new Properties; }
+        { $$ = new std::vector<Property*>; }
     ;
 
 ENEMY_PROP
-    : ANIMATION ':' ANIMATION_DEF
-        { $$ = new pair<string, Property*>("animation", new Property); }
+    : ANIMATION ':' ANIMATION_FILE '/' ANIMATION_IDENT
+        { $$ = new Animation(*$3, *$5); }
     | ANIMATE ':' ANIMATE_DEF
-        { $$ = new pair<string, Property*>("animate", new Property); }
-    | MOTION ':' MOTION_DEF
-        { $$ = new pair<string, Property*>("motion", new Property); }
-    | HEALTH ':' HEALTH_DEF
-        { $$ = new pair<string, Property*>("health", new Property); }
+        { $$ = new Health(55); }
+    | MOTION ':' MOTION_BORING SPEED
+        { $$ = new BoringBehavior($4->first, $4->second); }
+    | MOTION ':' MOTION_CHASE SPEED
+        { $$ = new ChaseBehavior($4->first, $4->second); }
+    | MOTION ':' MOTION_ROLL
+        { $$ = new RollBehavior; }
+    | HEALTH ':' INT
+        { $$ = new Health($3); }
     | FIRING ':' FIRING_DEF
-        { $$ = new pair<string, Property*>("firing", new Property); }
-    | WEAPON ':' WEAPON_DEF
-        { $$ = new pair<string, Property*>("weapon", new Property); }
+        { $$ = new Health(55); }
+    | WEAPON ':' WEAPON_NAME
+        { $$ = new Weapon(*$3); }
     | DEATH ':' DEATH_DEF
-        { $$ = new pair<string, Property*>("death", new Property); }
+        { $$ = new Health(55); }
+    ;
+
+SPEED
+    : INT
+        { $$ = new pair<int, int>($1, 1); }
+    | INT '/' INT
+        { $$ = new pair<int, int>($1, $3); }
     ;
 
 PROJ_PROPS
@@ -133,43 +156,10 @@ OPT_NL
     | /* empty */
     ;
 
-/* grammar will be very simple expressions:             */
-/*    L -> E ; L | empty                                */
-/*    E -> E addop T | T                                */
-/*    T -> T multop F | F                               */
-/*    F -> NUM | ( E )                                  */
-/*                                                      */
-/*    where addop is either + or -                      */
-/*      and multop is *                                 */
-
-/* bison refers to grammar elements in a production by number */
-/* so $1 refers to the first item, $2 to the second, etc.    */
-/* $$ refers to the left hand side item.                      */
-/* It is important to keep the various types coordinated.     */
-
-//L :	E {printf(" result = %d\n", $1);} EOL L
-	//| /* empty */
-//;
-
-/* Notice that we can write normal C code in the actions and  */
-/* so we have used the character type associated with ADDOP   */
-/* to determine if we add or subtract.                        */
-
-//E :	E ADDOP T	{if ($2 == '+') $$ = $1 + $3; else $$ = $1 - $3; }
-	//| T		{$$ = $1; }
-//;
-
-//T :	T MULTOP F	{$$ = $1 * $3; }
-	//| F		{$$ = $1; }
-//;
-
-//F :	NUM		{$$ = $1; }
-	//| '(' E CLOSE	{$$ = $2; }	/* Notice that E is item 2 */
-//;
-
 %%
 
-extern "C" int yywrap(void)
+extern "C"
+int yywrap(void)
 {
     return 1;
 }
@@ -181,12 +171,6 @@ int yyerror(const char* error)
          << error << endl;
 
     return 0;
-}
-
-void processDefinitions(vector<Enemy*> defs)
-{
-    for (int i = 0; i < defs.size(); ++i)
-        cout << defs[i]->name << endl;
 }
 
 int main()

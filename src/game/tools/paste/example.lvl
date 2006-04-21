@@ -1,6 +1,3 @@
-config
-    search: ../animations, .
-
 sprite small-explosion
     animation: explosion.anim/small
     animate: once

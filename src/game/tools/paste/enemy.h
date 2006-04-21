@@ -3,17 +3,36 @@
 
 #include <map>
 #include <string>
-#include "properties.h"
 
 using namespace std;
 
-typedef map<string, Property*> Properties;
+class Health;
+class Animation;
+class Weapon;
+class Behavior;
 
 class Enemy
 {
 public:
-    string     name;
-    Properties properties;
+    Enemy()
+        : name(""), health(NULL), animation(NULL), weapon(NULL)
+        { }
+
+    bool fullyDefined()
+        {
+            return (name != "")
+                && (health != NULL)
+                && (animation != NULL)
+                && (weapon != NULL)
+                && (behaviors.size() != 0);
+        }
+
+    string      name;
+    Health*     health;
+    Animation*  animation;
+    Weapon*     weapon;
+
+    vector<Behavior*> behaviors;
 };
 
 #endif // ENEMY_H
