@@ -334,27 +334,6 @@ begin
   	 DATA_WIDTH        => DATA_WIDTH,
     ADDR_WIDTH        => ADDR_WIDTH
     )
-  port map (
-    clk				 =>sdram_clk1x,             
-	 rst				 =>blit_reset,		 
- 	 rd             =>rd1,      
-    wr             =>wr1,       
-    opBegun        =>opBegun1,       
-    earlyopBegun   =>earlyOpBegun1,       
-    done           =>done1,
-	 rddone		 	 =>rddone1,      
-    rdPending		 =>rdPending1,
-	 Addr           =>hAddr1,    
-    DIn            =>hDIn1,     
-    DOut           =>hDOut1,     
-	 blit_begin		 =>blit_begin,
-	 source_address =>source_address, 
-	 source_lines	 =>source_lines,
-	 target_address =>target_address,
-	 line_size		 =>line_size,
-	 alphaOp			 =>alphaOp,
-	 blit_done		 =>blit_done,
-	 front_buffer	 =>not_fb
   port map (	
     clk					 => sdram_clk1x,             
 	 rst					 => blit_reset,		 
