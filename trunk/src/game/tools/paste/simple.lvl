@@ -1,8 +1,5 @@
-enemy aaa
-    animation: ok.anim/asdf
-    animate: forever
-    motion: boring
-    health: 10
-
 enemy f18
-    animation: oij/oij
+    health: 1
+    animation: enemies.anim/f18
+    weapon: plasma
+    motion: boring 5/2

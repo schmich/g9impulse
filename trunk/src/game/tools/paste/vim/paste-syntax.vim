@@ -43,7 +43,7 @@ syn region  pasteAnim matchgroup=pasteField start=/\v^\s*animate:/ end=/$/ conta
 syn keyword pasteAnimValue never once forever contained
 
 syn region  pasteMotion matchgroup=pasteField start=/\v^\s*motion:/ end=/$/ contains=pasteMotionValue
-syn keyword pasteMotionValue boring chase directed contained
+syn keyword pasteMotionValue boring chase roll target contained
 
 syn region  pasteLayer matchgroup=pasteField start=/\v^\s*layer:/ end=/$/ contains=pasteLayerValue
 syn keyword pasteLayerValue overlay underlay default contained

@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "enemy.h"
+#include "properties.h"
 
 #include "paste.tab.h"
 
@@ -37,7 +38,14 @@ FILE        [a-zA-Z0-9_][a-zA-Z0-9_\-\.]*
 
 "animation"         { BEGIN(ANIMATION_CTX); return ANIMATION; }
 <ANIMATION_CTX>{
-{FILE}"/"{IDENT}    { return ANIMATION_DEF; }
+{IDENT}             {
+                        yylval.strVal = new string(yytext);
+                        return ANIMATION_IDENT;
+                    }
+{FILE}              {
+                        yylval.strVal = new string(yytext);
+                        return ANIMATION_FILE;
+                    }
 }
 
 "animate"           { BEGIN(ANIMATE_CTX); return ANIMATE; }
@@ -49,14 +57,22 @@ FILE        [a-zA-Z0-9_][a-zA-Z0-9_\-\.]*
 
 "motion"            { BEGIN(MOTION_CTX); return MOTION; }
 <MOTION_CTX>{
-"boring"            { return MOTION_DEF; }
-"chase"             { return MOTION_DEF; }
-"directed"          { return MOTION_DEF; }
+"boring"            { return MOTION_BORING; }
+"chase"             { return MOTION_CHASE; }
+"target"            { return MOTION_TARGET; }
+"roll"              { return MOTION_ROLL; }
+{INT}               {
+                        yylval.intVal = atoi(yytext);
+                        return INT;
+                    }
 }
 
 "health"            { BEGIN(HEALTH_CTX); return HEALTH; }
 <HEALTH_CTX>{
-{INT}               { return HEALTH_DEF; }
+{INT}               {
+                        yylval.intVal = atoi(yytext);
+                        return INT;
+                    }
 }
 
 "firing"            { BEGIN(FIRING_CTX); return FIRING; }
@@ -67,15 +83,18 @@ FILE        [a-zA-Z0-9_][a-zA-Z0-9_\-\.]*
 
 "weapon"            { BEGIN(WEAPON_CTX); return WEAPON; }
 <WEAPON_CTX>{
-{IDENT}             { return WEAPON_DEF; }
+{IDENT}             {
+                        yylval.strVal = new string(yytext);
+                        return WEAPON_NAME;
+                    }
 }
 
 "death"             { BEGIN(DEATH_CTX); return DEATH; }
 <DEATH_CTX>{
 }
 
-{IDENT}             { 
-                        yylval.identifier = new string(yytext);
+{IDENT}             {
+                        yylval.strVal = new string(yytext);
                         return IDENT;
                     }
 <*>{SPACE}+         { }
@@ -92,11 +111,3 @@ FILE        [a-zA-Z0-9_][a-zA-Z0-9_\-\.]*
 <*>.                { return yytext[0]; }
 
 %%
-
-//{DIGIT}+	{yylval.ival = atoi(yytext); return NUM;}
-//"+"|"-"		{yylval.op = yytext[0]; return (ADDOP);}
-//"*"		    {yylval.op = yytext[0]; return (MULTOP);}
-//";"		    {yylval.op = yytext[0]; return (EOL);}
-//"("		    {return ('(');}
-//")"		    {yylval.op = yytext[0]; return (CLOSE);}
-//{SPACE}+	{}

@@ -1,5 +1,8 @@
-paste: paste.tab.c paste.yy.o
+paste: paste.tab.c paste.yy.o generator.o
 	g++ -o $@ $^
+
+generator.o: generator.cc
+	g++ -c $< -o $@
 
 paste.yy.o: paste.yy.c
 	g++ -c $< -o $@
