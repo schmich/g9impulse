@@ -109,7 +109,6 @@ World* createWorld(Player* player, Level* level)
 #endif
 
     w->introStep = 0;
-
     w->active = true;
 
     return w;
@@ -233,7 +232,7 @@ void drawWorld(World* world)
     drawSprite(world->healthMeter);
     drawNukeMeter(world->nukeMeter);
 
-    drawNumber(world->player->score, makePoint(2, 3));
+    drawNumber(world->player->score, makePoint(2, 2));
 
 #ifdef _DEBUG
     drawNumber(world->level->background->progress, makePoint(2, 17));
