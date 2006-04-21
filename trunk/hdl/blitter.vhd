@@ -64,8 +64,6 @@ package Blitter_pckg is
 	  alphaOp					: in std_logic;  -- if true then current operation is a blend alphaOp
 	  front_buffer				: in std_logic;  -- if false, then we are writing to back buffer
 	  blit_done					: out std_logic --line has been completely copied
-	  );
-	  blit_done					: out std_logic --line has been completely copied
 	);
 	end component Blitter;
 end package Blitter_pckg;
