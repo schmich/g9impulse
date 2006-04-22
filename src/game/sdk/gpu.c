@@ -67,6 +67,8 @@ void load_alphaOp(bool alphaOp)
 
 void setDoubleBuffer(bool doubleBuffer)
 {
+    clearBuffers();
+
     PORTC = 0x09;
     if (doubleBuffer)
         PORTB = 0x01;

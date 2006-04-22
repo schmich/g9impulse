@@ -1,9 +1,9 @@
 #!/usr/bin/ruby
 
 def writeAnim(name, images, poolName, poolOffset)
-    while name.match(/\s+(.)/)
+    while name.match(/\-+(.)/)
         up = $1.upcase
-        name[/\s+(.)/] = up
+        name[/\-+(.)/] = up
     end
 
     animName = name.clone
@@ -51,7 +51,7 @@ File.open(filename) { |file|
     file.each_line { |line|
         case line
             when /^\-\-/,/^\s*$/
-            when /\s*\[([A-Za-z][\w ]*)\]\s*/
+            when /\s*\[([A-Za-z][A-Za-z0-9\-]*)\]\s*/
                 animations << [name, images] if not name.nil?
                 name = $1
                 images = []

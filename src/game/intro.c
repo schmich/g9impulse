@@ -571,6 +571,7 @@ bool showScene3(void)
     char i = 0;
     char j = 0;
     bool pressed = false;
+    uint8 buffer = 0;
 
     Figure* cannon1 = new(Figure);
     Figure* cannon2 = new(Figure);
@@ -733,6 +734,7 @@ bool showScene3(void)
     cls(0);
     if (delayMs(255)) { pressed = true; goto exit; }
     
+    setDoubleBuffer(true);
     //scroll plane up
     for (i = 0; i < 70; i++)
     {
@@ -746,9 +748,11 @@ bool showScene3(void)
         plane_2->image.address += 160;
         tech_1->image.address += 160;
         tech_2->image.address += 160;
+        flipBuffer(&buffer);
         if (delayMs(130)) { pressed = true; goto exit; }
     }
     if (delayMs(255)) { pressed = true; goto exit; }
+    setDoubleBuffer(false);
 
 
     //move screen left    
@@ -767,6 +771,7 @@ bool showScene3(void)
         if (delayMs(20)) { pressed = true; goto exit; }
     }
     
+    setDoubleBuffer(true);
     //scroll plane up with overlay
     for (i = 0; i < 70; i++)
     {
@@ -783,8 +788,10 @@ bool showScene3(void)
         plane_2->image.address += 160;
         tech_1->image.address += 160;
         tech_2->image.address += 160;
+        flipBuffer(&buffer);
         if (delayMs(130)) { pressed = true; goto exit; }
     }
+    setDoubleBuffer(false);
 
     cls(0);
     if (delayS(1)) { pressed = true; goto exit; }
@@ -1135,7 +1142,6 @@ bool showTitle(void)
 
 void showIntro(void)
 {
-    // single-buffer mode
     setDoubleBuffer(false);
 
     delay_s(2);

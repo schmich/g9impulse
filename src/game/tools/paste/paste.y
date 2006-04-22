@@ -29,7 +29,7 @@ extern int LineNumber;
     Enemy* enemy;
     Property* property;
     vector<Property*>* properties;
-    vector<Enemy*>* definitions;
+    vector<Definition*>* definitions;
 }
 
 /* We list the tokens used in bison, but we also indicate     */
@@ -37,8 +37,7 @@ extern int LineNumber;
 /* Notice that the non-terminals are also typed if they are   */
 /* involved with the calculations.                            */
 
-%token ENEMY
-%token PROJ SPRITE
+%token ENEMY PROJ ARTIFACT SPRITE
 %token ANIMATION
 %token<strVal> ANIMATION_FILE ANIMATION_IDENT
 %token ANIMATE ANIMATE_DEF
@@ -48,6 +47,7 @@ extern int LineNumber;
 %token WEAPON
 %token<strVal> WEAPON_NAME
 %token DEATH DEATH_DEF
+%token EFFECT EFFECT_HEALTH
 %token<strVal> IDENT
 %token NL
 %token<intVal> INT
@@ -57,11 +57,6 @@ extern int LineNumber;
 %type<definitions> DEFS
 %type<fracVal> SPEED
 %start TOP
-
-//%token <ival> NUM
-//%token <op> ADDOP MULTOP EOL OPEN CLOSE
-//%type <ival> E T F
-//%start L
 
 %%
 
@@ -77,7 +72,7 @@ DEFS
             $$ = $3;
         }
     | /* empty */
-        { $$ = new vector<Enemy*>; }
+        { $$ = new vector<Definition*>; }
     ;
 
 DEF 
@@ -92,6 +87,7 @@ DEF
             }
         }
     | PROJ IDENT NL PROJ_PROPS { $$ = new Enemy; }
+    | ARTIFACT IDENT NL ARTIFACT_PROPS { $$ = new Enemy; }
     | SPRITE IDENT NL SPRITE_PROPS { $$ = new Enemy; }
     ;
 
@@ -140,6 +136,15 @@ PROJ_PROPS
 
 PROJ_PROP
     : '/'
+    ;
+
+ARTIFACT_PROPS
+    : ARTIFACT_PROP NL ARTIFACT_PROPS
+    | /* empty */
+    ;
+
+ARTIFACT_PROP
+    : EFFECT ':' EFFECT_HEALTH
     ;
 
 SPRITE_PROPS

@@ -6,6 +6,6 @@
 
 using namespace std;
 
-void generateCode(vector<Enemy*> definitions);
+void generateCode(vector<Definition*> definitions);
 
 #endif // GENERATOR_H

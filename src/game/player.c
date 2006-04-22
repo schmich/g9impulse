@@ -317,10 +317,14 @@ void upgradeWeapon(Player* who)
     }
 }
 
-void onEnemyKilled(Player* who, Enemy* enemy)
+void enemyKilled(Player* who, Enemy* enemy, bool collided)
 {
+    uint16 score = enemy->maxHealth * 13;
+    if (collided)
+        score >>= 1;
+
     ++who->kills;
-    updateScore(who, enemy->maxHealth * 13);
+    updateScore(who, score);
 }
 
 void updateScore(Player* who, int16 change)

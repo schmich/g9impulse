@@ -29,14 +29,43 @@ FILE        [a-zA-Z0-9_][a-zA-Z0-9_\-\.]*
 %x FIRING_CTX
 %x WEAPON_CTX
 %x DEATH_CTX
+%x EFFECT_CTX
+
+%x ENEMY_CTX
+%x PROJ_CTX
+%x ARTIFACT_CTX
+%x SPRITE_CTX
+
+%x ENEMY_DEF_CTX
+%x PROJ_DEF_CTX
+%x ARTIFACT_DEF_CTX
+%x SPRITE_DEF_CTX
 
 %%
 
-"enemy"             { return ENEMY; }
-"projectile"        { return PROJ; }
-"sprite"            { return SPRITE; }
+"projectile"        { BEGIN(PROJ_CTX); return PROJ; }
+"artifact"          { BEGIN(ARTIFACT_CTX); return ARTIFACT; }
+"sprite"            { BEGIN(SPRITE_CTX); return SPRITE; }
 
+"enemy"             { BEGIN(ENEMY_CTX); return ENEMY; }
+<ENEMY_CTX>{
+{IDENT}             {
+                        BEGIN(ENEMY_DEF_CTX);
+                        yylval.strVal = new string(yytext);
+                        return IDENT;
+                    }
+}
+
+<ENEMY_DEF_CTX>{
 "animation"         { BEGIN(ANIMATION_CTX); return ANIMATION; }
+"animate"           { BEGIN(ANIMATE_CTX); return ANIMATE; }
+"motion"            { BEGIN(MOTION_CTX); return MOTION; }
+"health"            { BEGIN(HEALTH_CTX); return HEALTH; }
+"firing"            { BEGIN(FIRING_CTX); return FIRING; }
+"weapon"            { BEGIN(WEAPON_CTX); return WEAPON; }
+"death"             { BEGIN(DEATH_CTX); return DEATH; }
+}
+
 <ANIMATION_CTX>{
 {IDENT}             {
                         yylval.strVal = new string(yytext);
@@ -48,14 +77,12 @@ FILE        [a-zA-Z0-9_][a-zA-Z0-9_\-\.]*
                     }
 }
 
-"animate"           { BEGIN(ANIMATE_CTX); return ANIMATE; }
 <ANIMATE_CTX>{
 "never"             { return ANIMATE_DEF; }
 "once"              { return ANIMATE_DEF; }
 "forever"           { return ANIMATE_DEF; }
 }
 
-"motion"            { BEGIN(MOTION_CTX); return MOTION; }
 <MOTION_CTX>{
 "boring"            { return MOTION_BORING; }
 "chase"             { return MOTION_CHASE; }
@@ -67,7 +94,6 @@ FILE        [a-zA-Z0-9_][a-zA-Z0-9_\-\.]*
                     }
 }
 
-"health"            { BEGIN(HEALTH_CTX); return HEALTH; }
 <HEALTH_CTX>{
 {INT}               {
                         yylval.intVal = atoi(yytext);
@@ -75,13 +101,11 @@ FILE        [a-zA-Z0-9_][a-zA-Z0-9_\-\.]*
                     }
 }
 
-"firing"            { BEGIN(FIRING_CTX); return FIRING; }
 <FIRING_CTX>{
 "lock-on"           { return FIRING_DEF; }
 "random"            { return FIRING_DEF; }
 }
 
-"weapon"            { BEGIN(WEAPON_CTX); return WEAPON; }
 <WEAPON_CTX>{
 {IDENT}             {
                         yylval.strVal = new string(yytext);
@@ -89,14 +113,38 @@ FILE        [a-zA-Z0-9_][a-zA-Z0-9_\-\.]*
                     }
 }
 
-"death"             { BEGIN(DEATH_CTX); return DEATH; }
 <DEATH_CTX>{
 }
 
+"effect"            { BEGIN(EFFECT_CTX); return EFFECT; }
+<EFFECT_CTX>{
+"increase-health"   { return EFFECT_HEALTH; }
+}
+
+<PROJ_CTX>{
 {IDENT}             {
+                        BEGIN(PROJ_DEF_CTX);
                         yylval.strVal = new string(yytext);
                         return IDENT;
                     }
+}
+
+<ARTIFACT_CTX>{
+{IDENT}             {
+                        BEGIN(ARTIFACT_DEF_CTX);
+                        yylval.strVal = new string(yytext);
+                        return IDENT;
+                    }
+}
+
+<SPRITE_CTX>{
+{IDENT}             {
+                        BEGIN(SPRITE_DEF_CTX);
+                        yylval.strVal = new string(yytext);
+                        return IDENT;
+                    }
+}
+
 <*>{SPACE}+         { }
 <*>{CRLF}+          {
                         BEGIN(INITIAL);

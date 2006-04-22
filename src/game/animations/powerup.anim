@@ -1,4 +1,4 @@
-[health powerup]
+[health-powerup]
 0,8182          24      26
 24,8182         24      26
 48,8182         24      26
@@ -48,7 +48,7 @@
 96,8260         24      26
 120,8260        24      26
 
-[weapon powerup]
+[weapon-powerup]
 0x000DA47B      5       9
 0x000DAA1B      5       9
 0x000DAFBB      5       9
