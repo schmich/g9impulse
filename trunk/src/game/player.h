@@ -31,7 +31,7 @@ Player* createPlayer(Point where);
 
 void drawPlayer(Player* who);
 
-void onEnemyKilled(Player* who, Enemy* enemy);
+void enemyKilled(Player* who, Enemy* enemy, bool collided);
 void updateScore(Player* who, int16 change);
 
 void upgradeWeapon(Player* who);

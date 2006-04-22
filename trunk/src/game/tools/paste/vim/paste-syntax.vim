@@ -18,7 +18,7 @@ syn case match
 syn keyword pasteCommand spawn
 
 syn keyword pasteType config
-syn region  pasteDeclare matchgroup=pasteType start=/^\(sprite\|projectile\|enemy\)/ end=/$/ contains=pasteInherit
+syn region  pasteDeclare matchgroup=pasteType start=/^\(sprite\|projectile\|enemy\|artifact\)/ end=/$/ contains=pasteInherit
 syn match   pasteInherit /\(<\(\(<\|\s\)*\)\)\@<!</ contained
 
 syn match pasteEvent /\v^\d+/
@@ -27,13 +27,15 @@ syn match pasteField /animation:/
 syn match pasteField /impact:/
 syn match pasteField /weapon:/
 syn match pasteField /death:/
-syn match pasteField /search:/
 
 syn region pasteHealth matchgroup=pasteField start=/\v^\s*health:/ end=/$/ contains=pasteInteger,pasteBadHealthValue
 syn match  pasteBadHealthValue /\v[^ 0-9]/ contained
 
 syn region pasteDamage matchgroup=pasteField start=/\v^\s*damage:/ end=/$/ contains=pasteInteger,pasteBadDamageValue
 syn match  pasteBadDamageValue /\v[^ 0-9]/ contained
+
+syn region pasteEffect matchgroup=pasteField start=/\v^\s*effect:/ end=/$/ contains=pasteEffectValue,pasteInteger
+syn match  pasteEffectValue "increase\-health" contained
 
 syn region  pasteFiring matchgroup=pasteField start=/\v^\s*firing:/ end=/$/ contains=pasteFiringValue,pasteInteger,pastePercent
 syn keyword pasteFiringValue random contained
@@ -87,6 +89,7 @@ if version >= 508
     Hi pasteMotionValue Constant
     Hi pasteLayerValue Constant
     Hi pasteFiringValue Constant
+    Hi pasteEffectValue Constant
 
     Hi pasteBadPair Error
     Hi pasteBadDamageValue Error

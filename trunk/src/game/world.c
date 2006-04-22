@@ -372,7 +372,7 @@ void collideWorld(World* world)
 
         if (killed)
         {
-            onEnemyKilled(world->player, enemy->data);
+            enemyKilled(world->player, enemy->data, false);
             enemy = removeEnemy(world, enemy);
         }
         else
@@ -420,7 +420,7 @@ void collideWorld(World* world)
                 if (damage(world->player, 2))
                     kill(world->player, world);
 #endif
-                onEnemyKilled(world->player, enemy->data);
+                enemyKilled(world->player, enemy->data, true);
 
                 kill(enemy->data, world);
                 removeEnemy(world, enemy);

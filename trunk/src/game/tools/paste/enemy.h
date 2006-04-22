@@ -1,8 +1,10 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include <map>
+#include <iostream>
 #include <string>
+#include <vector>
+#include "definition.h"
 
 using namespace std;
 
@@ -11,21 +13,14 @@ class Animation;
 class Weapon;
 class Behavior;
 
-class Enemy
+class Enemy : public Definition
 {
 public:
-    Enemy()
-        : name(""), health(NULL), animation(NULL), weapon(NULL)
-        { }
+    Enemy();
 
-    bool fullyDefined()
-        {
-            return (name != "")
-                && (health != NULL)
-                && (animation != NULL)
-                && (weapon != NULL)
-                && (behaviors.size() != 0);
-        }
+    virtual bool fullyDefined();
+    virtual void emitCode(ostream& out);
+    virtual void emitIncludes(ostream& out);
 
     string      name;
     Health*     health;
