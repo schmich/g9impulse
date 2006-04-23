@@ -1,25 +1,5 @@
 BINARY=starcell.hex
 
-MCC_DIR=/cygdrive/c/MCC18
-MCC_WIN_DIR=c:\MCC18
-
-DIRS=$(shell find . -maxdepth 1 -type d)
-MCC_INC=$(patsubst %,/i%,$(DIRS))
-GCC_INC=$(patsubst %,-I%,$(DIRS))
-
-CC=$(MCC_DIR)/bin/mcc18.exe
-CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" $(MCC_INC) -k
-
-LINK=$(MCC_DIR)/bin/mplink.exe
-LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" sdk/18f4620.lkr
-LFLAGS=$(LIBS)
-
-TRY=tools/try
-FIXDEPS=tools/fixdeps.rb
-
-DEPC=gcc
-DEPFLAGS=-MM -MG -I$(MCC_DIR)/h $(GCC_INC) -D__18F4620
-
 BUILD_DIR=
 BUILD_DEBUG_DIR=.debug
 BUILD_RELEASE_DIR=.release
@@ -38,12 +18,25 @@ ifeq ($(MAKECMDGOALS),depclean)
 	DEBUG=true
 endif
 
-ifeq ($(DEBUG),true)
-	CFLAGS += -D_DEBUG=1
-	BUILD_DIR=$(BUILD_DEBUG_DIR)
-else
-	BUILD_DIR=$(BUILD_RELEASE_DIR)
-endif
+MCC_DIR=/cygdrive/c/MCC18
+MCC_WIN_DIR=c:\MCC18
+
+DIRS=$(shell find . -maxdepth 1 -type d | grep -v "\/\.")
+MCC_INC=$(patsubst %,/i%,$(DIRS))
+GCC_INC=$(patsubst %,-I%,$(DIRS))
+
+CC=$(MCC_DIR)/bin/mcc18.exe
+CFLAGS=-p=18F4620 /i"$(MCC_WIN_DIR)\h" $(MCC_INC) /i"$(BUILD_DIR)" -k
+
+LINK=$(MCC_DIR)/bin/mplink.exe
+LIBS=/l"$(MCC_WIN_DIR)\lib" /k"$(MCC_WIN_DIR)\lkr" sdk/18f4620.lkr
+LFLAGS=$(LIBS)
+
+TRY=tools/try
+FIXDEPS=tools/fixdeps.rb
+
+DEPC=gcc
+DEPFLAGS=-MM -MG -I$(MCC_DIR)/h $(GCC_INC) -D__18F4620
 
 DEPFILE=$(BUILD_DIR)/deps
 OUT=$(BUILD_DIR)/$(BINARY)
@@ -51,6 +44,13 @@ OUT=$(BUILD_DIR)/$(BINARY)
 SRCS=$(shell find . -maxdepth 2 -iname '*.c')
 FLAT_SRCS=$(shell find . -maxdepth 2 -iname '*.c' | ruby -p -e '$$_ = $$_[/[^\/]+\.c$$/] + "\n"')
 OBJS=$(patsubst %,$(BUILD_DIR)/%,$(FLAT_SRCS:.c=.o))
+
+ifeq ($(DEBUG),true)
+	CFLAGS += -D_DEBUG=1
+	BUILD_DIR=$(BUILD_DEBUG_DIR)
+else
+	BUILD_DIR=$(BUILD_RELEASE_DIR)
+endif
 
 all: $(DEPFILE) $(OUT)
 
