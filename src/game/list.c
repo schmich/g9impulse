@@ -18,6 +18,8 @@ List* createList(void)
     List* list = new(List);
     list->destroy = destroyList;
     list->head = list->tail = NULL;
+
+    return list;
 }
 
 void appendElement(List* list, void* data)
@@ -62,4 +64,29 @@ Node* removeNode(List* list, Node* node)
     free(node);
 
     return next;
+}
+
+Node* insertElement(List* list, Node* before, void* data)
+{
+    Node* prev;
+
+    Node* newNode = new(Node);
+    newNode->data = data;
+    newNode->next = before;
+
+    if (before == list->head)
+    {
+        list->head = newNode;
+    }
+    else
+    {
+        for (prev = list->head; prev->next != before; prev = prev->next)
+        {
+            // scan
+        }
+
+        prev->next = newNode;
+    }
+
+    return newNode;
 }

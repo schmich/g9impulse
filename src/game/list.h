@@ -23,5 +23,6 @@ typedef struct List
 List* createList(void);
 void appendElement(List* list, void* data);
 Node* removeNode(List* list, Node* node);
+Node* insertElement(List* list, Node* before, void* data);
 
 #endif // LIST_H

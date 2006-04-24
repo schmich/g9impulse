@@ -2,6 +2,24 @@
 #include "image.h"
 #include "text.anim.inl"
 
+static uint8 indexOf(char c)
+{
+    Animation* font = textAnimation();
+
+    if (c >= 'A' && c <= 'Z')
+        return c - 'A' + 10;
+    else if (c >= 'a' && c <= 'z')
+        return c - 'a' + 10;
+    else if (c >= '0' && c <= '9')
+        return c - '0';
+    else if (c == '_')
+        return 36;
+    else if (c == ' ')
+        return 37; // space
+    else
+        return 38; // "unknown" character
+}
+
 //
 // assumes text is only numbers
 //
@@ -19,21 +37,19 @@ static void drawNumberReverse(uint8* text, Point where)
     }
 }
 
-void drawText(const rom char* text, Point where)
+void drawText(const char* text, Point where)
 {
     Animation* font = textAnimation();
 
-    const rom char* c;
-    for (c = text; *c != NULL; ++c)
-    {
-        if (*c >= '0' && *c <= '9')
-            drawImage(&font->images[*c - '0'], where, true);
-        else if (*c >= 'A' && *c <= 'Z')
-            drawImage(&font->images[*c - 'A' + 10], where, true);
-        else if (*c >= 'a' && *c <= 'z')
-            drawImage(&font->images[*c - 'a' + 10], where, true);
+    uint8 index;
+    const char* pos;
 
-        where.x += font->images[0].width;
+    for (pos = text; *pos != NULL; ++pos)
+    {
+        index = indexOf(*pos);
+
+        drawImage(&font->images[index], where, true);
+        where.x += font->images[index].width;
     }
 }
 
@@ -62,4 +78,17 @@ void drawNumber(uint16 num, Point where)
         buffer[i] = NULL;
         drawNumberReverse(buffer, where);
     }
+}
+
+uint16 textWidth(const char* text)
+{
+    Animation* font = textAnimation();
+
+    uint16 width = 0;
+    const char* pos;
+
+    for (pos = text; *pos != NULL; ++pos)
+        width += font->images[indexOf(*pos)].width;
+
+    return width;
 }

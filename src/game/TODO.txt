@@ -1,7 +1,9 @@
-- high score list
+- show "game over" and wait for start press after dying
+- after setting high score, pressing start takes you to "show highscore" screen (awkward)
+- animated high score screen (e.g. scrolling stars)
+- health/weapon powerup icon improvement
 - level completion (w/ boss)
 - engine flame improvement (longer flames when going forward)
-- weapon powerup similar to health powerup
 - nuke powerup
 - powerup pickup animation
 - non-flashing plasma
@@ -20,13 +22,12 @@
 - paint cabinet red (w/ logo and name)
 - complete impulse board
 - finish paste/gleu
-- high score system
 - multiplayer support
 - clear timer after pausing
 - loading off sd card
 - make font more blocky (i.e. 9 and 6)
 - fix font spacing (i.e. 1)
 - make engine flames longer and more animated
-- finalize scoring scheme (MORE ponits!!!)
+- finalize scoring scheme (MORE points!!!)
 - fix intro screen buffer flip problems
 - make weapon powerups fractionally incremental (e.g. give enemies much more health and make weapons fractionally better)

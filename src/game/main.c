@@ -6,19 +6,20 @@
 #include "world.h"
 #include "level1.h"
 #include "timer.h"
-#include "pause.anim.inl"
 #include "gpu.h"
 #include "spu.h"
+#include "high-score.h"
+#include "pause.anim.inl"
 
 #define FRAME_TIME 900
 
-void handleInput(uint8* buffer)
+void handlePause(uint8* buffer)
 {
     Animation* pause = pauseAnimation();
 
     if (getInputStatus()->startPressed)
     {
-#ifndef _DEBUG
+#ifdef _DEBUG
         drawImage(&pause->images[0],
                   makePoint(60, 85),
                   true);
@@ -63,7 +64,7 @@ void playGame(void)
         updateWorld(world);
         collideWorld(world);
 
-        handleInput(&buffer);
+        handlePause(&buffer);
 
         //
         // HACK drawing bug, uncomment to exploit
@@ -79,6 +80,10 @@ void playGame(void)
             //
         }
     }
+
+#ifndef _DEBUG
+    checkHighScore(world->player->score);
+#endif
 
     destroy(world);
 }
@@ -97,10 +102,12 @@ void main()
 #ifndef _DEBUG
     showBootSplash();
 
-    while (showAgain)
+    while (true)
     {
         showIntro();
-        showAgain = showTitle();
+
+        if (!showTitle() || !showHighScores())
+            break;
     }
 #endif
 
@@ -108,10 +115,17 @@ void main()
     // until the end of time (or major disaster)
     //
     while (true)
-    {        
+    {
         playGame();
 
-        while (showTitle())
+#ifndef _DEBUG
+        while (true)
+        {
+            if (!showHighScores() || !showTitle())
+                break;
+
             showIntro();
+        }
+#endif
     }
 }

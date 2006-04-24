@@ -4,7 +4,9 @@
 #include "common.h"
 #include "point.h"
 
-void drawText(const rom char* text, Point where);
+void drawText(const char* text, Point where);
 void drawNumber(uint16 num, Point where);
+
+uint16 textWidth(const char* text);
 
 #endif // TEXT_H
