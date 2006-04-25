@@ -12,7 +12,7 @@ typedef struct Background
     uint16 offset;
 } Background;
 
-Background* createBackground(void);
+Background* createBackground(uint16 initOffset);
 void drawBackground(Background* bg);
 
 #endif // BACKGROUND_H
