@@ -1,10 +1,11 @@
 #include "text.h"
-#include "score.anim.inl"
 #include "input.h"
 #include "storage.h"
 #include "list.h"
 #include "gpu.h"
 #include "delay.h"
+#include "background.h"
+#include "logo.anim.inl"
 #include "high-score.h"
 
 #define LOCATION_HIGH_SCORES 0
@@ -71,7 +72,7 @@ static bool displayHighScores(List* highScores, Node* scorePos)
     uint8 y;
 
     uint8 buffer;
-    Animation* background = highScoreBackgroundAnimation();
+    Animation* logo = logoAnimation();
 
     char _[] = "_";
     uint8 pos = 0;
@@ -80,6 +81,7 @@ static bool displayHighScores(List* highScores, Node* scorePos)
     Node* curr;
     ScoreEntry* entry;
     Input* event = getInputEvent();
+    Background* background = createBackground(6824);
 
     uint16 delay = 0;
 
@@ -130,7 +132,10 @@ static bool displayHighScores(List* highScores, Node* scorePos)
                 return true;
         }
 
-        drawImage(&background->images[0], makePoint(0, 0), true);
+        drawBackground(background);
+        drawImage(&logo->images[0], makePoint(0, 0), true);
+
+        update(background, NULL);
 
         y = 70;
         foreach (curr, highScores)

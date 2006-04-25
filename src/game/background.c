@@ -25,13 +25,13 @@ static void destroyBackground(Background* bg)
     destroy(bg->behavior);
 }
 
-Background* createBackground(void)
+Background* createBackground(uint16 initOffset)
 {
     Background* bg = new(Background);
     bg->destroy = destroyBackground;
     bg->behavior = createBehavior(updateBackground);
     bg->position = makePoint(0, 0);
-    bg->progress = bg->offset = SCREEN_HEIGHT;
+    bg->progress = bg->offset = initOffset + SCREEN_HEIGHT;
     bg->step = 0;
 
     bg->animation = backgroundAnimation();

@@ -63,7 +63,7 @@ Level* create#{upname}(void)
         theLevelInit = true;
     }
 
-    theLevel.background = createBackground();
+    theLevel.background = createBackground(0);
     return &theLevel;
 }
 """
