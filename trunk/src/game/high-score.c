@@ -7,6 +7,9 @@
 #include "delay.h"
 #include "high-score.h"
 
+#define LOCATION_HIGH_SCORES 0
+#define LOCATION_LAST_INITS  (LOCATION_HIGH_SCORES + (3 + 2) * 10)
+
 typedef struct ScoreEntry
 {
     char   initials[4];
@@ -25,7 +28,7 @@ static void destroyScores(List* scores)
 
 static void saveHighScores(List* highScores)
 {
-    uint8 pos = 0;
+    uint8 pos = LOCATION_HIGH_SCORES;
 
     Node* curr;
     ScoreEntry* entry;
@@ -48,7 +51,7 @@ static List* loadHighScores(void)
     List* scores = createList();
     ScoreEntry* entry;
 
-    for (i = 0, pos = 0; i < 10; ++i, pos += 5)
+    for (i = 0, pos = LOCATION_HIGH_SCORES; i < 10; ++i, pos += 5)
     {
         entry = new(ScoreEntry); 
 
@@ -88,19 +91,19 @@ static bool displayHighScores(List* highScores, Node* scorePos)
         {
             initial = ((ScoreEntry*)scorePos->data)->initials + pos;
 
-            if (event->leftPressed)
+            if (event->buttonBPressed)
             {
                 if (pos == 0)
                     pos = 2;
                 else
                     --pos;
             }
-            else if (event->rightPressed)
+            else if (event->buttonAPressed)
             {
                 if (++pos > 2)
                     pos = 0;
             }
-            else if (event->upPressed)
+            else if (event->leftPressed)
             {
                 if (*initial == 'A')
                     *initial = ' ';
@@ -109,7 +112,7 @@ static bool displayHighScores(List* highScores, Node* scorePos)
                 else
                     --*initial;
             }
-            else if (event->downPressed)
+            else if (event->rightPressed)
             {
                 if (*initial == 'Z')
                     *initial = ' ';
@@ -117,14 +120,6 @@ static bool displayHighScores(List* highScores, Node* scorePos)
                     *initial = 'A';
                 else
                     ++*initial;
-            }
-            else if (event->buttonBPressed)
-            {
-                *initial = 'I';
-            }
-            else if (event->buttonAPressed)
-            {
-                *initial = 'R';
             }
         }
         else
@@ -158,7 +153,7 @@ static bool displayHighScores(List* highScores, Node* scorePos)
 
 static void setDefaultHighScores(void)
 {
-    char inits[] = "LH _CPS_ZC _JPC_EMS_SYB_ECE_ABC_XYZ_DEF";
+    char inits[] = "CPS_LH _ZC _JPC_EMS_SYB_ECE_ABC_XYZ_DEF";
 
     uint16 scores[] = {100, 99, 98, 97, 96,
                        95,  94, 93, 92, 91};
@@ -182,6 +177,8 @@ static void setDefaultHighScores(void)
     }
 
     saveHighScores(highScores);
+    writeStorage(inits, 3, LOCATION_LAST_INITS);
+
     destroyScores(highScores);
 }
 
@@ -224,15 +221,18 @@ void checkHighScore(uint16 score)
     if (scorePos != NULL)
     {
         entry = new(ScoreEntry);
-        entry->initials[0] = entry->initials[1] = entry->initials[2] = 'A';
-        entry->initials[3] = '\0';
         entry->score = score;
+
+        readStorage(entry->initials, 3, LOCATION_LAST_INITS);
+        entry->initials[3] = '\0';
 
         newScore = insertElement(highScores, scorePos, entry);
         removeNode(highScores, highScores->tail);
 
         displayHighScores(highScores, newScore);
         saveHighScores(highScores);
+
+        writeStorage(entry->initials, 3, LOCATION_LAST_INITS);
     }
 
     destroyScores(highScores);

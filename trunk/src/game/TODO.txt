@@ -1,6 +1,7 @@
 - show "game over" and wait for start press after dying
 - after setting high score, pressing start takes you to "show highscore" screen (awkward)
 - animated high score screen (e.g. scrolling stars)
+- fix right side of screen not clearing (inspect clearScreen/Buffer?)
 - health/weapon powerup icon improvement
 - level completion (w/ boss)
 - engine flame improvement (longer flames when going forward)
