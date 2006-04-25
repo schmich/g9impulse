@@ -12,14 +12,15 @@
 #include "pause.anim.inl"
 
 #define FRAME_TIME 900
+#define SOFT_RESET_TIME 25
 
-void handlePause(uint8* buffer)
+static void handlePause(uint8* buffer)
 {
     Animation* pause = pauseAnimation();
 
     if (getInputStatus()->startPressed)
     {
-#ifdef _DEBUG
+#ifndef _DEBUG
         drawImage(&pause->images[0],
                   makePoint(60, 85),
                   true);
@@ -36,6 +37,26 @@ void handlePause(uint8* buffer)
 
         getInputStatus()->startPressed = false;
     }
+}
+
+static bool softReset(void)
+{
+    static uint8 resetCounter = SOFT_RESET_TIME;
+    Input* input = getInputStatus();
+
+    if (input->buttonBPressed &&
+        input->buttonAPressed &&
+        input->selectPressed)
+    {
+        if (--resetCounter == 0)
+            return true;
+    }
+    else
+    {
+        resetCounter = SOFT_RESET_TIME;
+    }
+
+    return false;
 }
 
 void playGame(void)
@@ -56,7 +77,7 @@ void playGame(void)
     //
     getInputStatus()->startPressed = false;
 
-    while (active(world))
+    while (active(world) && !softReset())
     {
         resetTimer();
 

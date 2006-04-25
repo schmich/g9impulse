@@ -67,8 +67,6 @@ void load_alphaOp(bool alphaOp)
 
 void setDoubleBuffer(bool doubleBuffer)
 {
-    clearBuffers();
-
     PORTC = 0x09;
     if (doubleBuffer)
         PORTB = 0x01;
@@ -77,6 +75,8 @@ void setDoubleBuffer(bool doubleBuffer)
 
     PORTA = 0x01;
     PORTA = 0x00;
+
+    clearBuffers();
 }
 
 void setFieldColor(uint8 color)
@@ -231,7 +231,7 @@ void clearBuffers(void)
     int16 y;
     uint8 buffer = 0;
 
-    for (i = 0; i < 2; ++i)
+    for (i = 0; i < 3; ++i)
     {
         for (y = 0; y < 240; y += 24)
             draw(0x000B6F80, 160, 24, 0, y, false);

@@ -13,28 +13,6 @@
 #include "nuke-meter.h"
 #include "text.h"
 
-#define MAX_RESET_TIME 25
-
-static bool softReset(void)
-{
-    static uint8 resetCounter = MAX_RESET_TIME;
-    Input* input = getInputStatus();
-
-    if (input->buttonBPressed &&
-        input->buttonAPressed &&
-        input->selectPressed)
-    {
-        if (--resetCounter == 0)
-            return true;
-    }
-    else
-    {
-        resetCounter = MAX_RESET_TIME;
-    }
-
-    return false;
-}
-
 static void destroyWorld(World* w)
 {
     Node* curr;
@@ -244,9 +222,6 @@ void updateWorld(World* world)
 {
     Node* curr;
     int16 stop;
-
-    if (softReset())
-        world->active = false;
 
     if (world->intro)
     {
