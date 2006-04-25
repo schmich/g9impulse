@@ -81,6 +81,10 @@ static bool displayHighScores(List* highScores, Node* scorePos)
     Node* curr;
     ScoreEntry* entry;
     Input* event = getInputEvent();
+
+    //
+    // HACK background repeat position hardcoded
+    //
     Background* background = createBackground(6824);
 
     uint16 delay = 0;
@@ -152,6 +156,8 @@ static bool displayHighScores(List* highScores, Node* scorePos)
 
         flipBuffer(&buffer);
     }
+
+    destroy(background);
 
     return false;
 }

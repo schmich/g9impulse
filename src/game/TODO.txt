@@ -1,3 +1,5 @@
+- more regular shooting (e.g. random but not bursty or gappy)
+- spread "chasers" out more
 - show "game over" and wait for start press after dying
 - after setting high score, pressing start takes you to "show highscore" screen (awkward)
 - animated high score screen (e.g. scrolling stars)
@@ -32,3 +34,17 @@
 - finalize scoring scheme (MORE points!!!)
 - fix intro screen buffer flip problems
 - make weapon powerups fractionally incremental (e.g. give enemies much more health and make weapons fractionally better)
+- gaiden-like player rating based on performance (e.g. "ninja dog", "ninja master", etc)
+- spawn weapon powerups randomly in first half (or third...) of level
+
+SCORING
+-------
+-1 for firing bullet (any weapon)
+-1 for firing nuke
++x for killing 
+
+alternate scoring:
+"sharp shooter" bonus for accuracy (i.e. no detriment for shooting)
+"survivor" bonus for having high health throughout
+spawn exactly 5 health randomly throughout the level (i.e. not just randomly)
+more health when getting health => more bonus
