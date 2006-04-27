@@ -735,6 +735,7 @@ bool showScene3(void)
     if (delayMs(255)) { pressed = true; goto exit; }
     
     setDoubleBuffer(true);
+    clearBuffers();
     //scroll plane up
     for (i = 0; i < 70; i++)
     {
@@ -753,6 +754,7 @@ bool showScene3(void)
     }
     if (delayMs(255)) { pressed = true; goto exit; }
     setDoubleBuffer(false);
+    clearBuffers();
 
 
     //move screen left    
@@ -772,6 +774,7 @@ bool showScene3(void)
     }
     
     setDoubleBuffer(true);
+    clearBuffers();
     //scroll plane up with overlay
     for (i = 0; i < 70; i++)
     {
@@ -792,6 +795,7 @@ bool showScene3(void)
         if (delayMs(130)) { pressed = true; goto exit; }
     }
     setDoubleBuffer(false);
+    clearBuffers();
 
     cls(0);
     if (delayS(1)) { pressed = true; goto exit; }

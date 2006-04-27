@@ -75,8 +75,6 @@ void setDoubleBuffer(bool doubleBuffer)
 
     PORTA = 0x01;
     PORTA = 0x00;
-
-    clearBuffers();
 }
 
 void setFieldColor(uint8 color)

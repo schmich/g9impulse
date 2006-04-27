@@ -90,6 +90,7 @@ static bool displayHighScores(List* highScores, Node* scorePos)
     uint16 delay = 0;
 
     setDoubleBuffer(true);
+    clearBuffers();
     while (!event->startPressed)
     {
         event = getInputEvent();

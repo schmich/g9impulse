@@ -13,7 +13,7 @@
 #define MAX_MOMENTUM_Y 13
 #define MAX_MOMENTUM_X 10
 #define MAX_WEAPONS 4
-#define MAX_MAX_COOLDOWN 8
+#define MAX_MAX_COOLDOWN 9
 #define MAX_NUKE_COOLDOWN 50
 
 static void destroyPlayer(Player* p)
