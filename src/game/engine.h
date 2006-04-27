@@ -12,6 +12,9 @@ typedef struct Engine
     Player* player;
     int16   yPrevious;
     uint8   frameDelay;
+    Animation* idle;
+    Animation* thrust;
+    Animation* reverse;
 } Engine;
 
 Engine* createEngine(Player* who);

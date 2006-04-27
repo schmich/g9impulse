@@ -26,7 +26,7 @@ static void handlePause(uint8* buffer)
                   true);
 
         drawImage(&pause->images[1],
-                  makePoint(45, 30),
+                  makePoint(46, 35),
                   true);
 #endif
 
