@@ -1,7 +1,7 @@
 OTHER
 -----
-- finish paste/gleu
 - complete impulse board
+- finish paste/gleu
 - paint cabinet red (w/ logo and name)
 - sound effects
 - functioning music
