@@ -1,0 +1,7 @@
+[logo]
+0,9321      144     100     -- "StarCell XF-1" logo
+
+[indicator]
+0,5318      24      11      -- left highlight
+26,5318     24      11      -- middle highlight
+52,5318     24      11      -- right highlight

@@ -5,7 +5,7 @@
 #include "gpu.h"
 #include "delay.h"
 #include "background.h"
-#include "logo.anim.inl"
+#include "score.anim.inl"
 #include "high-score.h"
 
 #define LOCATION_HIGH_SCORES 0
@@ -73,6 +73,7 @@ static bool displayHighScores(List* highScores, Node* scorePos)
 
     uint8 buffer;
     Animation* logo = logoAnimation();
+    Animation* indicator = indicatorAnimation();
 
     char _[] = "_";
     uint8 pos = 0;
@@ -154,6 +155,8 @@ static bool displayHighScores(List* highScores, Node* scorePos)
 
             y += 16;
         }
+
+        drawImage(&indicator->images[0], makePoint(70, 70), true);
 
         flipBuffer(&buffer);
     }
