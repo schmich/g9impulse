@@ -1,1 +1,0 @@
-Assets including all game art and executables need to be saved here.
