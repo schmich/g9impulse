@@ -1,0 +1,9 @@
+engine animation
+health powerup graphic
+weapon powerup graphic
+nuke powerup artifact + graphic
+high score indicator graphic
+full level (w/ new enemies + boss)
+bonus points awarded after win/loss (sharpshooter, survivor, etc)
+player's rating
+well-distributed powerups
