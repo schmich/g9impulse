@@ -26,3 +26,4 @@
 - implement remaining enemies
 - fix memory leak
 - fix new gpuchip.bit pause screen invisibility
+- rethink nuke shooting logic (i.e. nuke+beam)
