@@ -10,7 +10,6 @@ OTHER
 GRAPHICS
 --------
 - engine flame improvement (longer flames when going forward)
-- health/weapon powerup icon improvement
 - non-flashing plasma
 - powerup pickup animation
 
@@ -18,28 +17,21 @@ BUGS
 ----
 - fix right side of screen not clearing (inspect clearScreen/Buffer?)
 - clear timer after pausing
-- fix intro screen buffer flip problems
-
 
 GAMEPLAY
 --------
 - player ship rolling (can't be hit, can't shoot)
 - charged-up shooting?
 - level completion (w/ boss)
-- nuke powerup
 - make weapon powerups fractionally incremental (e.g. give enemies much more health and make weapons fractionally better)
 - spawn weapon powerups randomly in first half (or third...) of level
 - shields (regeneration of shields)?
-- show "game over" and wait for start press after dying
 
 ENEMIES
 -------
 - more regular enemy shooting (e.g. random but not bursty or gappy)
 - spread "chasers" out more
-- ground turrets (like tanks)
-- boats (like tanks)
 - enemy groups/group actions
-- implement remaining enemies
 - random-offset spawning
 - multiplayer support
 

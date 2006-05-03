@@ -73,12 +73,12 @@ static bool displayHighScores(List* highScores, Node* scorePos)
 
     uint8 buffer;
     Animation* logo = logoAnimation();
-    Animation* indicator = indicatorAnimation();
 
     char _[] = "_";
     uint8 pos = 0;
     char* initial;
 
+    uint8 color;
     Node* curr;
     ScoreEntry* entry;
     Input* event = getInputEvent();
@@ -146,17 +146,20 @@ static bool displayHighScores(List* highScores, Node* scorePos)
         y = 70;
         foreach (curr, highScores)
         {
-            entry = (ScoreEntry*)curr->data;
-            drawText(entry->initials, makePoint(85, y));
-            drawNumber(entry->score, makePoint(115, y));
+            if (scorePos != curr)
+                color = COLOR_WHITE;
+            else
+            {
+                color = COLOR_BLUE;
+                drawText(_, makePoint(85 + pos * textWidth(_), y - 1), COLOR_BLUE);
+            }
 
-            if (scorePos == curr)
-                drawText(_, makePoint(85 + pos * textWidth(_), y - 1));
+            entry = (ScoreEntry*)curr->data;
+            drawText(entry->initials, makePoint(85, y), color);
+            drawNumber(entry->score, makePoint(115, y), color);
 
             y += 16;
         }
-
-        drawImage(&indicator->images[0], makePoint(70, 70), true);
 
         flipBuffer(&buffer);
     }

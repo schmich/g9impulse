@@ -31,6 +31,10 @@ Explosion* createExplosion(Point where, uint8 size, uint8 frameDelay)
         case EXPLOSION_LARGE:
             e->animation = largeExplosionAnimation();
             break;
+
+        case EXPLOSION_HUGE:
+            e->animation = hugeExplosionAnimation();
+            break;
     }
 
     animationBeginning(e);

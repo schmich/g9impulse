@@ -210,11 +210,11 @@ void drawWorld(World* world)
     drawSprite(world->healthMeter);
     drawNukeMeter(world->nukeMeter);
 
-    drawNumber(world->player->score, makePoint(2, 2));
+    drawNumber(world->player->score, makePoint(2, 2), COLOR_WHITE);
 
 #ifdef _DEBUG
-    drawNumber(world->level->background->progress, makePoint(2, 17));
-    drawNumber(memoryFree(), makePoint(2, 31));
+    drawNumber(world->level->background->progress, makePoint(2, 17), COLOR_WHITE);
+    drawNumber(memoryFree(), makePoint(2, 31), COLOR_WHITE);
 #endif
 }
 

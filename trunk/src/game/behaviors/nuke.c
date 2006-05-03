@@ -18,7 +18,8 @@ static Projectile* createNukeExplosion(Point where, uint8 size)
         tinyExplosionAnimation,
         smallExplosionAnimation,
         mediumExplosionAnimation,
-        largeExplosionAnimation
+        largeExplosionAnimation,
+        hugeExplosionAnimation
     };
 
     return createProjectile(animations[size](), 0,
@@ -35,7 +36,7 @@ static void addNuke(World* world, Point where, uint8 delay)
     addUpdateable(
         world,
         createSpawner(
-            createNukeExplosion(where, 3),
+            createNukeExplosion(where, 4),
             delay,
             SPAWNER_PLAYER_PROJECTILE
         )

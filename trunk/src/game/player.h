@@ -21,6 +21,7 @@ typedef struct Player
     uint8   nukes;
 
     uint8   heat;
+    uint8   heatup;
     uint8   cooldown;
     uint8   maxCooldown;
 

@@ -4,7 +4,7 @@
 
 static uint8 indexOf(char c)
 {
-    Animation* font = textAnimation();
+    Animation* font = whiteTextAnimation();
 
     if (c >= 'A' && c <= 'Z')
         return c - 'A' + 10;
@@ -23,10 +23,8 @@ static uint8 indexOf(char c)
 //
 // assumes text is only numbers
 //
-static void drawNumberReverse(uint8* text, Point where)
+static void drawNumberReverse(uint8* text, Point where, Animation* font)
 {
-    Animation* font = textAnimation();
-
     uint8* c;
     for (c = text; *c != NULL; ++c) ;
 
@@ -37,12 +35,16 @@ static void drawNumberReverse(uint8* text, Point where)
     }
 }
 
-void drawText(const char* text, Point where)
+void drawText(const char* text, Point where, uint8 color)
 {
-    Animation* font = textAnimation();
-
     uint8 index;
     const char* pos;
+
+    Animation* font;
+    if (color == COLOR_WHITE)
+        font = whiteTextAnimation();
+    else
+        font = blueTextAnimation();
 
     for (pos = text; *pos != NULL; ++pos)
     {
@@ -53,15 +55,20 @@ void drawText(const char* text, Point where)
     }
 }
 
-void drawNumber(uint16 num, Point where)
+void drawNumber(uint16 num, Point where, uint8 color)
 {
     uint16 div10;
     uint16 mod;
 
     uint8 i = 0;
-    Animation* font = textAnimation();
-
     uint8 buffer[7];
+
+    Animation* font;
+    if (color == COLOR_WHITE)
+        font = whiteTextAnimation();
+    else
+        font = blueTextAnimation();
+
     if (num == 0)
         drawImage(&font->images[0], where, true);
     else
@@ -76,13 +83,13 @@ void drawNumber(uint16 num, Point where)
         }
 
         buffer[i] = NULL;
-        drawNumberReverse(buffer, where);
+        drawNumberReverse(buffer, where, font);
     }
 }
 
 uint16 textWidth(const char* text)
 {
-    Animation* font = textAnimation();
+    Animation* font = whiteTextAnimation();
 
     uint16 width = 0;
     const char* pos;

@@ -9,7 +9,7 @@ static void destroyHeatMeter(HeatMeter* h)
 
 static uint8 updateHeatMeter(HeatMeter* h, World* w)
 {
-    if (h->player->heat == 6)
+    if (h->player->heat >= 6)
     {
         if (++h->frameDelay == 3)
         {

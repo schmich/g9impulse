@@ -1,6 +1,7 @@
 #include "level1.h"
 #include "cloud.h"
 #include "boring.h"
+#include "strafing.h"
 #include "hover.h"
 #include "direct.h"
 #include "enemy.h"
@@ -20,6 +21,7 @@
 #include "mig.anim.inl"
 #include "chopper.anim.inl"
 #include "tank.anim.inl"
+#include "ship.anim.inl"
 #include "plasma.anim.inl"
 #include "fireball.anim.inl"
 #include "powerup.anim.inl"
@@ -60,8 +62,8 @@ static void spawnHealthPowerup(World* world, Point where)
     Behavior** bs;
 
     bs = newArray(Behavior*, 2);
-    bs[0] = createBoring(1, 1);
-    bs[1] = createAnimator(3, FOREVER);
+    bs[0] = createBoring(2, 1);
+    bs[1] = createAnimator(7, FOREVER);
 
     a = createArtifact(healthPowerupAnimation(), 0,
                        createChainBehavior(bs, 2),
@@ -78,12 +80,29 @@ static void spawnWeaponPowerup(World* world, Point where)
 
     bs = newArray(Behavior*, 3);
     bs[0] = createBoring(2, 1);
-    bs[1] = createAnimator(10, FOREVER);
+    bs[1] = createAnimator(7, FOREVER);
 
     a = createArtifact(weaponPowerupAnimation(), 0,
                        createChainBehavior(bs, 2),
                        where,
                        powerupWeapon);
+
+    addArtifact(world, a);
+}
+
+static void spawnNukePowerup(World* world, Point where)
+{
+    Artifact* a;
+    Behavior** bs;
+
+    bs = newArray(Behavior*, 3);
+    bs[0] = createBoring(2, 1);
+    bs[1] = createAnimator(7, FOREVER);
+
+    a = createArtifact(nukePowerupAnimation(), 0,
+                       createChainBehavior(bs, 2),
+                       where,
+                       powerupNuke);
 
     addArtifact(world, a);
 }
@@ -110,6 +129,14 @@ static void killTank(Enemy* who, World* world)
     addUnderlay(world, crater);
 }
 
+static void killShip(Enemy* who, World* world)
+{
+    Explosion* e = createExplosion(makePoint(0, 0), EXPLOSION_LARGE, 4);
+    setSpriteCenter(e, spriteCenter(who));
+
+    addUpdateable(world, e);
+}
+
 static void killEnemy(Enemy* who, World* world)
 {
     Explosion* e = createExplosion(makePoint(0, 0), EXPLOSION_SMALL, 4);
@@ -118,7 +145,12 @@ static void killEnemy(Enemy* who, World* world)
     addUpdateable(world, e);
 
     if (random(0, 100) < 10)
-        spawnHealthPowerup(world, spriteCenter(who));
+    {
+        if (random(0, 1) == 0)
+            spawnHealthPowerup(world, spriteCenter(who));
+        else
+            spawnNukePowerup(world, spriteCenter(who));
+    }
 }
 
 static void killSpecialEnemy(Enemy* who, World* world)
@@ -241,6 +273,29 @@ static void spawnChopper(World* w, int16 x, int16 dy, int16 yDest)
 
     e->position.y = -(int16)spriteHeight(e) - dy;
     
+    addEnemy(w, e);
+}
+
+static void spawnShip(World* w, int16 x, int16 dy)
+{
+    Behavior** bs;
+    Enemy* e;
+
+    bs = newArray(Behavior*, 3);
+    bs[0] = createBoring(1, 2);
+    bs[1] = createStrafing(1, 2);
+    bs[2] = createRandomShoot(400);
+
+    e = createEnemy(shipAnimation(), 0,
+                    createChainBehavior(bs, 3),
+                    2,
+                    makePoint(x, 0),
+                    spawnPellet,
+                    killShip);
+
+    e->position.y = -(int16)spriteHeight(e) - dy;
+    e->ground = true;
+
     addEnemy(w, e);
 }
 

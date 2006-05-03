@@ -16,3 +16,9 @@ void powerupWeapon(Artifact* a, Player* p, World* w)
     updateScore(p, 200);
     upgradeWeapon(p);
 }
+
+void powerupNuke(Artifact* a, Player* p, World* w)
+{
+    updateScore(p, 50);
+    ++p->nukes;
+}
