@@ -7,13 +7,15 @@
 #include "boring.h"
 #include "chain.h"
 #include "nuke.h"
+#include "beam.h"
 #include "player.anim.inl"
 #include "nuke.anim.inl"
 
 #define MAX_MOMENTUM_Y 13
 #define MAX_MOMENTUM_X 10
-#define MAX_WEAPONS 4
-#define MAX_MAX_COOLDOWN 9
+#define MAX_WEAPONS 5
+#define INITIAL_MAX_COOLDOWN 9
+#define INITIAL_HEATUP 1
 #define MAX_NUKE_COOLDOWN 50
 
 static void destroyPlayer(Player* p)
@@ -24,7 +26,7 @@ static void destroyPlayer(Player* p)
 
 static void killPlayer(Player* who, World* world)
 {
-    Explosion* e = createExplosion(makePoint(0, 0), EXPLOSION_LARGE, 7);
+    Explosion* e = createExplosion(makePoint(0, 0), EXPLOSION_HUGE, 7);
     setSpriteCenter(e, spriteCenter(who));
 
     addUpdateable(world, e);
@@ -87,6 +89,23 @@ static void spawnWave(Entity* player, World* world, Projectile** p)
                           false);
 }
 
+static void spawnBeam(Entity* who, World* world, Projectile** p)
+{
+    Behavior** bs;
+    Player* player = who;
+
+    bs = newArray(Behavior*, 2);
+    bs[0] = createAnimator(6, 1);
+    bs[1] = createBeam(player);
+
+    *p = createProjectile(beamAnimation(), 0,
+                          createChainBehavior(bs, 2),
+                          1,
+                          makePoint(0, 0),
+                          nullImpact,
+                          true);
+}
+
 static void spawnNuke(Entity* player, World* world, Projectile** p)
 {
     Behavior** bs;
@@ -118,7 +137,7 @@ static uint8 updatePlayer(Player* who, World* world)
         {
             fire(who, world);
 
-            ++who->heat;
+            who->heat += who->heatup;
             who->cooldown = who->maxCooldown;
 
             updateScore(who, -1);
@@ -138,7 +157,7 @@ static uint8 updatePlayer(Player* who, World* world)
 
     if (event->buttonAPressed)
     {
-        if (who->nukes > 0 && who->nukeCooldown == 0)
+        if (who->nukes > 0 && who->nukeCooldown == 0 && who->heat == 0)
         {
             currSpawn = who->spawnProjectile;
             who->spawnProjectile = spawnNuke;
@@ -263,17 +282,24 @@ Player* createPlayer(Point where)
     player->health = 6;
     player->momentum = makePoint(0, 0);
     player->heat = 0;
-    player->maxCooldown = MAX_MAX_COOLDOWN;
+    player->maxCooldown = INITIAL_MAX_COOLDOWN;
+    player->heatup = INITIAL_HEATUP;
     player->cooldown = player->maxCooldown;
 
     player->nukeCooldown = MAX_NUKE_COOLDOWN;
-    player->nukes = 5;
+    player->nukes = 3;
 
     player->kills = 0;
     player->score = 0;
 
     player->weaponLevel = 0;
     player->spawnProjectile = spawnBullet;
+
+    upgradeWeapon(player);
+    upgradeWeapon(player);
+    upgradeWeapon(player);
+    upgradeWeapon(player);
+    upgradeWeapon(player);
 
     return player;
 }
@@ -303,16 +329,25 @@ void upgradeWeapon(Player* who)
         case 1:
             who->spawnProjectile = spawnDoubleBullet;
             who->maxCooldown = 7;
+            who->heatup = 1;
             break;
 
         case 2:
             who->spawnProjectile = spawnLaser;
             who->maxCooldown = 6;
+            who->heatup = 1;
             break;
 
         case 3:
             who->spawnProjectile = spawnWave;
             who->maxCooldown = 4;
+            who->heatup = 1;
+            break;
+
+        case 4:
+            who->spawnProjectile = spawnBeam;
+            who->maxCooldown = 5;
+            who->heatup = 23;
             break;
     }
 }

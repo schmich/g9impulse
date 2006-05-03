@@ -8,6 +8,7 @@
 #define EXPLOSION_SMALL  1
 #define EXPLOSION_MEDIUM 2
 #define EXPLOSION_LARGE  3
+#define EXPLOSION_HUGE   4
 
 typedef struct Explosion
 {

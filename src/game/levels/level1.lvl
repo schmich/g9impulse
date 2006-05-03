@@ -2,7 +2,10 @@
 -- don't spawn enemies before 350 (allow player to get control)
 
 [250]
-spawnCloudUnder(w, 100, 10, 1, CLOUD_LARGE);
+spawnCloudOver(w, 100, 10, 1, CLOUD_LARGE);
+
+[300]
+spawnShip(w, -10, 0);
 
 [400]
 spawnF18Boring(w, 20, 10, 2);
