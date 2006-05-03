@@ -1,6 +1,10 @@
 - engine animation
 - full level (w/ new enemies + boss)
+- player's rating
 - bonus points awarded after win/loss
+    - continuum of points based on how much you were (e.g. more accurate
+      sharpshooters get more points, but have threshold below which you
+      aren't considered a sharpshooter)
     - sharpshooter (high accuracy)
     - survivor (not getting hit too much)
     - packrat (collecting many powerups)
@@ -8,13 +12,12 @@
     - spammer (shooting alot)
     - bullet magnet (getting hit alot)
     - punisher (killing a lot of enemies)
-    - pacifism (not killing enemies)
+    - pacifist (not killing enemies)
     - masochist (killing enemies by running into them)
 - weapons
     - 3-level beam
     - 3-level spread (automatic shot)
     - 3-level single shot (crosshairs when holding down shoot)
-- player's rating
 - well-distributed powerups
 - 2 player
 - boat waves
@@ -27,4 +30,5 @@
 - fix memory leak
 - fix new gpuchip.bit pause screen invisibility
 - rethink nuke shooting logic (i.e. nuke+beam)
+- multiple lives (small ship icons above health)
 - get camera batteries
