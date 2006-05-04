@@ -2,6 +2,7 @@
 
 void kill(Entity* who, World* world)
 {
+    damage(who, who->health);
     who->kill(who, world);
 }
 

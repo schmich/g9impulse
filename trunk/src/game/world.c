@@ -16,6 +16,28 @@
 #include "weapon-indicator.h"
 #include "text.h"
 
+#define SUICIDE_TIME 25
+
+static bool suicide(void)
+{
+    static uint8 resetCounter = SUICIDE_TIME;
+    Input* input = getInputStatus();
+
+    if (input->buttonBPressed &&
+        input->buttonAPressed &&
+        input->selectPressed)
+    {
+        if (--resetCounter == 0)
+            return true;
+    }
+    else
+    {
+        resetCounter = SUICIDE_TIME;
+    }
+
+    return false;
+}
+
 static void destroyWorld(World* w)
 {
     Node* curr;
@@ -206,13 +228,13 @@ void drawWorld(World* world)
     foreach (curr, world->artifacts)
         drawSprite(curr->data);
 
-    foreach (curr, world->playerProjectiles)
-        drawSprite(curr->data);
-
     foreach (curr, world->enemyProjectiles)
         drawSprite(curr->data);
 
     foreach (curr, world->enemies)
+        drawSprite(curr->data);
+
+    foreach (curr, world->playerProjectiles)
         drawSprite(curr->data);
 
     if (!dead(world->player) && world->respawnShow)
@@ -237,6 +259,7 @@ void drawWorld(World* world)
 #ifdef _DEBUG
         drawNumber(world->level->background->progress, makePoint(2, 17), COLOR_WHITE);
         drawNumber(memoryFree(), makePoint(2, 31), COLOR_WHITE);
+        drawNumber(world->player->stats->enemiesFaced, makePoint(2, 45), COLOR_WHITE);
 #endif
     }
     else
@@ -364,6 +387,11 @@ void updateWorld(World* world)
     
     if (!world->gameOver)
     {
+        if (suicide())
+        {
+            kill(world->player, world);
+        }
+
         if (dead(world->player))
         {
             if (empty(world->updateables))

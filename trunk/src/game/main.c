@@ -12,27 +12,6 @@
 #include "pause.anim.inl"
 
 #define FRAME_TIME 900
-#define SOFT_QUIT_TIME 25
-
-static bool softQuit(void)
-{
-    static uint8 resetCounter = SOFT_QUIT_TIME;
-    Input* input = getInputStatus();
-
-    if (input->buttonBPressed &&
-        input->buttonAPressed &&
-        input->selectPressed)
-    {
-        if (--resetCounter == 0)
-            return true;
-    }
-    else
-    {
-        resetCounter = SOFT_QUIT_TIME;
-    }
-
-    return false;
-}
 
 //
 // returns true if user paused game, false otherwise
@@ -84,7 +63,7 @@ void playGame(void)
     //
     getInputStatus()->startPressed = false;
 
-    while (active(world) && !softQuit())
+    while (active(world))
     {
         resetTimer();
 
@@ -101,9 +80,9 @@ void playGame(void)
 
         //
         // check for pause after flipping buffer
-        // HACK check for player dead, bleh
+        // HACK check for not game over, bleh
         //
-        if (!dead(world->player))
+        if (!world->gameOver)
             handlePause(&buffer);
 
         while (timeElapsed() < FRAME_TIME)
@@ -130,10 +109,13 @@ void main()
     inputInit();
     delay_ms(10);               // wait for system to boot
 
+    initTimer();
+    resetTimer();
+
     setFieldColor(0);
 
 #ifndef _DEBUG
-/*    showBootSplash();
+    showBootSplash();
 
     while (true)
     {
@@ -141,8 +123,10 @@ void main()
 
         if (!showTitle() || !showHighScores())
             break;
-    }*/
+    }
 #endif
+
+    srand(timeElapsed());
 
     //
     // until the end of time (or major disaster)

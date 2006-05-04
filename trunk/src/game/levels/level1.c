@@ -139,28 +139,58 @@ static void killShip(Enemy* who, World* world)
 
 static void killEnemy(Enemy* who, World* world)
 {
+    Player* p = world->player;
     Explosion* e = createExplosion(makePoint(0, 0), EXPLOSION_SMALL, 4);
+    int16 randMax;
+    uint8 upgrades;
+    uint16 faced;
+
     setSpriteCenter(e, spriteCenter(who));
 
     addUpdateable(world, e);
 
-    if (random(0, 100) < 10)
+    faced = p->stats->enemiesFaced;
+    upgrades = weaponUpgrades(p);
+    if (upgrades == 0 && faced <= 30)
     {
-        if (random(0, 1) == 0)
+        randMax = 30 - faced;
+        if (randMax < 0)
+            randMax = 1;
+
+        if (random(1, randMax) == 1)
+        {
+            spawnWeaponPowerup(world, spriteCenter(who));
+        }
+    }
+    else if (upgrades < 1 && (faced > 30 && faced <= 60))
+    {
+        randMax = 60 - p->stats->enemiesFaced;
+        if (randMax < 0)
+            randMax = 1;
+
+        if (random(1, randMax) == 1)
+        {
+            spawnWeaponPowerup(world, spriteCenter(who));
+        }
+    }
+    else if (upgrades < 2 && (faced > 60 && faced <= 90))
+    {
+        randMax = 90 - p->stats->enemiesFaced;
+        if (randMax < 0)
+            randMax = 1;
+
+        if (random(1, randMax) == 1)
+        {
+            spawnWeaponPowerup(world, spriteCenter(who));
+        }
+    }
+    else if (random(0, 100) < 15)
+    {
+        if (random(0, 10) < 8)
             spawnHealthPowerup(world, spriteCenter(who));
         else
             spawnNukePowerup(world, spriteCenter(who));
     }
-}
-
-static void killSpecialEnemy(Enemy* who, World* world)
-{
-    Explosion* e = createExplosion(makePoint(0, 0), EXPLOSION_SMALL, 4);
-    setSpriteCenter(e, spriteCenter(who));
-
-    addUpdateable(world, e);
-
-    spawnWeaponPowerup(world, spriteCenter(who));
 }
 
 static void killLargeEnemy(Enemy* who, World* world)
@@ -273,7 +303,7 @@ static void spawnChopper(World* w, int16 x, int16 dy, int16 yDest)
 
     e = createEnemy(chopperAnimation(), 0, 
                     createChainBehavior(bs, 3),
-                    4,
+                    20,
                     makePoint(x, 0),
                     spawnPlasma,
                     killEnemy);
@@ -295,7 +325,7 @@ static void spawnShip(World* w, int16 x, int16 dy)
 
     e = createEnemy(shipAnimation(), 0,
                     createChainBehavior(bs, 3),
-                    2,
+                    10,
                     makePoint(x, 0),
                     spawnPellet,
                     killShip);
@@ -318,32 +348,10 @@ static void spawnF16(World* w, int16 x, int16 dy, uint8 speed)
 
     e = createEnemy(f16Animation(), 0, 
                     createChainBehavior(bs, 3),
-                    2,
+                    10,
                     makePoint(x, 0),
                     spawnPlasma,
                     killEnemy);
-
-    e->position.y = -(int16)spriteHeight(e) - dy;
-
-    addEnemy(w, e);
-}
-
-static void spawnF16Special(World* w, int16 x, int16 dy, uint8 speed)
-{
-    Behavior** bs;
-    Enemy* e;
-
-    bs = newArray(Behavior*, 3);
-    bs[0] = createBoring(speed, 1);
-    bs[1] = createRandomShoot(300);
-    bs[2] = createAnimator(3, FOREVER);
-
-    e = createEnemy(f16Animation(), 0, 
-                    createChainBehavior(bs, 3),
-                    2,
-                    makePoint(x, 0),
-                    spawnPlasma,
-                    killSpecialEnemy);
 
     e->position.y = -(int16)spriteHeight(e) - dy;
 
@@ -362,7 +370,7 @@ static void spawnF18Chase(World* w, int16 x, int16 dy, uint8 speed)
 
     e = createEnemy(f18Animation(), 0, 
                     createChainBehavior(bs, 3),
-                    1, 
+                    5, 
                     makePoint(x, 0),
                     spawnFireball,
                     killEnemy);
@@ -384,7 +392,7 @@ static void spawnF18Boring(World* w, int16 x, int16 dy, uint8 speed)
 
     e = createEnemy(f18Animation(), 0,
                     createChainBehavior(bs, 3),
-                    1,
+                    5,
                     makePoint(x, 0),
                     spawnFireball,
                     killEnemy);
@@ -405,7 +413,7 @@ static void spawnMig(World* w, int16 x, int16 dy)
 
     e = createEnemy(migAnimation(), 0, 
                     createChainBehavior(bs, 2),
-                    5,
+                    25,
                     makePoint(x, 0),
                     spawnMissle,
                     killLargeEnemy);
@@ -427,7 +435,7 @@ static void spawnTank(World* w, int16 x, int16 dy)
 
     e = createEnemy(tankAnimation(), 0,
                     createChainBehavior(bs, 3),
-                    4,
+                    20,
                     makePoint(x, 0),
                     spawnPellet,
                     killTank);
@@ -451,7 +459,7 @@ static void spawnF18Cut(World* w, int16 x, int16 dy, int16 yTarget, bool right)
 
     e = createEnemy(f18Animation(), 0, 
                     createChainBehavior(bs, 3),
-                    1, 
+                    5, 
                     makePoint(x, 0),
                     spawnFireball,
                     killEnemy);
@@ -474,7 +482,7 @@ static void spawnF18Kamikaze(World* w, int16 x, int16 dy, uint8 speed)
 
     e = createEnemy(f18Animation(), 0, 
                     createChainBehavior(bs, 2),
-                    1, 
+                    5, 
                     makePoint(x, 0),
                     nullProjectileSpawn,
                     killEnemy);

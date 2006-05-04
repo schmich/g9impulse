@@ -19,6 +19,11 @@ def writeEvents(events)
     puts """
 static void spawn(World* w, uint16 time)
 {
+    int8   i8;
+    int16  i16;
+    uint8  ui8;
+    uint16 ui16;
+
     switch (time)
     {
         #{eventHandlers.join("        ")}

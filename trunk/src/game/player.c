@@ -53,7 +53,7 @@ static void spawnBullet(Entity* player, World* world, Point where)
 {
     Projectile* p = createProjectile(bulletAnimation(), 0,
                                      createBoring(-9, 1),
-                                     1,
+                                     5,
                                      makePoint(0, 0),
                                      impactProjectile,
                                      false);
@@ -65,7 +65,7 @@ static void spawnDoubleBullet(Entity* player, World* world, Point where)
 {
     Projectile* p = createProjectile(doubleBulletAnimation(), 0,
                                      createBoring(-9, 1),
-                                     2,
+                                     8,
                                      makePoint(0, 0),
                                      impactProjectile,
                                      false);
@@ -77,7 +77,7 @@ static void spawnLaser(Entity* player, World* world, Point where)
 {
     Projectile* p = createProjectile(laserAnimation(), 0,
                                      createBoring(-9, 1),
-                                     3,
+                                     12,
                                      makePoint(0, 0),
                                      impactProjectile,
                                      false);
@@ -90,7 +90,7 @@ static void spawnWave(Entity* player, World* world, Point where)
 {
     Projectile* p = createProjectile(waveAnimation(), 0,
                                      createBoring(-9, 1),
-                                     4,
+                                     20,
                                      makePoint(0, 0),
                                      impactProjectile,
                                      false);
@@ -120,26 +120,16 @@ static void spawnBeam(Entity* who, World* world, Point where)
     addPlayerProjectile(world, p);
 }
 
-static void spawnSpread(Entity* player, World* world, Point where)
+static void spawnSpread2(Entity* player, World* world, Point where)
 {
     Projectile* p;
     Point target = where;
-
-    p = createProjectile(fireballAnimation(), 8,
-                         createBoring(-7, 1),
-                         1,
-                         makePoint(0, 0),
-                         impactProjectile,
-                         false);
-
-    setSpriteCenterTop(p, where);
-    addPlayerProjectile(world, p);
 
     target.y -= 10;
     target.x -= 1;
     p = createProjectile(fireballAnimation(), 7,
                          createDirect(where, target, 7),
-                         1,
+                         3,
                          makePoint(0, 0),
                          impactProjectile,
                          false);
@@ -150,13 +140,30 @@ static void spawnSpread(Entity* player, World* world, Point where)
     target.x += 2;
     p = createProjectile(fireballAnimation(), 9,
                          createDirect(where, target, 7),
-                         1,
+                         3,
                          makePoint(0, 0),
                          impactProjectile,
                          false);
 
     setSpriteCenterTop(p, where);
     addPlayerProjectile(world, p);
+}
+
+static void spawnSpread3(Entity* player, World* world, Point where)
+{
+    Projectile* p;
+
+    p = createProjectile(fireballAnimation(), 8,
+                         createBoring(-7, 1),
+                         6,
+                         makePoint(0, 0),
+                         impactProjectile,
+                         false);
+
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
+
+    spawnSpread2(player, world, where);
 }
 
 static void spawnNuke(Entity* player, World* world, Point where)
@@ -200,7 +207,7 @@ static void switchWeapon(Player* who)
                 case 1:
                     who->spawnProjectile = spawnDoubleBullet;
                     who->maxCooldown = 7;
-                    who->heatup = 1;
+                    who->heatup = 2;
                     break;
 
                 case 2:
@@ -209,8 +216,8 @@ static void switchWeapon(Player* who)
                     who->heatup = 1;
                     break;
 
-                case 3:
                 default:
+                case 3:
                     who->spawnProjectile = spawnWave;
                     who->maxCooldown = 4;
                     who->heatup = 1;
@@ -225,10 +232,22 @@ static void switchWeapon(Player* who)
             switch(who->weaponLevel[1])
             {
                 case 0:
-                default:
-                    who->spawnProjectile = spawnSpread;
-                    who->maxCooldown = 6;
+                    who->spawnProjectile = spawnSpread2;
+                    who->maxCooldown = 10;
+                    who->heatup = 2;
+                    break;
+
+                case 1:
+                    who->spawnProjectile = spawnSpread3;
+                    who->maxCooldown = 5;
                     who->heatup = 3;
+                    break;
+
+                default:
+                case 2:
+                    who->spawnProjectile = spawnSpread3;
+                    who->maxCooldown = 3;
+                    who->heatup = 2;
                     break;
             }
             break;
@@ -240,10 +259,16 @@ static void switchWeapon(Player* who)
             switch(who->weaponLevel[2])
             {
                 case 0:
-                default:
                     who->spawnProjectile = spawnBeam;
                     who->maxCooldown = 5;
-                    who->heatup = 26;
+                    who->heatup = 28;
+                    break;
+
+                default:
+                case 1:
+                    who->spawnProjectile = spawnBeam;
+                    who->maxCooldown = 5;
+                    who->heatup = 20;
                     break;
             }
             break;
@@ -275,8 +300,6 @@ static uint8 updatePlayer(Player* who, World* world)
 
             who->heat += who->heatup;
             who->cooldown = who->maxCooldown;
-
-            updateScore(who, -1);
         }
     }
     else
@@ -470,7 +493,7 @@ void upgradeWeapon(Player* who)
 
 void enemyKilled(Player* who, Enemy* enemy, bool collided)
 {
-    uint16 score = enemy->maxHealth * 13;
+    uint16 score = enemy->maxHealth * 7;
     if (collided)
         score >>= 1;
 
@@ -501,4 +524,11 @@ void drawPlayer(Player* who)
 {
     drawSprite(who);
     drawSprite(who->engine);
+}
+
+uint8 weaponUpgrades(Player* who)
+{
+    return who->weaponLevel[0]
+         + who->weaponLevel[1]
+         + who->weaponLevel[2];
 }

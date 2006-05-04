@@ -73,9 +73,17 @@ uint8 numAwards(Awards* a)
     return count;
 }
 
+#define SET_BONUS(x, bonus) { a->awards->x = true; a->awards->x##Bonus = bonus; }
+
 AwardsOverlay* createAwardsOverlay(Player* who)
 {
     AwardsOverlay* a = new(AwardsOverlay);
+    Stats* s = who->stats;
+
+    uint16 shotAcc;
+    uint16 artAcc;
+    uint16 killPct;
+
     a->destroy = destroyAwardsOverlay;
     a->awards = createAwards();
     a->showStep = 0;
@@ -85,14 +93,39 @@ AwardsOverlay* createAwardsOverlay(Player* who)
     //
     // calculate player awards
     //
-    /*a->awards->sharpShooter = true;
-    a->awards->sharpShooterBonus = 100;
 
-    a->awards->masochist = true;
-    a->awards->masochistBonus = 200;
+    if (s->shotsFired > 0)
+    {
+        shotAcc = (s->shotsLanded * 100) / s->shotsFired;
+        if (shotAcc > 60)
+            SET_BONUS(sharpShooter, 50 * (shotAcc - 60) + 250);
+    }
 
-    a->awards->bulletMagnet = true;
-    a->awards->bulletMagnetBonus = 300;*/
+    if (s->healthLost < 6)
+        SET_BONUS(survivor, (6 - s->healthLost) * 500);
+
+    if (s->enemiesFaced > 0)
+    {
+        killPct = (s->kills * 100) / s->enemiesFaced;
+        if (killPct > 75)
+            SET_BONUS(punisher, 25 * (killPct - 75) + 500);
+    }
+
+    if (s->artifactsGiven > 0)
+    {
+        artAcc = (s->artifactsCollected * 100) / s->artifactsGiven;
+        if (artAcc > 80)
+            SET_BONUS(packrat, 5 * (artAcc - 80) + 100);
+    }
+
+    if (s->nukesFired == 0)
+        SET_BONUS(greenpeace, 1000);
+
+    if (s->kamikazes >= 5)
+        SET_BONUS(masochist, 750);
+
+    if (s->healthLost > 20)
+        SET_BONUS(bulletMagnet, 1000);
 
     a->numAwards = numAwards(a->awards);
     a->finalScore = who->stats->score + totalBonus(a->awards);
@@ -104,6 +137,7 @@ AwardsOverlay* createAwardsOverlay(Player* who)
 bool updateAwardsOverlay(AwardsOverlay* a)
 {
     Input* input = getInputEvent();
+    uint16 step = a->finalScore / 100;
 
     if (a->awardsShown <= a->numAwards)
     {
@@ -115,8 +149,8 @@ bool updateAwardsOverlay(AwardsOverlay* a)
     }
     else if (a->scoreStep < a->finalScore)
     {
-        if (a->scoreStep + 7 <= a->finalScore)
-            a->scoreStep += 7;
+        if (a->scoreStep + step <= a->finalScore)
+            a->scoreStep += step;
         else
             a->scoreStep = a->finalScore;
     }
@@ -133,7 +167,7 @@ void drawAward(const char* desc, uint16 bonus, Point where)
 
     drawText(desc, where, COLOR_WHITE);
 
-    where.x += 120;
+    where.x += 110;
     drawText(plus, where, COLOR_WHITE);
 
     where.x += textWidth(plus);
