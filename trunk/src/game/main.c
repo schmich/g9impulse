@@ -14,7 +14,10 @@
 #define FRAME_TIME 900
 #define SOFT_RESET_TIME 25
 
-static void handlePause(uint8* buffer)
+//
+// returns true if user paused game, false otherwise
+//
+static bool handlePause(uint8* buffer)
 {
     Animation* pause = pauseAnimation();
 
@@ -46,7 +49,11 @@ static void handlePause(uint8* buffer)
         while (!getInputStatus()->startPressed) ;
 
         getInputStatus()->startPressed = false;
+
+        return true;
     }
+
+    return false;
 }
 
 static bool softReset(void)
@@ -95,14 +102,17 @@ void playGame(void)
         updateWorld(world);
         collideWorld(world);
 
-        handlePause(&buffer);
-
         //
         // HACK drawing bug, uncomment to exploit
         //
         //draw(0x000D97B2, 2, 6, 87, 1, true);
         
         flipBuffer(&buffer);
+
+        //
+        // check for pause after flipping buffer
+        //
+        handlePause(&buffer);
 
         while (timeElapsed() < FRAME_TIME)
         {
