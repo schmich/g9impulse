@@ -22,6 +22,7 @@ static void destroyPlayer(Player* p)
 {
     destroy(p->behavior);
     destroy(p->engine);
+    destroy(p->stats);
 }
 
 static void killPlayer(Player* who, World* world)
@@ -33,18 +34,15 @@ static void killPlayer(Player* who, World* world)
 
     if (who->lives > 0)
         --who->lives;
+
+    ++who->stats->livesLost;
 }
 
 static void firePlayer(Entity* player, World* world)
 {
-    Projectile* p;
-    player->spawnProjectile(player, world, &p);
-
-    if (p)
-    {
-        setSpriteCenterTop(p, spriteCenterTop(player));
-        addPlayerProjectile(world, p);
-    }
+    player->spawnProjectile(player,
+                            world,
+                            spriteCenterTop(player));
 }
 
 static void impactProjectile(Projectile* p, Sprite* s, World* world)
@@ -52,77 +50,101 @@ static void impactProjectile(Projectile* p, Sprite* s, World* world)
     addUpdateable(world, createExplosion(p->position, EXPLOSION_TINY, 10));
 }
 
-static void spawnBullet(Entity* player, World* world, Projectile** p)
+static void spawnBullet(Entity* player, World* world, Point where)
 {
-    *p = createProjectile(bulletAnimation(), 0,
-                          createBoring(-7, 1),
-                          1,
-                          makePoint(0, 0),
-                          impactProjectile,
-                          false);
+    Projectile* p = createProjectile(bulletAnimation(), 0,
+                                     createBoring(-7, 1),
+                                     1,
+                                     makePoint(0, 0),
+                                     impactProjectile,
+                                     false);
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
 }
 
-static void spawnDoubleBullet(Entity* player, World* world, Projectile** p)
+static void spawnDoubleBullet(Entity* player, World* world, Point where)
 {
-    *p = createProjectile(doubleBulletAnimation(), 0,
-                          createBoring(-7, 1),
-                          2,
-                          makePoint(0, 0),
-                          impactProjectile,
-                          false);
+    Projectile* p = createProjectile(doubleBulletAnimation(), 0,
+                                     createBoring(-7, 1),
+                                     2,
+                                     makePoint(0, 0),
+                                     impactProjectile,
+                                     false);
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
 }
 
-static void spawnLaser(Entity* player, World* world, Projectile** p)
+static void spawnLaser(Entity* player, World* world, Point where)
 {
-    *p = createProjectile(laserAnimation(), 0,
-                          createBoring(-7, 1),
-                          3,
-                          makePoint(0, 0),
-                          impactProjectile,
-                          false);
+    Projectile* p = createProjectile(laserAnimation(), 0,
+                                     createBoring(-7, 1),
+                                     3,
+                                     makePoint(0, 0),
+                                     impactProjectile,
+                                     false);
+
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
 }
 
-static void spawnWave(Entity* player, World* world, Projectile** p)
+static void spawnWave(Entity* player, World* world, Point where)
 {
-    *p = createProjectile(waveAnimation(), 0,
-                          createBoring(-7, 1),
-                          4,
-                          makePoint(0, 0),
-                          impactProjectile,
-                          false);
+    Projectile* p = createProjectile(waveAnimation(), 0,
+                                     createBoring(-7, 1),
+                                     4,
+                                     makePoint(0, 0),
+                                     impactProjectile,
+                                     false);
+
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
 }
 
-static void spawnBeam(Entity* who, World* world, Projectile** p)
+static void spawnBeam(Entity* who, World* world, Point where)
 {
     Behavior** bs;
     Player* player = who;
+    Projectile* p;
 
     bs = newArray(Behavior*, 2);
     bs[0] = createAnimator(6, 1);
     bs[1] = createBeam(player);
 
-    *p = createProjectile(beamAnimation(), 0,
-                          createChainBehavior(bs, 2),
-                          1,
-                          makePoint(0, 0),
-                          nullImpact,
-                          true);
+    p = createProjectile(beamAnimation(), 0,
+                         createChainBehavior(bs, 2),
+                         1,
+                         makePoint(0, 0),
+                         nullImpact,
+                         true);
+
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
 }
 
-static void spawnNuke(Entity* player, World* world, Projectile** p)
+/*static void spawnSpread(Entity* player, World* world, Projectile** p)
+{
+}*/
+
+static void spawnNuke(Entity* player, World* world, Point where)
 {
     Behavior** bs;
+    Projectile* p;
 
     bs = newArray(Behavior*, 2);
     bs[0] = createBoring(-6, 1);
     bs[1] = createNuke(player->position.y / 3);
 
-    *p = createProjectile(nukeAnimation(), 0,
-                          createChainBehavior(bs, 2),
-                          0,
-                          makePoint(0, 0),
-                          nullImpact,
-                          true);
+    p = createProjectile(nukeAnimation(), 0,
+                         createChainBehavior(bs, 2),
+                         0,
+                         makePoint(0, 0),
+                         nullImpact,
+                         true);
+
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
+
+    ++((Player*)player)->stats->nukesFired;
 }
 
 static uint8 updatePlayer(Player* who, World* world)
@@ -296,13 +318,12 @@ Player* createPlayer(Point where)
     player->heatup = INITIAL_HEATUP;
     player->cooldown = player->maxCooldown;
 
-    player->lives = 4;
+    player->lives = 3;
 
     player->nukeCooldown = MAX_NUKE_COOLDOWN;
     player->nukes = 3;
 
-    player->kills = 0;
-    player->score = 0;
+    player->stats = createStats();
 
     player->weaponLevel = 0;
     player->spawnProjectile = spawnBullet;
@@ -372,20 +393,26 @@ void enemyKilled(Player* who, Enemy* enemy, bool collided)
     if (collided)
         score >>= 1;
 
-    ++who->kills;
+    ++who->stats->kills;
     updateScore(who, score);
+}
+
+bool damagePlayer(Player* who, uint8 amount)
+{
+    who->stats->healthLost += amount;
+    return damage(who, amount);
 }
 
 void updateScore(Player* who, int16 change)
 {
     if (change > 0)
-        who->score += change;
+        who->stats->score += change;
     else
     {
-        if (who->score < -change)
-            who->score = 0;
+        if (who->stats->score < -change)
+            who->stats->score = 0;
         else
-            who->score += change;
+            who->stats->score += change;
     }
 }
 

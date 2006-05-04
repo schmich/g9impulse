@@ -5,10 +5,10 @@
 #include "updateable.h"
 #include "projectile.h"
 
-struct Entity;
-typedef near rom void (*KillFn)(struct Entity*, World*);
-typedef near rom void (*FireFn)(struct Entity*, World*);
-typedef near rom void (*SpawnFn)(struct Entity*, World*, Projectile** p);
+typedef struct Entity Entity;
+typedef near rom void (*KillFn)(Entity*, World*);
+typedef near rom void (*FireFn)(Entity*, World*);
+typedef near rom void (*SpawnFn)(Entity*, World*, Point);
 
 #define ENTITY_BASE UPDATEABLE_BASE; \
                     uint8   health; \

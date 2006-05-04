@@ -183,28 +183,29 @@ static void impactMissle(Projectile* p, Sprite* s, World* world)
     addUpdateable(world, createExplosion(p->position, EXPLOSION_SMALL, 5));
 }
 
-static void spawnPellet(Entity* who, World* world, Projectile** p)
+static void spawnPellet(Entity* who, World* world, Point where)
 {
+    Projectile* p;
     Point tip = spriteCenterBottom(who);
     Point center = spriteCenter(world->player);
 
     if (tip.y < center.y)
     {
-        *p = createProjectile(pelletAnimation(), 0,
-                              createDirect(tip, center, 4),
-                              1,
-                              makePoint(0, 0),
-                              impactProjectile,
-                              false);
-    }
-    else
-    {
-        *p = NULL;
+        p = createProjectile(pelletAnimation(), 0,
+                             createDirect(tip, center, 4),
+                             1,
+                             makePoint(0, 0),
+                             impactProjectile,
+                             false);
+
+        setSpriteCenterBottom(p, where);
+        addEnemyProjectile(world, p);
     }
 }
 
-static void spawnPlasma(Entity* who, World* world, Projectile** p)
+static void spawnPlasma(Entity* who, World* world, Point where)
 {
+    Projectile* p;
     Behavior** bs;
     Point tip = spriteCenterBottom(who);
     Point center = spriteCenter(world->player);
@@ -215,43 +216,49 @@ static void spawnPlasma(Entity* who, World* world, Projectile** p)
 
     if (abs(tip.y - center.y) > abs(tip.x - center.x))
     {
-        *p = createProjectile(plasmaAnimation(), 0,
-                              createChainBehavior(bs, 2),
-                              1,
-                              makePoint(0, 0),
-                              impactProjectile,
-                              false);
-    }
-    else
-    {
-        *p = NULL;
+        p = createProjectile(plasmaAnimation(), 0,
+                             createChainBehavior(bs, 2),
+                             1,
+                             makePoint(0, 0),
+                             impactProjectile,
+                             false);
+
+        setSpriteCenterBottom(p, where);
+        addEnemyProjectile(world, p);
     }
 }
 
-static void spawnFireball(Entity* who, World* world, Projectile** p)
+static void spawnFireball(Entity* who, World* world, Point where)
 {
-    *p = createProjectile(fireballAnimation(), 0,
-                          createBoring(5, 1),
-                          1,
-                          makePoint(0, 0),
-                          impactProjectile,
-                          false);
+    Projectile* p = createProjectile(fireballAnimation(), 0,
+                                     createBoring(5, 1),
+                                     1,
+                                     makePoint(0, 0),
+                                     impactProjectile,
+                                     false);
+
+    setSpriteCenterBottom(p, where);
+    addEnemyProjectile(world, p);
 }
 
-static void spawnMissle(Entity* who, World* world, Projectile** p)
+static void spawnMissle(Entity* who, World* world, Point where)
 {
     Behavior** bs;
+    Projectile* p;
 
     bs = newArray(Behavior*, 2);
     bs[0] = createChase(4, 1);
     bs[1] = createRoll(0);
 
-    *p = createProjectile(missleAnimation(), 0,
-                          createChainBehavior(bs, 2),
-                          3,
-                          makePoint(0, 0),
-                          impactMissle,
-                          false);
+    p = createProjectile(missleAnimation(), 0,
+                         createChainBehavior(bs, 2),
+                         3,
+                         makePoint(0, 0),
+                         impactMissle,
+                         false);
+
+    setSpriteCenterBottom(p, where);
+    addEnemyProjectile(world, p);
 }
 
 static void spawnChopper(World* w, int16 x, int16 dy, int16 yDest)

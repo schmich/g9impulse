@@ -13,10 +13,8 @@ graphics
 
 gameplay
 --------
-- multiple player lives
 - renormalize enemy health and weapon power
 - well-distributed powerups
-- show "game over" and wait for start press after dying
 - player's rating
 - bonus points awarded after win/loss
     - continuum of points based on how much you were (e.g. more accurate

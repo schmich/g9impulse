@@ -9,16 +9,20 @@ void powerupHealth(Artifact* a, Player* p, World* w)
     }
     else
         updateScore(p, 100);
+
+    ++p->stats->artifactsCollected;
 }
 
 void powerupWeapon(Artifact* a, Player* p, World* w)
 {
     updateScore(p, 200);
     upgradeWeapon(p);
+    ++p->stats->artifactsCollected;
 }
 
 void powerupNuke(Artifact* a, Player* p, World* w)
 {
     updateScore(p, 50);
     ++p->nukes;
+    ++p->stats->artifactsCollected;
 }

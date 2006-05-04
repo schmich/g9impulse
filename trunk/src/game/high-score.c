@@ -94,6 +94,8 @@ static bool displayHighScores(List* highScores, Node* scorePos)
     clearBuffers();
     while (!event->startPressed)
     {
+        delay_ms(10);
+
         event = getInputEvent();
         if (scorePos != NULL)
         {
@@ -132,7 +134,6 @@ static bool displayHighScores(List* highScores, Node* scorePos)
         }
         else
         {
-            delay_ms(10);
             delay += 10;
             if (delay >= 15000)
                 return true;
