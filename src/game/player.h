@@ -33,6 +33,8 @@ typedef struct Player
 
 Player* createPlayer(Point where);
 
+uint8 weaponUpgrades(Player* who);
+
 void drawPlayer(Player* who);
 
 void enemyKilled(Player* who, Enemy* enemy, bool collided);

@@ -5,7 +5,7 @@ enemies
 - full level (w/ new enemies + boss)
 - blimp-like enemies (strafe left to right, absorb shots)
 - ground turrets (like tanks, 1 health, omnidirectional)
-
+ 
 graphics
 --------
 - boat waves
@@ -15,7 +15,7 @@ gameplay
 --------
 - renormalize enemy health and weapon power
 - well-distributed powerups
-- player's rating
+- player's descriptive rating (ninja dog!)
 - bonus points awarded after win/loss
     - continuum of points based on how much you were (e.g. more accurate
       sharpshooters get more points, but have threshold below which you
@@ -32,7 +32,6 @@ gameplay
 
 weapons
 -------
-- player's descriptive rating (ninja dog!)
 - weapons
     - selectable
     - 3-level beam
