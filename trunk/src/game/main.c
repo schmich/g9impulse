@@ -32,6 +32,16 @@ static void handlePause(uint8* buffer)
 
         flipBuffer(buffer);
 
+#ifndef _DEBUG
+        //
+        // HACK issue some draw command so GPU executes
+        // pre-flipBuffer draws
+        //
+        drawImage(&pause->images[0],
+                  makePoint(60, 85),
+                  true);
+#endif
+
         while (getInputStatus()->startPressed) ;
         while (!getInputStatus()->startPressed) ;
 
