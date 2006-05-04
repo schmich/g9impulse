@@ -16,7 +16,9 @@ typedef struct Player
 
     Engine* engine;
     Point   momentum;
-    uint8   weaponLevel;
+
+    uint8   weaponClass;
+    uint8   weaponLevel[3];
 
     uint8   lives;
 

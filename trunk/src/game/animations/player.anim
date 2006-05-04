@@ -27,3 +27,11 @@
 272,4780        8       240
 268,4780        4       240
 262,4780        4       240
+
+[weapon-icon]
+292,5635        8      8        -- single shot
+300,5635        8      8        -- spread shot
+308,5635        8      8        -- beam
+292,5643        8      8        -- single shot selected
+300,5643        8      8        -- spread shot selected
+308,5643        8      8        -- beam selected
