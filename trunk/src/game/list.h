@@ -20,6 +20,7 @@ typedef struct List
     Node*  tail;
 } List;
 
+bool empty(List* list);
 List* createList(void);
 void appendElement(List* list, void* data);
 Node* removeNode(List* list, Node* node);

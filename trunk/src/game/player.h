@@ -18,14 +18,15 @@ typedef struct Player
     Point   momentum;
     uint8   weaponLevel;
 
+    uint8   lives;
+
     uint8   nukes;
+    uint8   nukeCooldown;
 
     uint8   heat;
     uint8   heatup;
     uint8   cooldown;
     uint8   maxCooldown;
-
-    uint8   nukeCooldown;
 } Player;
 
 Player* createPlayer(Point where);
@@ -34,6 +35,7 @@ void drawPlayer(Player* who);
 
 void enemyKilled(Player* who, Enemy* enemy, bool collided);
 void updateScore(Player* who, int16 change);
+void respawnPlayer(Player* who);
 
 void upgradeWeapon(Player* who);
 void rollLeft(Player* who);

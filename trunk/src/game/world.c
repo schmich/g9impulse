@@ -10,6 +10,7 @@
 #include "artifact.h"
 #include "health-meter.h"
 #include "heat-meter.h"
+#include "life-meter.h"
 #include "nuke-meter.h"
 #include "text.h"
 
@@ -46,6 +47,7 @@ static void destroyWorld(World* w)
     destroy(w->underlays);
     destroy(w->artifacts);
 
+    destroy(w->lifeMeter);
     destroy(w->healthMeter);
     destroy(w->heatMeter);
     destroy(w->nukeMeter);
@@ -72,13 +74,16 @@ World* createWorld(Player* player, Level* level)
     w->level = level;
     w->player = player;
 
-    start = screenCenterBottom();
-    start.y += spriteHeight(w->player) / 2;
-    setSpriteCenterTop(w->player,  start);
+    setSpriteCenterTop(w->player, screenCenterBottom());
 
     w->healthMeter = createHealthMeter(w->player, makePoint(130, 230));
     w->heatMeter = createHeatMeter(w->player, makePoint(1, 230));
     w->nukeMeter = createNukeMeter(w->player, makePoint(155, 3));
+    w->lifeMeter = createLifeMeter(w->player, makePoint(154, 220));
+
+    w->respawnShow = true;
+    w->respawning = false;
+    w->respawnStep = 0;
 
 #ifdef _DEBUG
     w->intro = false;
@@ -197,7 +202,7 @@ void drawWorld(World* world)
     foreach (curr, world->enemies)
         drawSprite(curr->data);
 
-    if (!dead(world->player))
+    if (!dead(world->player) && world->respawnShow)
         drawPlayer(world->player);
 
     foreach (curr, world->updateables)
@@ -209,6 +214,7 @@ void drawWorld(World* world)
     drawSprite(world->heatMeter);
     drawSprite(world->healthMeter);
     drawNukeMeter(world->nukeMeter);
+    drawLifeMeter(world->lifeMeter);
 
     drawNumber(world->player->score, makePoint(2, 2), COLOR_WHITE);
 
@@ -229,7 +235,7 @@ void updateWorld(World* world)
 
         if (++world->introStep == 2)
         {
-            stop = SCREEN_HEIGHT - (int16)spriteHeight(world->player) * 2;
+            stop = SCREEN_HEIGHT - (int16)spriteHeight(world->player) - 10;
 
             if (--world->player->position.y == stop)
                 world->intro = false;
@@ -241,6 +247,18 @@ void updateWorld(World* world)
     {
         if (!dead(world->player))
             update(world->player, world);
+    }
+
+    if (world->respawning)
+    {
+        if (++world->respawnStep == 1)
+        {
+            world->respawnShow = !world->respawnShow;
+            world->respawnStep = 0;
+
+            if (++world->respawnCycles == 100)
+                world->respawning = false;
+        }
     }
 
     update(world->heatMeter, world);
@@ -311,9 +329,27 @@ void updateWorld(World* world)
         else
             curr = curr->next;
     }
+    
+    if (dead(world->player))
+    {
+        if (empty(world->updateables))
+        {
+            if (world->player->lives == 0)
+                world->active = false;
+            else
+            {
+                respawnPlayer(world->player);
 
-    if (dead(world->player) && (world->updateables->head == NULL))
-        world->active = false;
+                world->respawning = true;
+                world->respawnStep = 0;
+                world->respawnCycles = 0;
+                world->respawnShow = true;
+
+                world->intro = true;
+                world->introStep = 0;
+            }
+        }
+    }
 }
 
 void collideWorld(World* world)
@@ -365,7 +401,7 @@ void collideWorld(World* world)
             impact(proj->data, world->player, world);
 
 #ifndef _DEBUG
-            if (damage(world->player, ((Projectile*)proj->data)->damage))
+            if (!world->respawning && damage(world->player, ((Projectile*)proj->data)->damage))
                 kill(world->player, world);
 #endif
 
@@ -392,7 +428,7 @@ void collideWorld(World* world)
             if (!((Enemy*)enemy->data)->ground)
             {
 #ifndef _DEBUG
-                if (damage(world->player, 2))
+                if (!world->respawning && damage(world->player, 2))
                     kill(world->player, world);
 #endif
                 enemyKilled(world->player, enemy->data, true);

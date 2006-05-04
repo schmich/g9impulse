@@ -15,6 +15,7 @@ typedef struct Level Level;
 typedef struct HealthMeter HealthMeter;
 typedef struct HeatMeter HeatMeter;
 typedef struct NukeMeter NukeMeter;
+typedef struct LifeMeter LifeMeter;
 
 typedef struct World
 {
@@ -36,6 +37,12 @@ typedef struct World
     HealthMeter* healthMeter;
     HeatMeter*   heatMeter;
     NukeMeter*   nukeMeter;
+    LifeMeter*   lifeMeter;
+
+    bool    respawnShow;
+    bool    respawning;
+    uint8   respawnStep;
+    uint8   respawnCycles;
 
     bool    intro;
     uint8   introStep;
