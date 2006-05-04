@@ -1,5 +1,22 @@
-- engine animation
+enemies
+-------
+- implement migs
+- implement "cargo" planes
 - full level (w/ new enemies + boss)
+- blimp-like enemies (strafe left to right, absorb shots)
+- ground turrets (like tanks, 1 health, omnidirectional)
+
+graphics
+--------
+- boat waves
+- engine animation
+
+gameplay
+--------
+- multiple player lives
+- renormalize enemy health and weapon power
+- well-distributed powerups
+- show "game over" and wait for start press after dying
 - player's rating
 - bonus points awarded after win/loss
     - continuum of points based on how much you were (e.g. more accurate
@@ -14,21 +31,12 @@
     - punisher (killing a lot of enemies)
     - pacifist (not killing enemies)
     - masochist (killing enemies by running into them)
+
+weapons
+-------
+- player's descriptive rating (ninja dog!)
 - weapons
+    - selectable
     - 3-level beam
     - 3-level spread (automatic shot)
     - 3-level single shot (crosshairs when holding down shoot)
-- well-distributed powerups
-- 2 player
-- boat waves
-- blimp-like enemies (strafe left to right, absorb shots)
-- clear timer after pausing
-- renormalize enemy health and weapon power
-- show "game over" and wait for start press after dying
-- ground turrets (like tanks)
-- implement remaining enemies
-- fix memory leak
-- fix new gpuchip.bit pause screen invisibility
-- rethink nuke shooting logic (i.e. nuke+beam)
-- multiple lives (small ship icons above health)
-- get camera batteries

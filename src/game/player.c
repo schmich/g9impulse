@@ -30,6 +30,9 @@ static void killPlayer(Player* who, World* world)
     setSpriteCenter(e, spriteCenter(who));
 
     addUpdateable(world, e);
+
+    if (who->lives > 0)
+        --who->lives;
 }
 
 static void firePlayer(Entity* player, World* world)
@@ -157,7 +160,7 @@ static uint8 updatePlayer(Player* who, World* world)
 
     if (event->buttonAPressed)
     {
-        if (who->nukes > 0 && who->nukeCooldown == 0 && who->heat == 0)
+        if (who->nukes > 0 && who->nukeCooldown == 0)
         {
             currSpawn = who->spawnProjectile;
             who->spawnProjectile = spawnNuke;
@@ -262,6 +265,14 @@ static uint8 updatePlayer(Player* who, World* world)
     return UPDATE_KEEP;
 }
 
+void respawnPlayer(Player* who)
+{
+    who->health = 6;
+    who->momentum = makePoint(0, 0);
+    animationBeginning(who);
+    setSpriteCenterTop(who, screenCenterBottom());
+}
+
 Player* createPlayer(Point where)
 {
     Behavior** bs;
@@ -279,12 +290,13 @@ Player* createPlayer(Point where)
 
     player->engine = createEngine(player);
 
-    player->health = 6;
     player->momentum = makePoint(0, 0);
     player->heat = 0;
     player->maxCooldown = INITIAL_MAX_COOLDOWN;
     player->heatup = INITIAL_HEATUP;
     player->cooldown = player->maxCooldown;
+
+    player->lives = 4;
 
     player->nukeCooldown = MAX_NUKE_COOLDOWN;
     player->nukes = 3;
@@ -294,6 +306,8 @@ Player* createPlayer(Point where)
 
     player->weaponLevel = 0;
     player->spawnProjectile = spawnBullet;
+
+    respawnPlayer(player);
 
     upgradeWeapon(player);
     upgradeWeapon(player);

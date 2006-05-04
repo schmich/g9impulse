@@ -90,3 +90,8 @@ Node* insertElement(List* list, Node* before, void* data)
 
     return newNode;
 }
+
+bool empty(List* list)
+{
+    return list->head == NULL;
+}

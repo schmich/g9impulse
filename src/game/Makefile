@@ -53,8 +53,10 @@ else
 endif
 
 all: $(DEPFILE) $(OUT)
+	@rm -f *.err
 
 release: all
+	@rm -f *.err
 
 $(OUT): $(OBJS)
 	@echo -n "Linking $(shell basename $@)..."
@@ -97,12 +99,13 @@ clean:
 depclean:
 	rm -f $(DEPFILE)
 
-release-depclean: depclean
+release-depclean:
+	rm -f $(DEPFILE)
 
 nuke: depclean clean
 	rm -rf $(BUILD_DEBUG_DIR)
 
-release-nuke: depclean clean
+release-nuke: release-depclean clean
 	rm -rf $(BUILD_RELEASE_DIR)
 
-.PHONY: all release clean depclean nuke
+.PHONY: all release clean depclean nuke release-nuke release-depclean

@@ -1,7 +1,14 @@
 #include "gpu.h"
 
+static void waitForAck()
+{
+    while (!(PORTD & 0b10000000)) //hang here till we recieve idle from GPU
+    {
+    }
+}
+
 //Loads the source address (registers 0, 1, and 2) into the GPU 
-void load_s_addr(uint32 address)
+static void load_s_addr(uint32 address)
 {    
     PORTC = 0x02;                                //Load least significant byte
     PORTB = (uint8) (0x000000FF & address);
@@ -19,7 +26,7 @@ void load_s_addr(uint32 address)
     PORTA = 0x00;                                //load complete
 }
 
-void load_t_addr(uint32 address)
+static void load_t_addr(uint32 address)
 {    
     PORTC = 0x05;                                 
     PORTB = (uint8) (0x000000FF & address);
@@ -37,7 +44,7 @@ void load_t_addr(uint32 address)
     PORTA = 0x00;
 }
 
-void load_s_lines(uint8 lines)
+static void load_s_lines(uint8 lines)
 {    
     PORTC = 0x06;
     PORTB = lines;
@@ -45,7 +52,7 @@ void load_s_lines(uint8 lines)
     PORTA = 0x00;
 }
 
-void load_l_size(uint8 size)
+static void load_l_size(uint8 size)
 {    
     PORTC = 0x07;
     PORTB = size;
@@ -53,7 +60,7 @@ void load_l_size(uint8 size)
     PORTA = 0x00;
 }
 
-void load_alphaOp(bool alphaOp)
+static void load_alphaOp(bool alphaOp)
 {
     PORTC = 0x08;
     if (alphaOp)
@@ -75,6 +82,8 @@ void setDoubleBuffer(bool doubleBuffer)
 
     PORTA = 0x01;
     PORTA = 0x00;
+
+    waitForAck();
 }
 
 void setFieldColor(uint8 color)
@@ -83,6 +92,8 @@ void setFieldColor(uint8 color)
     PORTB = color;
     PORTA = 0x01;
     PORTA = 0x00;
+
+    waitForAck();
 }
 
 
@@ -101,15 +112,15 @@ void flipBuffer(uint8* buf)
     }
     PORTA = 0x01;
     PORTA = 0x00;
+
+    waitForAck();
 }
 
 void drawData(void)
 {
     PORTA = 0b00000010;           //initialize draw
     PORTA = 0b00000000;           //draw command received, so turn off draw bit
-    while (!(PORTD & 0b10000000)) //hang here till we recieve idle from GPU
-    {
-    }
+    waitForAck();
 }
 
 int32 max(int32 p, int32 q)
