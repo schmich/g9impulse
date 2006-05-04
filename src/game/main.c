@@ -12,7 +12,27 @@
 #include "pause.anim.inl"
 
 #define FRAME_TIME 900
-#define SOFT_RESET_TIME 25
+#define SOFT_QUIT_TIME 25
+
+static bool softQuit(void)
+{
+    static uint8 resetCounter = SOFT_QUIT_TIME;
+    Input* input = getInputStatus();
+
+    if (input->buttonBPressed &&
+        input->buttonAPressed &&
+        input->selectPressed)
+    {
+        if (--resetCounter == 0)
+            return true;
+    }
+    else
+    {
+        resetCounter = SOFT_QUIT_TIME;
+    }
+
+    return false;
+}
 
 //
 // returns true if user paused game, false otherwise
@@ -46,26 +66,6 @@ static bool handlePause(uint8* buffer)
     return false;
 }
 
-static bool softReset(void)
-{
-    static uint8 resetCounter = SOFT_RESET_TIME;
-    Input* input = getInputStatus();
-
-    if (input->buttonBPressed &&
-        input->buttonAPressed &&
-        input->selectPressed)
-    {
-        if (--resetCounter == 0)
-            return true;
-    }
-    else
-    {
-        resetCounter = SOFT_RESET_TIME;
-    }
-
-    return false;
-}
-
 void playGame(void)
 {
     uint8 buffer = 0;
@@ -84,7 +84,7 @@ void playGame(void)
     //
     getInputStatus()->startPressed = false;
 
-    while (active(world) && !softReset())
+    while (active(world) && !softQuit())
     {
         resetTimer();
 
@@ -101,8 +101,10 @@ void playGame(void)
 
         //
         // check for pause after flipping buffer
+        // HACK check for player dead, bleh
         //
-        handlePause(&buffer);
+        if (!dead(world->player))
+            handlePause(&buffer);
 
         while (timeElapsed() < FRAME_TIME)
         {
@@ -113,7 +115,7 @@ void playGame(void)
     }
 
 #ifndef _DEBUG
-    checkHighScore(world->player->score);
+    checkHighScore(world->player->stats->score);
 #endif
 
     destroy(world);
@@ -131,7 +133,7 @@ void main()
     setFieldColor(0);
 
 #ifndef _DEBUG
-    showBootSplash();
+/*    showBootSplash();
 
     while (true)
     {
@@ -139,7 +141,7 @@ void main()
 
         if (!showTitle() || !showHighScores())
             break;
-    }
+    }*/
 #endif
 
     //

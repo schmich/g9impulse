@@ -16,6 +16,7 @@ typedef struct HealthMeter HealthMeter;
 typedef struct HeatMeter HeatMeter;
 typedef struct NukeMeter NukeMeter;
 typedef struct LifeMeter LifeMeter;
+typedef struct AwardsOverlay AwardsOverlay;
 
 typedef struct World
 {
@@ -39,6 +40,8 @@ typedef struct World
     NukeMeter*   nukeMeter;
     LifeMeter*   lifeMeter;
 
+    AwardsOverlay* awardsOverlay;
+
     bool    respawnShow;
     bool    respawning;
     uint8   respawnStep;
@@ -46,6 +49,8 @@ typedef struct World
 
     bool    intro;
     uint8   introStep;
+
+    bool    gameOver;
 } World;
 
 World* createWorld(Player* player, Level* level);

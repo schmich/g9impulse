@@ -2,22 +2,25 @@
 #include "image.h"
 #include "text.anim.inl"
 
+//
+// only accepts uppercase letters
+//
 static uint8 indexOf(char c)
 {
     Animation* font = whiteTextAnimation();
 
     if (c >= 'A' && c <= 'Z')
         return c - 'A' + 10;
-    else if (c >= 'a' && c <= 'z')
-        return c - 'a' + 10;
     else if (c >= '0' && c <= '9')
         return c - '0';
+    else if (c == ' ')
+        return 38; // space
+    else if (c == '+')
+        return 37;
     else if (c == '_')
         return 36;
-    else if (c == ' ')
-        return 37; // space
     else
-        return 38; // "unknown" character
+        return 39; // "unknown" character
 }
 
 //
@@ -33,6 +36,12 @@ static void drawNumberReverse(uint8* text, Point where, Animation* font)
         drawImage(&font->images[*c - '0'], where, true);
         where.x += font->images[0].width;
     }
+}
+
+void drawTextCentered(const char* text, Point where, uint8 color)
+{
+    where.x -= textWidth(text) / 2;
+    drawText(text, where, color);
 }
 
 void drawText(const char* text, Point where, uint8 color)
@@ -83,6 +92,43 @@ void drawNumber(uint16 num, Point where, uint8 color)
         }
 
         buffer[i] = NULL;
+        drawNumberReverse(buffer, where, font);
+    }
+}
+
+//
+// HACK copied from above (with modifications)
+//
+void drawNumberCentered(uint16 num, Point where, uint8 color)
+{
+    uint16 div10;
+    uint16 mod;
+
+    uint8 i = 0;
+    uint8 buffer[7];
+
+    Animation* font;
+    if (color == COLOR_WHITE)
+        font = whiteTextAnimation();
+    else
+        font = blueTextAnimation();
+
+    if (num == 0)
+        drawImage(&font->images[0], where, true);
+    else
+    {
+        while (num > 0)
+        {
+            div10 = num / 10;
+            mod = num - (div10 << 3) - (div10 << 1);
+            
+            buffer[i++] = (uint8)mod + '0';
+            num = div10;
+        }
+
+        buffer[i] = NULL;
+        where.x -= textWidth(buffer) / 2;
+
         drawNumberReverse(buffer, where, font);
     }
 }

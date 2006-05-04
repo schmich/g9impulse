@@ -4,6 +4,7 @@
 #include "player.h"
 #include "input.h"
 #include "enemy.h"
+#include "awards.h"
 #include "background.h"
 #include "collision.h"
 #include "level.h"
@@ -52,6 +53,8 @@ static void destroyWorld(World* w)
     destroy(w->heatMeter);
     destroy(w->nukeMeter);
 
+    destroy(w->awardsOverlay);
+
     destroy(w->player);
     destroyStatic(w->level);
 }
@@ -74,12 +77,15 @@ World* createWorld(Player* player, Level* level)
     w->level = level;
     w->player = player;
 
-    setSpriteCenterTop(w->player, screenCenterBottom());
+    setSpriteCenterTop(player, screenCenterBottom());
 
-    w->healthMeter = createHealthMeter(w->player, makePoint(130, 230));
-    w->heatMeter = createHeatMeter(w->player, makePoint(1, 230));
-    w->nukeMeter = createNukeMeter(w->player, makePoint(155, 3));
-    w->lifeMeter = createLifeMeter(w->player, makePoint(154, 220));
+    w->healthMeter = createHealthMeter(player, makePoint(130, 230));
+    w->heatMeter = createHeatMeter(player, makePoint(1, 230));
+    w->nukeMeter = createNukeMeter(player, makePoint(155, 3));
+    w->lifeMeter = createLifeMeter(player, makePoint(154, 220));
+
+    w->gameOver = false;
+    w->awardsOverlay = NULL;
 
     w->respawnShow = true;
     w->respawning = false;
@@ -109,16 +115,19 @@ void addUpdateable(World* world, Updateable* u)
 
 void addEnemy(World* world, Enemy* e)
 {
+    ++world->player->stats->enemiesFaced;
     appendElement(world->enemies, e);
 }
 
 void addPlayerProjectile(World* world, Projectile* p)
 {
+    ++world->player->stats->shotsFired;
     appendElement(world->playerProjectiles, p);
 }
 
 void addEnemyProjectile(World* world, Projectile* p)
 {
+    ++world->player->stats->shotsFaced;
     appendElement(world->enemyProjectiles, p);
 }
 
@@ -134,6 +143,7 @@ void addUnderlay(World* world, Updateable* u)
 
 void addArtifact(World* world, Artifact* a)
 {
+    ++world->player->stats->artifactsGiven;
     appendElement(world->artifacts, a);
 }
 
@@ -211,17 +221,24 @@ void drawWorld(World* world)
     foreach (curr, world->overlays)
         drawSprite(curr->data);
 
-    drawSprite(world->heatMeter);
-    drawSprite(world->healthMeter);
-    drawNukeMeter(world->nukeMeter);
-    drawLifeMeter(world->lifeMeter);
+    if (!world->gameOver)
+    {
+        drawSprite(world->heatMeter);
+        drawSprite(world->healthMeter);
+        drawNukeMeter(world->nukeMeter);
+        drawLifeMeter(world->lifeMeter);
 
-    drawNumber(world->player->score, makePoint(2, 2), COLOR_WHITE);
+        drawNumber(world->player->stats->score, makePoint(2, 2), COLOR_WHITE);
 
 #ifdef _DEBUG
-    drawNumber(world->level->background->progress, makePoint(2, 17), COLOR_WHITE);
-    drawNumber(memoryFree(), makePoint(2, 31), COLOR_WHITE);
+        drawNumber(world->level->background->progress, makePoint(2, 17), COLOR_WHITE);
+        drawNumber(memoryFree(), makePoint(2, 31), COLOR_WHITE);
 #endif
+    }
+    else
+    {
+        drawAwardsOverlay(world->awardsOverlay);
+    }
 }
 
 void updateWorld(World* world)
@@ -261,11 +278,22 @@ void updateWorld(World* world)
         }
     }
 
+    if (world->gameOver)
+    {
+        if (updateAwardsOverlay(world->awardsOverlay))
+        {
+            world->player->stats->score += totalBonus(world->awardsOverlay->awards);
+            world->active = false;
+        }
+    }
+
     update(world->heatMeter, world);
     update(world->healthMeter, world);
 
     update(world->level->background, world);
-    updateLevel(world->level, world);
+
+    if (!world->gameOver)
+        updateLevel(world->level, world);
     
     curr = world->updateables->head;
     while (curr != NULL)
@@ -330,23 +358,29 @@ void updateWorld(World* world)
             curr = curr->next;
     }
     
-    if (dead(world->player))
+    if (!world->gameOver)
     {
-        if (empty(world->updateables))
+        if (dead(world->player))
         {
-            if (world->player->lives == 0)
-                world->active = false;
-            else
+            if (empty(world->updateables))
             {
-                respawnPlayer(world->player);
+                if (world->player->lives == 0)
+                {
+                    world->gameOver = true;
+                    world->awardsOverlay = createAwardsOverlay(world->player);
+                }
+                else
+                {
+                    respawnPlayer(world->player);
 
-                world->respawning = true;
-                world->respawnStep = 0;
-                world->respawnCycles = 0;
-                world->respawnShow = true;
+                    world->respawning = true;
+                    world->respawnStep = 0;
+                    world->respawnCycles = 0;
+                    world->respawnShow = true;
 
-                world->intro = true;
-                world->introStep = 0;
+                    world->intro = true;
+                    world->introStep = 0;
+                }
             }
         }
     }
@@ -370,6 +404,8 @@ void collideWorld(World* world)
         proj = collides(enemy->data, world->playerProjectiles);
         if (proj != NULL)
         {
+            ++world->player->stats->shotsLanded;
+
             impact(proj->data, enemy->data, world);
             if (damage(enemy->data, ((Projectile*)proj->data)->damage))
             {
@@ -400,10 +436,8 @@ void collideWorld(World* world)
         {
             impact(proj->data, world->player, world);
 
-#ifndef _DEBUG
-            if (!world->respawning && damage(world->player, ((Projectile*)proj->data)->damage))
+            if (!world->respawning && damagePlayer(world->player, ((Projectile*)proj->data)->damage))
                 kill(world->player, world);
-#endif
 
             if (!((Projectile*)proj->data)->invincible)
                 removeEnemyProjectile(world, proj);
@@ -427,11 +461,11 @@ void collideWorld(World* world)
         {
             if (!((Enemy*)enemy->data)->ground)
             {
-#ifndef _DEBUG
-                if (!world->respawning && damage(world->player, 2))
+                if (!world->respawning && damagePlayer(world->player, 2))
                     kill(world->player, world);
-#endif
+
                 enemyKilled(world->player, enemy->data, true);
+                ++world->player->stats->kamikazes;
 
                 kill(enemy->data, world);
                 removeEnemy(world, enemy);

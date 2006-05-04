@@ -6,13 +6,13 @@
 #include "projectile.h"
 #include "engine.h"
 #include "enemy.h"
+#include "stats.h"
 
 typedef struct Player
 {
     ENTITY_BASE;
 
-    uint16  kills;
-    uint16  score;
+    Stats*  stats;
 
     Engine* engine;
     Point   momentum;
@@ -34,6 +34,7 @@ Player* createPlayer(Point where);
 void drawPlayer(Player* who);
 
 void enemyKilled(Player* who, Enemy* enemy, bool collided);
+bool damagePlayer(Player* who, uint8 amount);
 void updateScore(Player* who, int16 change);
 void respawnPlayer(Player* who);
 

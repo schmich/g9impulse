@@ -7,14 +7,7 @@ static void destroyEnemy(Enemy* e)
 
 static void fireEnemy(Entity* e, World* w)
 {
-    Projectile* p;
-    e->spawnProjectile(e, w, &p);
-
-    if (p)
-    {
-        setSpriteCenterBottom(p, spriteCenterBottom(e));
-        addEnemyProjectile(w, p);
-    }
+    e->spawnProjectile(e, w, spriteCenterBottom(e));
 }
 
 Enemy* createEnemy(Animation* anim,
