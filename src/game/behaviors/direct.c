@@ -25,7 +25,7 @@ static uint8 updateDirectFlat(Updateable* who, World* world)
         if (2 * d->error > abs(dx))
         {
             --stepsLeft;
-            ++who->position.y;
+            who->position.y += d->verticalChange;
             d->error -= abs(dx);
         }
 
@@ -79,7 +79,7 @@ static uint8 updateDirectSteep(Updateable* who, World* world)
     while (stepsLeft > 0)
     {
         --stepsLeft;
-        ++who->position.y;
+        who->position.y += d->verticalChange;
 
         d->error += abs(dx);
         if (2 * d->error > abs(dy))
@@ -135,6 +135,11 @@ Direct* createDirect(Point start, Point target, uint8 speed)
     d->target = target;
     d->error = 0;
     d->speed = speed;
+
+    if (target.y > start.y)
+        d->verticalChange = 1;
+    else
+        d->verticalChange = -1;
 
     return d;
 }

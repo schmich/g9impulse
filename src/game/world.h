@@ -16,6 +16,7 @@ typedef struct HealthMeter HealthMeter;
 typedef struct HeatMeter HeatMeter;
 typedef struct NukeMeter NukeMeter;
 typedef struct LifeMeter LifeMeter;
+typedef struct WeaponIndicator WeaponIndicator;
 typedef struct AwardsOverlay AwardsOverlay;
 
 typedef struct World
@@ -35,10 +36,11 @@ typedef struct World
     Player* player;
     Level*  level;
 
-    HealthMeter* healthMeter;
-    HeatMeter*   heatMeter;
-    NukeMeter*   nukeMeter;
-    LifeMeter*   lifeMeter;
+    HealthMeter*        healthMeter;
+    HeatMeter*          heatMeter;
+    NukeMeter*          nukeMeter;
+    LifeMeter*          lifeMeter;
+    WeaponIndicator*    weaponIndicator;
 
     AwardsOverlay* awardsOverlay;
 

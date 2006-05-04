@@ -7,15 +7,14 @@
 #include "boring.h"
 #include "chain.h"
 #include "nuke.h"
+#include "direct.h"
 #include "beam.h"
 #include "player.anim.inl"
 #include "nuke.anim.inl"
+#include "fireball.anim.inl"
 
 #define MAX_MOMENTUM_Y 13
 #define MAX_MOMENTUM_X 10
-#define MAX_WEAPONS 5
-#define INITIAL_MAX_COOLDOWN 9
-#define INITIAL_HEATUP 1
 #define MAX_NUKE_COOLDOWN 50
 
 static void destroyPlayer(Player* p)
@@ -53,7 +52,7 @@ static void impactProjectile(Projectile* p, Sprite* s, World* world)
 static void spawnBullet(Entity* player, World* world, Point where)
 {
     Projectile* p = createProjectile(bulletAnimation(), 0,
-                                     createBoring(-7, 1),
+                                     createBoring(-9, 1),
                                      1,
                                      makePoint(0, 0),
                                      impactProjectile,
@@ -65,7 +64,7 @@ static void spawnBullet(Entity* player, World* world, Point where)
 static void spawnDoubleBullet(Entity* player, World* world, Point where)
 {
     Projectile* p = createProjectile(doubleBulletAnimation(), 0,
-                                     createBoring(-7, 1),
+                                     createBoring(-9, 1),
                                      2,
                                      makePoint(0, 0),
                                      impactProjectile,
@@ -77,7 +76,7 @@ static void spawnDoubleBullet(Entity* player, World* world, Point where)
 static void spawnLaser(Entity* player, World* world, Point where)
 {
     Projectile* p = createProjectile(laserAnimation(), 0,
-                                     createBoring(-7, 1),
+                                     createBoring(-9, 1),
                                      3,
                                      makePoint(0, 0),
                                      impactProjectile,
@@ -90,7 +89,7 @@ static void spawnLaser(Entity* player, World* world, Point where)
 static void spawnWave(Entity* player, World* world, Point where)
 {
     Projectile* p = createProjectile(waveAnimation(), 0,
-                                     createBoring(-7, 1),
+                                     createBoring(-9, 1),
                                      4,
                                      makePoint(0, 0),
                                      impactProjectile,
@@ -121,9 +120,44 @@ static void spawnBeam(Entity* who, World* world, Point where)
     addPlayerProjectile(world, p);
 }
 
-/*static void spawnSpread(Entity* player, World* world, Projectile** p)
+static void spawnSpread(Entity* player, World* world, Point where)
 {
-}*/
+    Projectile* p;
+    Point target = where;
+
+    p = createProjectile(fireballAnimation(), 8,
+                         createBoring(-7, 1),
+                         1,
+                         makePoint(0, 0),
+                         impactProjectile,
+                         false);
+
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
+
+    target.y -= 10;
+    target.x -= 1;
+    p = createProjectile(fireballAnimation(), 7,
+                         createDirect(where, target, 7),
+                         1,
+                         makePoint(0, 0),
+                         impactProjectile,
+                         false);
+
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
+
+    target.x += 2;
+    p = createProjectile(fireballAnimation(), 9,
+                         createDirect(where, target, 7),
+                         1,
+                         makePoint(0, 0),
+                         impactProjectile,
+                         false);
+
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
+}
 
 static void spawnNuke(Entity* player, World* world, Point where)
 {
@@ -147,6 +181,75 @@ static void spawnNuke(Entity* player, World* world, Point where)
     ++((Player*)player)->stats->nukesFired;
 }
 
+static void switchWeapon(Player* who)
+{
+    switch (who->weaponClass)
+    {
+        //
+        // single shot
+        //
+        case 0:
+            switch(who->weaponLevel[0])
+            {
+                case 0:
+                    who->spawnProjectile = spawnBullet;
+                    who->maxCooldown = 9;
+                    who->heatup = 1;
+                    break;
+
+                case 1:
+                    who->spawnProjectile = spawnDoubleBullet;
+                    who->maxCooldown = 7;
+                    who->heatup = 1;
+                    break;
+
+                case 2:
+                    who->spawnProjectile = spawnLaser;
+                    who->maxCooldown = 6;
+                    who->heatup = 1;
+                    break;
+
+                case 3:
+                default:
+                    who->spawnProjectile = spawnWave;
+                    who->maxCooldown = 4;
+                    who->heatup = 1;
+                    break;
+            }
+            break;
+
+        //
+        // spread shot
+        //
+        case 1:
+            switch(who->weaponLevel[1])
+            {
+                case 0:
+                default:
+                    who->spawnProjectile = spawnSpread;
+                    who->maxCooldown = 6;
+                    who->heatup = 3;
+                    break;
+            }
+            break;
+
+        //
+        // beam
+        //
+        case 2:
+            switch(who->weaponLevel[2])
+            {
+                case 0:
+                default:
+                    who->spawnProjectile = spawnBeam;
+                    who->maxCooldown = 5;
+                    who->heatup = 26;
+                    break;
+            }
+            break;
+    }
+}
+
 static uint8 updatePlayer(Player* who, World* world)
 {
     Projectile* bullet;
@@ -155,6 +258,14 @@ static uint8 updatePlayer(Player* who, World* world)
     uint8 width;
     uint8 height;
     SpawnFn currSpawn;
+
+    if (event->selectPressed)
+    {
+        if (++who->weaponClass == 3)
+            who->weaponClass = 0;
+
+        switchWeapon(who);
+    }
 
     if (event->buttonBPressed)
     {
@@ -291,6 +402,8 @@ void respawnPlayer(Player* who)
 {
     who->health = 6;
     who->momentum = makePoint(0, 0);
+    who->heat = 0;
+    who->cooldown = who->maxCooldown;
     animationBeginning(who);
     setSpriteCenterTop(who, screenCenterBottom());
 }
@@ -314,9 +427,6 @@ Player* createPlayer(Point where)
 
     player->momentum = makePoint(0, 0);
     player->heat = 0;
-    player->maxCooldown = INITIAL_MAX_COOLDOWN;
-    player->heatup = INITIAL_HEATUP;
-    player->cooldown = player->maxCooldown;
 
     player->lives = 3;
 
@@ -325,16 +435,14 @@ Player* createPlayer(Point where)
 
     player->stats = createStats();
 
-    player->weaponLevel = 0;
-    player->spawnProjectile = spawnBullet;
+    player->weaponLevel[0] =
+    player->weaponLevel[1] =
+    player->weaponLevel[2] = 0;
+    player->weaponClass = 0;
+
+    switchWeapon(player);
 
     respawnPlayer(player);
-
-    upgradeWeapon(player);
-    upgradeWeapon(player);
-    upgradeWeapon(player);
-    upgradeWeapon(player);
-    upgradeWeapon(player);
 
     return player;
 }
@@ -356,35 +464,8 @@ void noRoll(Player* who)
 
 void upgradeWeapon(Player* who)
 {
-    if (who->weaponLevel == (MAX_WEAPONS - 1))
-        return;
-
-    switch (++who->weaponLevel)
-    {
-        case 1:
-            who->spawnProjectile = spawnDoubleBullet;
-            who->maxCooldown = 7;
-            who->heatup = 1;
-            break;
-
-        case 2:
-            who->spawnProjectile = spawnLaser;
-            who->maxCooldown = 6;
-            who->heatup = 1;
-            break;
-
-        case 3:
-            who->spawnProjectile = spawnWave;
-            who->maxCooldown = 4;
-            who->heatup = 1;
-            break;
-
-        case 4:
-            who->spawnProjectile = spawnBeam;
-            who->maxCooldown = 5;
-            who->heatup = 23;
-            break;
-    }
+    ++who->weaponLevel[who->weaponClass];
+    switchWeapon(who);
 }
 
 void enemyKilled(Player* who, Enemy* enemy, bool collided)

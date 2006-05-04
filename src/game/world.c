@@ -13,6 +13,7 @@
 #include "heat-meter.h"
 #include "life-meter.h"
 #include "nuke-meter.h"
+#include "weapon-indicator.h"
 #include "text.h"
 
 static void destroyWorld(World* w)
@@ -52,6 +53,7 @@ static void destroyWorld(World* w)
     destroy(w->healthMeter);
     destroy(w->heatMeter);
     destroy(w->nukeMeter);
+    destroy(w->weaponIndicator);
 
     destroy(w->awardsOverlay);
 
@@ -83,6 +85,7 @@ World* createWorld(Player* player, Level* level)
     w->heatMeter = createHeatMeter(player, makePoint(1, 230));
     w->nukeMeter = createNukeMeter(player, makePoint(155, 3));
     w->lifeMeter = createLifeMeter(player, makePoint(154, 220));
+    w->weaponIndicator = createWeaponIndicator(player, makePoint(1, 220));
 
     w->gameOver = false;
     w->awardsOverlay = NULL;
@@ -227,6 +230,7 @@ void drawWorld(World* world)
         drawSprite(world->healthMeter);
         drawNukeMeter(world->nukeMeter);
         drawLifeMeter(world->lifeMeter);
+        drawWeaponIndicator(world->weaponIndicator);
 
         drawNumber(world->player->stats->score, makePoint(2, 2), COLOR_WHITE);
 

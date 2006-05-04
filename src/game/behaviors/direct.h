@@ -11,6 +11,7 @@ typedef struct Direct
     Point target;
     uint8 speed;
     int16 error;
+    int16 verticalChange;
 } Direct;
 
 Direct* createDirect(Point start, Point target, uint8 speed);
