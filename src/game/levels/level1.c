@@ -15,6 +15,7 @@
 #include "lock-on.h"
 #include "projectile.h"
 #include "explosion.h"
+#include "proximity-explosion.h"
 #include "powerup.h"
 #include "f16.anim.inl"
 #include "f18.anim.inl"
@@ -25,7 +26,7 @@
 #include "plasma.anim.inl"
 #include "fireball.anim.inl"
 #include "powerup.anim.inl"
-#include "missle.anim.inl"
+#include "missile.anim.inl"
 #include "player.h"
 #include "world.h"
 
@@ -208,7 +209,7 @@ static void impactProjectile(Projectile* p, Sprite* s, World* world)
     addUpdateable(world, createExplosion(p->position, EXPLOSION_TINY, 10));
 }
 
-static void impactMissle(Projectile* p, Sprite* s, World* world)
+static void impactMissile(Projectile* p, Sprite* s, World* world)
 {
     addUpdateable(world, createExplosion(p->position, EXPLOSION_SMALL, 5));
 }
@@ -271,7 +272,27 @@ static void spawnFireball(Entity* who, World* world, Point where)
     addEnemyProjectile(world, p);
 }
 
-static void spawnMissle(Entity* who, World* world, Point where)
+static void spawnProximityMissile(Entity* who, World* world, Point where)
+{
+    Behavior** bs;
+    Projectile* p;
+
+    bs = newArray(Behavior*, 2);
+    bs[0] = createBoring(4, 1);
+    bs[1] = createProximityExplosion(world->player);
+
+    p = createProjectile(missileAnimation(), 0,
+                         createChainBehavior(bs, 2),
+                         0,
+                         makePoint(0, 0),
+                         nullImpact,
+                         false);
+
+    setSpriteCenterBottom(p, where);
+    addEnemyProjectile(world, p);
+}
+
+static void spawnSeekMissile(Entity* who, World* world, Point where)
 {
     Behavior** bs;
     Projectile* p;
@@ -280,11 +301,11 @@ static void spawnMissle(Entity* who, World* world, Point where)
     bs[0] = createChase(4, 1);
     bs[1] = createRoll(0);
 
-    p = createProjectile(missleAnimation(), 0,
+    p = createProjectile(missileAnimation(), 0,
                          createChainBehavior(bs, 2),
                          3,
                          makePoint(0, 0),
-                         impactMissle,
+                         impactMissile,
                          false);
 
     setSpriteCenterBottom(p, where);
@@ -303,7 +324,7 @@ static void spawnChopper(World* w, int16 x, int16 dy, int16 yDest)
 
     e = createEnemy(chopperAnimation(), 0, 
                     createChainBehavior(bs, 3),
-                    20,
+                    25,
                     makePoint(x, 0),
                     spawnPlasma,
                     killEnemy);
@@ -408,14 +429,14 @@ static void spawnMig(World* w, int16 x, int16 dy)
     Enemy* e;
 
     bs = newArray(Behavior*, 2);
-    bs[0] = createBoring(3, 1);
+    bs[0] = createBoring(2, 1);
     bs[1] = createRandomShoot(300);
 
     e = createEnemy(migAnimation(), 0, 
                     createChainBehavior(bs, 2),
-                    25,
+                    30,
                     makePoint(x, 0),
-                    spawnMissle,
+                    spawnSeekMissile,
                     killLargeEnemy);
 
     e->position.y = -(int16)spriteHeight(e) - dy;
@@ -480,7 +501,7 @@ static void spawnF18Kamikaze(World* w, int16 x, int16 dy, uint8 speed)
     bs[0] = createChase(speed, 1);
     bs[1] = createRoll(x);
 
-    e = createEnemy(f18Animation(), 0, 
+    e = createEnemy(f18Animation(), 0,
                     createChainBehavior(bs, 2),
                     5, 
                     makePoint(x, 0),

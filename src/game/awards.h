@@ -77,6 +77,8 @@ typedef struct AwardsOverlay
     uint8   numAwards;
     uint16  finalScore;
     uint16  scoreStep;
+
+    uint16  screenTimeout;
 } AwardsOverlay;
 
 AwardsOverlay* createAwardsOverlay(Player* who);
