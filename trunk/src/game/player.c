@@ -35,6 +35,19 @@ static void killPlayer(Player* who, World* world)
         --who->lives;
 
     ++who->stats->livesLost;
+
+    //
+    // uncomment to decrement weapons
+    // if the player dies
+    //
+    /*
+    uint8 i;
+    for (i = 0; i < 2; ++i)
+        if (who->weaponLevel[i] > 0)
+            --who->weaponLevel[i];
+
+    switchWeapon(who);
+    */
 }
 
 static void firePlayer(Entity* player, World* world)
@@ -99,7 +112,7 @@ static void spawnWave(Entity* player, World* world, Point where)
     addPlayerProjectile(world, p);
 }
 
-static void spawnBeam(Entity* who, World* world, Point where)
+static void spawnRedBeam(Entity* who, World* world, Point where)
 {
     Behavior** bs;
     Player* player = who;
@@ -109,9 +122,30 @@ static void spawnBeam(Entity* who, World* world, Point where)
     bs[0] = createAnimator(6, 1);
     bs[1] = createBeam(player);
 
-    p = createProjectile(beamAnimation(), 0,
+    p = createProjectile(redBeamAnimation(), 0,
                          createChainBehavior(bs, 2),
                          1,
+                         makePoint(0, 0),
+                         nullImpact,
+                         true);
+
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
+}
+
+static void spawnGreenBeam(Entity* who, World* world, Point where)
+{
+    Behavior** bs;
+    Player* player = who;
+    Projectile* p;
+
+    bs = newArray(Behavior*, 2);
+    bs[0] = createAnimator(6, 1);
+    bs[1] = createBeam(player);
+
+    p = createProjectile(greenBeamAnimation(), 0,
+                         createChainBehavior(bs, 2),
+                         2,
                          makePoint(0, 0),
                          nullImpact,
                          true);
@@ -129,7 +163,7 @@ static void spawnSpread2(Entity* player, World* world, Point where)
     target.x -= 1;
     p = createProjectile(fireballAnimation(), 7,
                          createDirect(where, target, 7),
-                         3,
+                         4,
                          makePoint(0, 0),
                          impactProjectile,
                          false);
@@ -140,7 +174,7 @@ static void spawnSpread2(Entity* player, World* world, Point where)
     target.x += 2;
     p = createProjectile(fireballAnimation(), 9,
                          createDirect(where, target, 7),
-                         3,
+                         4,
                          makePoint(0, 0),
                          impactProjectile,
                          false);
@@ -151,11 +185,30 @@ static void spawnSpread2(Entity* player, World* world, Point where)
 
 static void spawnSpread3(Entity* player, World* world, Point where)
 {
-    Projectile* p;
+    Projectile* p = createProjectile(fireballAnimation(), 8,
+                                     createBoring(-7, 1),
+                                     4,
+                                     makePoint(0, 0),
+                                     impactProjectile,
+                                     false);
 
-    p = createProjectile(fireballAnimation(), 8,
-                         createBoring(-7, 1),
-                         6,
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
+
+    spawnSpread2(player, world, where);
+}
+
+static void spawnSpread5(Entity* player, World* world, Point where)
+{
+    Projectile* p;
+    Point target = where;
+
+    target.x -= 1;
+    target.y -= 5;
+
+    p = createProjectile(fireballAnimation(), 6,
+                         createDirect(where, target, 7),
+                         3,
                          makePoint(0, 0),
                          impactProjectile,
                          false);
@@ -163,7 +216,18 @@ static void spawnSpread3(Entity* player, World* world, Point where)
     setSpriteCenterTop(p, where);
     addPlayerProjectile(world, p);
 
-    spawnSpread2(player, world, where);
+    target.x += 2;
+    p = createProjectile(fireballAnimation(), 10,
+                         createDirect(where, target, 7),
+                         3,
+                         makePoint(0, 0),
+                         impactProjectile,
+                         false);
+
+    setSpriteCenterTop(p, where);
+    addPlayerProjectile(world, p);
+
+    spawnSpread3(player, world, where);
 }
 
 static void spawnNuke(Entity* player, World* world, Point where)
@@ -196,7 +260,7 @@ static void switchWeapon(Player* who)
         // single shot
         //
         case 0:
-            switch(who->weaponLevel[0])
+            switch (who->weaponLevel[0])
             {
                 case 0:
                     who->spawnProjectile = spawnBullet;
@@ -229,7 +293,7 @@ static void switchWeapon(Player* who)
         // spread shot
         //
         case 1:
-            switch(who->weaponLevel[1])
+            switch (who->weaponLevel[1])
             {
                 case 0:
                     who->spawnProjectile = spawnSpread2;
@@ -245,9 +309,9 @@ static void switchWeapon(Player* who)
 
                 default:
                 case 2:
-                    who->spawnProjectile = spawnSpread3;
-                    who->maxCooldown = 3;
-                    who->heatup = 2;
+                    who->spawnProjectile = spawnSpread5;
+                    who->maxCooldown = 2;
+                    who->heatup = 4;
                     break;
             }
             break;
@@ -256,19 +320,19 @@ static void switchWeapon(Player* who)
         // beam
         //
         case 2:
-            switch(who->weaponLevel[2])
+            switch (who->weaponLevel[2])
             {
                 case 0:
-                    who->spawnProjectile = spawnBeam;
+                    who->spawnProjectile = spawnRedBeam;
                     who->maxCooldown = 5;
                     who->heatup = 28;
                     break;
 
                 default:
                 case 1:
-                    who->spawnProjectile = spawnBeam;
+                    who->spawnProjectile = spawnGreenBeam;
                     who->maxCooldown = 5;
-                    who->heatup = 20;
+                    who->heatup = 28;
                     break;
             }
             break;

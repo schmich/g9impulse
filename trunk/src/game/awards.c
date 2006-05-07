@@ -97,12 +97,12 @@ AwardsOverlay* createAwardsOverlay(Player* who)
     if (s->shotsFired > 0)
     {
         shotAcc = (s->shotsLanded * 100) / s->shotsFired;
-        if (shotAcc > 60)
-            SET_BONUS(sharpShooter, 50 * (shotAcc - 60) + 250);
+        if (shotAcc > 50)
+            SET_BONUS(sharpShooter, 10 * (shotAcc - 50) + 250);
     }
 
     if (s->healthLost < 6)
-        SET_BONUS(survivor, (6 - s->healthLost) * 500);
+        SET_BONUS(survivor, (6 - s->healthLost) * 100);
 
     if (s->enemiesFaced > 0)
     {
@@ -114,8 +114,8 @@ AwardsOverlay* createAwardsOverlay(Player* who)
     if (s->artifactsGiven > 0)
     {
         artAcc = (s->artifactsCollected * 100) / s->artifactsGiven;
-        if (artAcc > 80)
-            SET_BONUS(packrat, 5 * (artAcc - 80) + 100);
+        if (artAcc > 75)
+            SET_BONUS(packrat, 5 * (artAcc - 75) + 100);
     }
 
     if (s->nukesFired == 0)
@@ -130,6 +130,7 @@ AwardsOverlay* createAwardsOverlay(Player* who)
     a->numAwards = numAwards(a->awards);
     a->finalScore = who->stats->score + totalBonus(a->awards);
     a->scoreStep = 0;
+    a->screenTimeout = 0;
 
     return a;
 }
@@ -155,8 +156,14 @@ bool updateAwardsOverlay(AwardsOverlay* a)
             a->scoreStep = a->finalScore;
     }
 
-    if (input->startPressed && a->scoreStep == a->finalScore)
-        return true;
+    if (a->scoreStep == a->finalScore)
+    {
+        if (input->startPressed)
+            return true;
+
+        if (++a->screenTimeout == 300)
+            return true;
+    }
 
     return false;
 }
@@ -186,6 +193,7 @@ void drawAwardsOverlay(AwardsOverlay* ao)
 
     static char gameOver[] = "GAME OVER";
     static char finalScore[] = "FINAL SCORE";
+    static char pressStart[] = "PRESS START";
     static char noAwards[] = "NO AWARDS";
 
     static char sharpShooterText[]  = "SHARP SHOOTER";
@@ -224,5 +232,11 @@ void drawAwardsOverlay(AwardsOverlay* ao)
 
         where.y += 20;
         drawNumberCentered(ao->scoreStep, where, COLOR_BLUE);
+    }
+
+    if (ao->scoreStep == ao->finalScore)
+    {
+        where.y += 40;
+        drawTextCentered(pressStart, where, COLOR_WHITE);
     }
 }

@@ -9,22 +9,38 @@ static void destroyHealthMeter(HealthMeter* h)
 
 static uint8 updateHealthMeter(HealthMeter* h, World* w)
 {
-    if (h->player->health == 1)
+    if (h->player->health > 1)
     {
-        if (++h->frameDelay == 10)
+        h->currentFrame = 6 - h->player->health;
+    }
+    else if (h->player->health == 1)
+    {
+        if (++h->frameDelay == 3)
         {
-            if (h->currentFrame == 6)
-                h->currentFrame = 5;
-            else
-                h->currentFrame = 6;
-
             h->frameDelay = 0;
+
+            if (h->currentFrame < 5 || h->currentFrame > 10)
+            {
+                //
+                // get into 1-health animation loop
+                //
+                h->currentFrame = 5;
+            }
+            else if (++h->currentFrame == 11)
+            {
+                //
+                // reset to beginning of 1-health animation loop
+                //
+                h->currentFrame = 5;
+            }
         }
     }
     else
     {
-        if (h->player->health <= 6)
-            h->currentFrame = 6 - h->player->health;
+        //
+        // health == 0
+        //
+        h->currentFrame = 11;
     }
     
     return UPDATE_KEEP;

@@ -1,9 +1,12 @@
+#include "player.h"
 #include "beam.h"
 
 static uint8 updateBeam(Updateable* who, World* world)
 {
     Beam* b = who->behavior;
     setSpriteCenterBottom(who, spriteCenterTop(b->player));
+
+    ++b->player->stats->shotsFired;
 
     return UPDATE_KEEP;
 }

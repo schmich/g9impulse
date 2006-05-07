@@ -6,6 +6,7 @@ spawnCloudOver(w, 100, 10, 1, CLOUD_LARGE);
 
 [300]
 spawnShip(w, -10, 0);
+spawnProximityMissile(NULL, w, makePoint(80, 0));
 
 [400]
 i16 = random(-20, 20);
@@ -172,18 +173,34 @@ if (random(0, 1) == 0)
     spawnF18Chase(w, 70, 10, random(2, 3));
 }
 
+[2273]
+spawnCloudUnder(w, 0, 0, 1, CLOUD_COVER);
+
+[2300]
+spawnProximityMissile(NULL, w, makePoint(80, 0));
+
+[2325]
+spawnProximityMissile(NULL, w, makePoint(80, 0));
+
 [2350]
+spawnProximityMissile(NULL, w, makePoint(20, 0));
+spawnProximityMissile(NULL, w, makePoint(140, 0));
+
+[2375]
+spawnProximityMissile(NULL, w, makePoint(w->player->position.x, 0));
+
+[2390]
+spawnProximityMissile(NULL, w, makePoint(w->player->position.x, 0));
+
+[2400]
 i16 = random(40, 60);
 spawnMig(w, 60, 0);
 spawnF16(w, 60 - i16, 20, 2);
 spawnF16(w, 60 + i16, 20, 2);
 
-[2400]
+[2450]
 spawnF18Cut(w, -10, 0, 95, true);
 spawnF18Cut(w, 0, -30, 65, true);
 
-[2450]
+[2500]
 spawnF16(w, 10, 0, 2);
-
-[2273]
-spawnCloudUnder(w, 0, 0, 1, CLOUD_COVER);

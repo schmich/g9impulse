@@ -73,6 +73,7 @@ static bool displayHighScores(List* highScores, Node* scorePos)
 
     uint8 buffer;
     Animation* logo = logoAnimation();
+    Animation* highScore = highScoreAnimation();
 
     char _[] = "_";
     uint8 pos = 0;
@@ -141,6 +142,9 @@ static bool displayHighScores(List* highScores, Node* scorePos)
 
         drawBackground(background);
         drawImage(&logo->images[0], makePoint(0, 0), true);
+
+        if (scorePos != NULL)
+            drawImage(&highScore->images[0], makePoint(78, 15), true);
 
         update(background, NULL);
 
