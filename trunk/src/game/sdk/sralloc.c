@@ -110,7 +110,7 @@
 //#define	MAX_HEAP_SIZE	0x200
 
 #define NEAR_MODEL
-#define	MAX_HEAP_SIZE	0x9FF
+#define	MAX_HEAP_SIZE	0x8FF
 
 
 

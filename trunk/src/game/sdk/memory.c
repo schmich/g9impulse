@@ -16,7 +16,7 @@ typedef union _SALLOC
 	}bits;
 }SALLOC;
 
-uint16 theBytesFree = 0x9FF;
+uint16 theBytesFree = 0x8FF;
 #endif
 
 void* alloc(uint8 size)
