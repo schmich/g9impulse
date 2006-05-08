@@ -6,7 +6,6 @@ spawnCloudOver(w, 100, 10, 1, CLOUD_LARGE);
 
 [300]
 spawnShip(w, -10, 0);
-spawnProximityMissile(NULL, w, makePoint(80, 0));
 
 [400]
 i16 = random(-20, 20);
@@ -204,3 +203,95 @@ spawnF18Cut(w, 0, -30, 65, true);
 
 [2500]
 spawnF16(w, 10, 0, 2);
+
+--new additions by Zuofu
+
+[2550]
+spawnF18Chase(w, -20, 0, 3);
+spawnF18Chase(w, 75, 0, 2);
+spawnF18Chase(w, 180, 0, 3);
+
+[2600]
+spawnF18Chase(w, -20, 0, 3);
+spawnF18Chase(w, 0, 0, 2);
+spawnMig(w, 70, 0);
+spawnF18Chase(w, 160, 0, 2);
+spawnF18Chase(w, 180, 0, 3);
+
+[2650]
+spawnProximityMissile(NULL, w, makePoint(30, 0));
+spawnProximityMissile(NULL, w, makePoint(130, 0));
+
+[2690]
+spawnProximityMissile(NULL, w, makePoint(60, 0));
+spawnProximityMissile(NULL, w, makePoint(100, 0));
+
+[2710]
+i16 = 20;
+spawnProximityMissile(NULL, w, makePoint(w->player->position.x - i16, 0));
+
+[2720]
+spawnProximityMissile(NULL, w, makePoint(w->player->position.x, 0));
+
+[2730]
+i16 = 20;
+spawnProximityMissile(NULL, w, makePoint(w->player->position.x + i16, 0));
+
+[2750]
+i16 = random(40, 60);
+spawnMig(w, w->player->position.x, 0);
+spawnF16(w, w->player->position.x - i16, 20, 2);
+spawnF16(w, w->player->position.x + i16, 20, 2);
+
+[2800]
+spawnTank(w, 80, 0);
+
+[2830]
+spawnTank(w, 120, 0);
+
+[2850]
+spawnF18Chase(w, 10 - random(0, 10), 10, random(2, 3));
+spawnF18Chase(w, 70 + random + random(0, 10), 20, random(2, 3));
+
+[2900]
+spawnF18Cut(w, -10, 0, 95, true);
+spawnF18Cut(w, 0, -30, 65, true);
+
+[2920]
+spawnF18Cut(w, 170, 0, 95, false);
+spawnF18Cut(w, 180, -30, 65, false);
+
+[2980]
+spawnF18Chase(w, 80, 20, random(2, 3));
+spawnF18Chase(w, 100, 10, 2);
+if (random(0, 1) == 0)
+    spawnF18Chase(w, 130, 20, 2);
+spawnCloudUnder(w, 60, 10, 1, CLOUD_LARGE);
+
+[3010]
+spawnChopper(w, 50, 30, 30);
+spawnChopper(w, 80, 50, 60);
+spawnF18Chase(w, 10 - random(0, 10), 10, random(2, 3));
+spawnF18Chase(w, 70 + random + random(0, 10), 20, random(2, 3));
+
+[3040]
+spawnProximityMissile(NULL, w, makePoint(60, 0));
+spawnProximityMissile(NULL, w, makePoint(100,0));
+
+[3045]
+spawnProximityMissile(NULL, w, makePoint(30, 0));
+spawnProximityMissile(NULL, w, makePoint(130, 0));
+
+[3060]
+spawnF18Boring(w, 60, 30, 3);
+spawnF18Boring(w, 75, 10, 3);
+spawnF18Boring(w, 90, 30, 3);
+
+[3070]
+spawnMig(w, 90, 0);
+
+[3080]
+spawnF18Boring(w, 110, 30, 3);
+spawnF18Boring(w, 115, 10, 3);
+spawnF18Boring(w, 130, 30, 3);
+

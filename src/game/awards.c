@@ -108,7 +108,7 @@ AwardsOverlay* createAwardsOverlay(Player* who)
     {
         killPct = (s->kills * 100) / s->enemiesFaced;
         if (killPct > 75)
-            SET_BONUS(punisher, 25 * (killPct - 75) + 500);
+            SET_BONUS(punisher, 25 * (killPct - 75) + 1000);
     }
 
     if (s->artifactsGiven > 0)
@@ -119,13 +119,13 @@ AwardsOverlay* createAwardsOverlay(Player* who)
     }
 
     if (s->nukesFired == 0)
-        SET_BONUS(greenpeace, 1000);
+        SET_BONUS(greenpeace, 500);
 
     if (s->kamikazes >= 5)
         SET_BONUS(masochist, 750);
 
     if (s->healthLost > 20)
-        SET_BONUS(bulletMagnet, 1000);
+        SET_BONUS(bulletMagnet, 250);
 
     a->numAwards = numAwards(a->awards);
     a->finalScore = who->stats->score + totalBonus(a->awards);
