@@ -153,6 +153,12 @@ void draw(uint32 address, uint16 width, uint16 height, int16 x, int16 y, bool is
 
     int16 right;
     int16 bottom;
+    
+    //clear WDT, set WDT period to about 30 seconds, if no draw operation 
+    //happens during that time, it is probably safe to assume that the system
+    //has crashed and a restart is in order.
+    // 
+    ClrWdt();
 
     right = x + (int16)width;
     if (right > SCREEN_WIDTH)
