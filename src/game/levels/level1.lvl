@@ -322,15 +322,36 @@ spawnChopper(w, 130, 0, 90);
 -- speed up here
 
 [3500]
-spawnF18Boring(w, 150, 10, 1);
-spawnF18Boring(w, 110, 30, 1);
+spawnF18Boring(w, 150, 10, 4);
+spawnF18Boring(w, 110, 30, 4);
 
 [3600]
-spawnF18Boring(w, 60, 30, 1);
-spawnF18Boring(w, 75, 10, 1);
-spawnF18Boring(w, 90, 30, 1);
+spawnF18Boring(w, 60, 30, 3);
+spawnF18Boring(w, 75, 10, 3);
+spawnF18Boring(w, 90, 30, 3);
 
 [3700]
 spawnF16(w, w->player->position.x - i16, 20, 1);
 spawnF16(w, w->player->position.x + i16, 20, 1);
 
+[3750]
+spawnF18Chase(w, -20, 0, 4);
+spawnF18Chase(w, 75, 0, 3);
+spawnF18Chase(w, 180, 0, 4);
+
+[3800]
+i16 = random(40, 60);
+spawnF16(w, 60 - i16, 20, 2);
+spawnF16(w, 60 + i16, 20, 2);
+
+[3900]
+spawnTank(w, 80, 0);
+spawnTank(w, 100, -30
+
+[4000]
+spawnF18Boring(w, 20, 10, 1);
+spawnF18Boring(w, 35, 30, 1);
+
+[4200]
+spawnF18Boring(w, 75, 10, 1);
+spawnF18Boring(w, 90, 30, 1);
