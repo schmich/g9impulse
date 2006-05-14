@@ -274,7 +274,7 @@ spawnChopper(w, 80, 50, 60);
 spawnF18Chase(w, 10 - random(0, 10), 10, random(2, 3));
 spawnF18Chase(w, 70 + random + random(0, 10), 20, random(2, 3));
 
-[3040]
+[3020]
 spawnProximityMissile(NULL, w, makePoint(60, 0));
 spawnProximityMissile(NULL, w, makePoint(100,0));
 
@@ -282,16 +282,55 @@ spawnProximityMissile(NULL, w, makePoint(100,0));
 spawnProximityMissile(NULL, w, makePoint(30, 0));
 spawnProximityMissile(NULL, w, makePoint(130, 0));
 
-[3060]
+[3065]
 spawnF18Boring(w, 60, 30, 3);
 spawnF18Boring(w, 75, 10, 3);
 spawnF18Boring(w, 90, 30, 3);
 
-[3070]
+[3080]
 spawnMig(w, 90, 0);
 
-[3080]
+[3090]
 spawnF18Boring(w, 110, 30, 3);
 spawnF18Boring(w, 115, 10, 3);
 spawnF18Boring(w, 130, 30, 3);
+
+[3150]
+spawnProximityMissile(NULL, w, makePoint(30, 0));
+spawnProximityMissile(NULL, w, makePoint(130, 0));
+
+
+[3190]
+spawnMig(w, 90, 0);
+spawnF18Cut(w, -10, 0, 95, true);
+spawnF18Cut(w, 0, -30, 65, true);
+
+[3200]
+spawnF18Cut(w, 170, 0, 95, false);
+spawnF18Cut(w, 180, -30, 65, false);
+
+[3250]
+spawnF18Boring(w, 50, 10, 3);
+spawnF18Boring(w, 90, 30, 3);
+spawnChopper(w, 70, 0, 90);
+
+[3270]
+spawnF18Boring(w, 150, 10, 3);
+spawnF18Boring(w, 110, 30, 3);
+spawnChopper(w, 130, 0, 90);
+
+-- speed up here
+
+[3500]
+spawnF18Boring(w, 150, 10, 1);
+spawnF18Boring(w, 110, 30, 1);
+
+[3600]
+spawnF18Boring(w, 60, 30, 1);
+spawnF18Boring(w, 75, 10, 1);
+spawnF18Boring(w, 90, 30, 1);
+
+[3700]
+spawnF16(w, w->player->position.x - i16, 20, 1);
+spawnF16(w, w->player->position.x + i16, 20, 1);
 
