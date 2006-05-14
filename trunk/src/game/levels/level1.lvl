@@ -344,13 +344,31 @@ i16 = random(40, 60);
 spawnF16(w, 60 - i16, 20, 2);
 spawnF16(w, 60 + i16, 20, 2);
 
-[3900]
+[3850]
+i16 = random(40, 60);
+spawnF16(w, 60 - i16, 20, 2);
+spawnF16(w, 60 + i16, 20, 2);
+
+[4000]
 spawnTank(w, 80, 0);
 spawnTank(w, 100, -30);
 
-[4000]
+[4030]
+spawnMig(w, w->player->position.x, 0);
+spawnF16(w, w->player->position.x - i16, 20, 2);
+spawnF16(w, w->player->position.x + i16, 20, 2);
+
+[4100]
 spawnF18Boring(w, 20, 10, 1);
 spawnF18Boring(w, 35, 30, 1);
+
+[4150]
+spawnF18Cut(w, -10, 0, 95, true);
+spawnF18Cut(w, 0, -30, 65, true);
+
+[4170]
+spawnF18Cut(w, 170, 0, 95, false);
+spawnF18Cut(w, 180, -30, 65, false);
 
 [4200]
 spawnF18Boring(w, 75, 10, 1);
