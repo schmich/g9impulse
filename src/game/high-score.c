@@ -10,6 +10,7 @@
 
 #define LOCATION_HIGH_SCORES 0
 #define LOCATION_LAST_INITS  (LOCATION_HIGH_SCORES + (3 + 2) * 10)
+#define LOCATION_MAGIC       1020
 
 typedef struct ScoreEntry
 {
@@ -25,6 +26,35 @@ static void destroyScores(List* scores)
         free(curr->data);
 
     destroy(scores);
+}
+
+static bool validInitials(char* initials)
+{
+    char* c;
+    for (c = initials; *c != NULL; ++c)
+    {
+        if (*c >= 'A' && *c <= 'Z')
+            return true;
+
+        if (*c >= '0' && *c <= '9')
+            return true;
+
+        if (*c == ' ')
+            return true;
+    }
+
+    return false;
+}
+
+static bool validMagic(void)
+{
+    char magic[4];
+    readStorage(magic, 4, LOCATION_MAGIC);
+
+    return magic[0] == 0xDE
+        && magic[1] == 0xAD
+        && magic[2] == 0xBE
+        && magic[3] == 0xEF;
 }
 
 static void saveHighScores(List* highScores)
@@ -176,6 +206,7 @@ static bool displayHighScores(List* highScores, Node* scorePos)
 
 static void setDefaultHighScores(void)
 {
+    char magic[] = { 0xDE, 0xAD, 0xBE, 0xEF };
     char inits[] = "CPS_LH _ZC _JPC_EMS_SYB_ECE_ABC_XYZ_DEF";
 
     uint16 scores[] = {100, 99, 98, 97, 96,
@@ -201,6 +232,7 @@ static void setDefaultHighScores(void)
 
     saveHighScores(highScores);
     writeStorage(inits, 3, LOCATION_LAST_INITS);
+    writeStorage(magic, 4, LOCATION_MAGIC);
 
     destroyScores(highScores);
 }
@@ -223,10 +255,16 @@ static Node* highScorePosition(uint16 score, List* highScores)
 
 bool showHighScores()
 {
-    List* highScores = loadHighScores();
-    bool startPressed = displayHighScores(highScores, NULL);
-    destroyScores(highScores);
+    List* highScores;
+    bool  startPressed;
 
+    if (!validMagic())
+        setDefaultHighScores();
+
+    highScores = loadHighScores();
+    startPressed = displayHighScores(highScores, NULL);
+
+    destroyScores(highScores);
     return startPressed;
 }
 
@@ -238,6 +276,9 @@ void checkHighScore(uint16 score)
     Node* newScore;
     ScoreEntry* entry;
 
+    if (!validMagic())
+        setDefaultHighScores();
+
     highScores = loadHighScores();
 
     scorePos = highScorePosition(score, highScores);
@@ -248,6 +289,15 @@ void checkHighScore(uint16 score)
 
         readStorage(entry->initials, 3, LOCATION_LAST_INITS);
         entry->initials[3] = '\0';
+
+        if (!validInitials(entry->initials))
+        {
+            //
+            // somehow we got into an inconsistent state with the
+            // last initials entered, so just reset them
+            //
+            entry->initials[0] = entry->initials[1] = entry->initials[2] = 'A';
+        }
 
         newScore = insertElement(highScores, scorePos, entry);
         removeNode(highScores, highScores->tail);
