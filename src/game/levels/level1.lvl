@@ -346,7 +346,7 @@ spawnF16(w, 60 + i16, 20, 2);
 
 [3900]
 spawnTank(w, 80, 0);
-spawnTank(w, 100, -30
+spawnTank(w, 100, -30);
 
 [4000]
 spawnF18Boring(w, 20, 10, 1);
