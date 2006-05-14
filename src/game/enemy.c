@@ -13,7 +13,7 @@ static void fireEnemy(Entity* e, World* w)
 Enemy* createEnemy(Animation* anim,
                    uint8 initFrame, 
                    Behavior* behavior,
-                   uint8 health,
+                   uint16 health,
                    Point where,
                    SpawnFn onProjectileSpawn,
                    KillFn onKill)

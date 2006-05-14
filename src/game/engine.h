@@ -15,6 +15,7 @@ typedef struct Engine
     Animation* idle;
     Animation* thrust;
     Animation* reverse;
+    Animation* boost;
 } Engine;
 
 Engine* createEngine(Player* who);

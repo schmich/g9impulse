@@ -6,7 +6,7 @@ void kill(Entity* who, World* world)
     who->kill(who, world);
 }
 
-bool damage(Entity* who, uint8 damage)
+bool damage(Entity* who, uint16 damage)
 {
     if (damage >= who->health)
     {

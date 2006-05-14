@@ -27,6 +27,8 @@
 #include "fireball.anim.inl"
 #include "powerup.anim.inl"
 #include "missile.anim.inl"
+#include "boss.anim.inl"
+#include "boss.h"
 #include "player.h"
 #include "world.h"
 
@@ -177,6 +179,17 @@ static void killEnemy(Enemy* who, World* world)
     else if (upgrades < 2 && (faced > 60 && faced <= 90))
     {
         randMax = 90 - p->stats->enemiesFaced;
+        if (randMax < 0)
+            randMax = 1;
+
+        if (random(1, randMax) == 1)
+        {
+            spawnWeaponPowerup(world, spriteCenter(who));
+        }
+    }
+    else if (upgrades < 3 && (faced > 90 && faced <= 120))
+    {
+        randMax = 120 - p->stats->enemiesFaced;
         if (randMax < 0)
             randMax = 1;
 
@@ -531,32 +544,6 @@ static void spawnManyF18Cut(World* w, int16 x, int16 yTarget, bool right)
     spawnF18Cut(w, x + mult * 50, 30, yTarget, right); 
 }
 
-static void spawnManyF18(World* w, int16 x, bool inc)
-{
-    int16 mult;
-    if (inc)
-        mult = 1;
-    else
-        mult = -1;
-
-    /*spawnF18(w, makePoint(x + mult * 0,  -23));
-    spawnF18(w, makePoint(x + mult * 15, -46));
-    spawnF18(w, makePoint(x + mult * 30, -69));*/
-}
-
-static void spawnManyF16(World* w, int16 x, bool inc)
-{
-    int16 mult;
-    if (inc)
-        mult = 1;
-    else
-        mult = -1;
-
-    /*spawnF16(w, makePoint(x + mult * 0,  -50));
-    spawnF16(w, makePoint(x + mult * 20, -100));
-    spawnF16(w, makePoint(x + mult * 40, -150));*/
-}
-
 static void spawnCloudUnder(World* w, int16 x, int16 dy, int8 speed, uint8 size)
 {
     addUnderlay(w, createCloud(x, dy, speed, size));
@@ -565,6 +552,48 @@ static void spawnCloudUnder(World* w, int16 x, int16 dy, int8 speed, uint8 size)
 static void spawnCloudOver(World* w, int16 x, int16 dy, int8 speed, uint8 size)
 {
     addOverlay(w, createCloud(x, dy, speed, size));
+}
+
+static void spawnBossFlyby(World* w)
+{
+    Point player = spriteCenter(w->player);
+    uint16 edge;
+
+    Enemy* e = createEnemy(bossAnimation(), 0,
+                           createBoring(-7, 1),
+                           MAX_HEALTH,
+                           makePoint(0, 0),
+                           nullProjectileSpawn,
+                           NULL);
+
+    if (player.x > (SCREEN_WIDTH / 2))
+    {
+        edge = spriteLeft(w->player);
+        setSpriteRightUpper(e, makePoint(edge - 10, SCREEN_HEIGHT));
+    }
+    else
+    {
+        edge = spriteRight(w->player);
+        setSpriteLeftUpper(e, makePoint(edge + 10, SCREEN_HEIGHT));
+    }
+
+    addUpdateable(w, e);
+}
+
+static void spawnBoss(World* w)
+{
+    Enemy* e = createEnemy(bossAnimation(), 1,
+                           NULL,
+                           60000,
+                           makePoint(0, 0),
+                           nullProjectileSpawn,
+                           killEnemy);
+
+    e->behavior = createBossBehavior(e);
+
+    setSpriteCenterBottom(e, makePoint((SCREEN_WIDTH / 2), 0));
+
+    addEnemy(w, e);
 }
 
 #include "level1.lvl.inl"

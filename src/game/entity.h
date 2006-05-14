@@ -5,13 +5,15 @@
 #include "updateable.h"
 #include "projectile.h"
 
+#define MAX_HEALTH 65535
+
 typedef struct Entity Entity;
 typedef near rom void (*KillFn)(Entity*, World*);
 typedef near rom void (*FireFn)(Entity*, World*);
 typedef near rom void (*SpawnFn)(Entity*, World*, Point);
 
 #define ENTITY_BASE UPDATEABLE_BASE; \
-                    uint8   health; \
+                    uint16  health; \
                     KillFn  kill; \
                     FireFn  fire; \
                     SpawnFn spawnProjectile
@@ -22,7 +24,7 @@ typedef struct Entity
 } Entity;
 
 void kill(Entity* who, World* world);
-bool damage(Entity* who, uint8 damage);
+bool damage(Entity* who, uint16 damage);
 bool dead(Entity* who);
 void fire(Entity* e, World* w);
 

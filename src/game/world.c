@@ -468,8 +468,10 @@ void collideWorld(World* world)
         {
             impact(proj->data, world->player, world);
 
+#ifndef _DEBUG
             if (!world->respawning && damagePlayer(world->player, ((Projectile*)proj->data)->damage))
                 kill(world->player, world);
+#endif
 
             if (!((Projectile*)proj->data)->invincible)
                 removeEnemyProjectile(world, proj);
@@ -493,14 +495,19 @@ void collideWorld(World* world)
         {
             if (!((Enemy*)enemy->data)->ground)
             {
+#ifndef _DEBUG
                 if (!world->respawning && damagePlayer(world->player, 2))
                     kill(world->player, world);
+#endif
 
                 enemyKilled(world->player, enemy->data, true);
                 ++world->player->stats->kamikazes;
 
-                kill(enemy->data, world);
-                removeEnemy(world, enemy);
+                if (damage(enemy->data, 50))
+                {
+                    kill(enemy->data, world);
+                    removeEnemy(world, enemy);
+                }
             }
         }
     }

@@ -1,9 +1,19 @@
-[boss-flyby]
-0,8060          32          27
-32,8060         30          27
-62,8067         50          27
-
 [boss]
-116,8079        52          28
-168,8078        56          29
-224,8072        50          44
+0,8060          32          27      -- boss flyby
+32,8060         30          27      -- small boss 1
+62,8067         50          27      -- small boss 2
+116,8079        52          28      -- medium boss 1
+168,8078        56          29      -- medium boss 2
+224,8072        50          44      -- large boss
+
+[boss-plasma-small]
+278,8084        4           3       -- small projectile 1
+278,8091        4           3       -- small projectile 2
+
+[boss-plasma-medium]
+282,8083        6           5       -- medium projectile 1
+282,8090        6           5       -- medium projectile 2
+
+[boss-plasma-large]
+288,8082        8           7       -- large projectile 1
+288,8089        8           7       -- large projectile 2

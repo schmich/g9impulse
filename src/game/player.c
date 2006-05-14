@@ -453,9 +453,15 @@ static uint8 updatePlayer(Player* who, World* world)
             --who->momentum.y;
     }
 
+    //
+    // move player due to momentum
+    //
     who->position.x += who->momentum.x / 4;
     who->position.y += who->momentum.y / 3;
 
+    //
+    // keep player in bounds horizontally
+    //
     if (who->position.x < 0)
     {
         who->position.x = 0;
@@ -468,6 +474,9 @@ static uint8 updatePlayer(Player* who, World* world)
             who->position.x = SCREEN_WIDTH - width;
     }
 
+    //
+    // keep player in bounds vertically
+    //
     if (who->position.y < 0)
     {
         who->position.y = 0;
@@ -504,6 +513,7 @@ Player* createPlayer(Point where)
     player->position = where;
     player->kill = killPlayer;
     player->fire = firePlayer;
+    player->boost = false;
 
     player->behavior = createBehavior(updatePlayer);
 

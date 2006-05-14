@@ -9,14 +9,14 @@
 typedef struct Enemy
 {
     ENEMY_BASE;
-    uint8 maxHealth;
-    bool  ground;
+    uint16 maxHealth;
+    bool   ground;
 } Enemy;
 
 Enemy* createEnemy(Animation* anim,
                    uint8 initFrame,
                    Behavior* behavior,
-                   uint8 health,
+                   uint16 health,
                    Point where,
                    SpawnFn onProjectileSpawn,
                    KillFn onKill);
