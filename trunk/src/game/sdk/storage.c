@@ -23,9 +23,6 @@ void readStorage(char* buffer, uint16 count, uint16 fromWhere)
     uint16 pos;
     uint16 addr;
 
-    if (fromWhere + count > MEMORY_MAX)
-        return;
-
     //
     // slow but safe
     //
@@ -37,9 +34,6 @@ void writeStorage(char* buffer, uint16 count, uint16 toWhere)
 {
     uint16 pos;
     uint16 addr;
-
-    if (toWhere + count > MEMORY_MAX)
-        return;
 
     //
     // slow but safe

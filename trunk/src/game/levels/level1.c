@@ -241,12 +241,16 @@ static void spawnPlasma(Entity* who, World* world, Point where)
     Point tip = spriteCenterBottom(who);
     Point center = spriteCenter(world->player);
 
-    bs = newArray(Behavior*, 2);
-    bs[0] = createDirect(tip, center, 4);
-    bs[1] = createAnimator(4, FOREVER);
-
-    if (abs(tip.y - center.y) > abs(tip.x - center.x))
+    //
+    // prevent "shallow" shots and shooting behind
+    //
+    if (abs(tip.y - center.y) > abs(tip.x - center.x)
+     && (tip.y < center.y))
     {
+        bs = newArray(Behavior*, 2);
+        bs[0] = createDirect(tip, center, 4);
+        bs[1] = createAnimator(4, FOREVER);
+
         p = createProjectile(plasmaAnimation(), 0,
                              createChainBehavior(bs, 2),
                              1,
