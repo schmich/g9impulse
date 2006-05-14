@@ -10,4 +10,4 @@
 200,6999        60      8   -- health = 1 (bright red)      8
 140,6999        60      8   -- health = 1 (medium red)      9
 80,6999         60      8   -- health = 1 (dark red)        10
-200,6999        60      8   -- health = 0 (empty)           11
+260,6999        60      8   -- health = 0 (empty)           11

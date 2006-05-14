@@ -14,49 +14,64 @@ static uint8 updateEngine(Engine* e, World* w)
     int16 x = e->player->position.x;
     int16 y = e->player->position.y;
 
-    if (y > e->yPrevious)
+    if (e->player->boost)
     {
-        //
-        // going backwards
-        //
-        
-        if (e->animation == e->reverse)
+        e->animation = e->boost;
+        if (++e->frameDelay == FRAME_DELAY)
         {
-            if (++e->frameDelay == FRAME_DELAY)
-            {
-                animationNext(e);
-                e->frameDelay = 0;
-            }
+            animationNext(e);
+            e->frameDelay = 0;
         }
-        else
-        {
-            e->animation = e->reverse;
-            e->currentFrame = 0;
-        }
+
+        e->position.x = x + 4;
+        e->position.y = y + 22;
     }
     else
     {
-        //
-        // going forwards or not moving
-        //
-
-        if (e->animation == e->thrust)
+        if (y > e->yPrevious)
         {
-            if (++e->frameDelay == FRAME_DELAY)
+            //
+            // going backwards
+            //
+            
+            if (e->animation == e->reverse)
             {
-                animationNext(e);
-                e->frameDelay = 0;
+                if (++e->frameDelay == FRAME_DELAY)
+                {
+                    animationNext(e);
+                    e->frameDelay = 0;
+                }
+            }
+            else
+            {
+                e->animation = e->reverse;
+                e->currentFrame = 0;
             }
         }
         else
         {
-            e->animation = e->thrust;
-            e->currentFrame = 0;
-        }
-    }
+            //
+            // going forwards or not moving
+            //
 
-    e->position.x = x + 6;
-    e->position.y = y + 23;
+            if (e->animation == e->thrust)
+            {
+                if (++e->frameDelay == FRAME_DELAY)
+                {
+                    animationNext(e);
+                    e->frameDelay = 0;
+                }
+            }
+            else
+            {
+                e->animation = e->thrust;
+                e->currentFrame = 0;
+            }
+        }
+
+        e->position.x = x + 6;
+        e->position.y = y + 23;
+    }
 
     e->yPrevious = y;
 
@@ -74,6 +89,7 @@ Engine* createEngine(Player* who)
     e->idle    = engineIdleAnimation();
     e->thrust  = engineThrustAnimation();
     e->reverse = engineReverseAnimation();
+    e->boost   = engineBoostAnimation();
     e->animation = e->idle;
 
     e->frameDelay = 0;

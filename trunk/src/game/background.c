@@ -1,20 +1,43 @@
 #include "background.h"
 #include "animation.h"
+#include "player.h"
 #include "background.anim.inl"
 #include "gpu.h"
 
 #define LOOP_END    7229
 #define LOOP_START  6824
 
+#define FAST_START  4300
+#define FAST_END    6200
+
 static uint8 updateBackground(Background* bg, World* world)
 {
-    if (++bg->step == 2)
+    if (bg->progress > FAST_START && bg->progress < FAST_END)
     {
-        ++bg->progress;
-        if (++bg->offset == LOOP_END)
-            bg->offset = LOOP_START;
+        world->player->boost = true;
 
-        bg->step = 0;
+        if (++bg->step == 2)
+        {
+            bg->step = 0;
+            ++bg->progress;
+            ++bg->offset;
+        }
+
+        bg->progress += 2;
+        bg->offset += 2;
+    }
+    else
+    {
+        world->player->boost = false;
+
+        if (++bg->step == 2)
+        {
+            ++bg->progress;
+            if (++bg->offset == LOOP_END)
+                bg->offset = LOOP_START;
+
+            bg->step = 0;
+        }
     }
 
     return UPDATE_KEEP;

@@ -29,6 +29,8 @@ typedef struct Player
     uint8   heatup;
     uint8   cooldown;
     uint8   maxCooldown;
+
+    bool    boost;
 } Player;
 
 Player* createPlayer(Point where);
